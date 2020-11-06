@@ -27,6 +27,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        //Bottom Nav
         LHome = findViewById(R.id.linearHome);
         LIzin = findViewById(R.id.linearIzin);
         LAbsen = findViewById(R.id.linearAbsen);
@@ -40,7 +41,9 @@ public class HomeActivity extends AppCompatActivity {
         IHome = findViewById(R.id.ivHome);
         IIzin = findViewById(R.id.ivIzin);
         IAbsen = findViewById(R.id.ivAbsen);
+        IGames = findViewById(R.id.ivGames);
         IUser = findViewById(R.id.ivUser);
+        //
         Home();
         LHome.setOnClickListener(new View.OnClickListener() {
             @Override
