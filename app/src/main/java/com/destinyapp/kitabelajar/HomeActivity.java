@@ -81,7 +81,7 @@ public class HomeActivity extends AppCompatActivity {
         THome.setTextColor(Color.rgb(255,255,255));
         IIzin.setImageResource(R.drawable.izin);
         TIzin.setTextColor(Color.rgb(255,255,255));
-        IAbsen.setImageResource(R.drawable.list_check);
+        IAbsen.setImageResource(R.drawable.absen);
         TAbsen.setTextColor(Color.rgb(255,255,255));
         IGames.setImageResource(R.drawable.games);
         TGames.setTextColor(Color.rgb(255,255,255));
@@ -104,7 +104,7 @@ public class HomeActivity extends AppCompatActivity {
     }
     private void Absen(){
         Default();
-        IAbsen.setImageResource(R.drawable.list_check_active);
+        IAbsen.setImageResource(R.drawable.absen_active);
         TAbsen.setTextColor(Color.rgb(37,166,161));
         fragment = new AbsenFragment();
         ChangeFragment(fragment);

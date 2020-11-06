@@ -2,4 +2,8 @@
     <string name="app_name">Kita Belajar</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="Izin">
+        <item>Sakit</item>
+        <item>Izin</item>
+    </string-array>
 </resources>

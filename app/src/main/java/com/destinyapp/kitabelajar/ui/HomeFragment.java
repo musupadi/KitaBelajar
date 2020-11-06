@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -24,7 +25,7 @@ public class HomeFragment extends Fragment {
     LinearLayout LihatSemua;
     //Dialog
     Dialog dialog;
-    LinearLayout Kembali;
+    Button Kembali;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -50,7 +51,7 @@ public class HomeFragment extends Fragment {
         LihatSemua = view.findViewById(R.id.linearLihatSemua);
         dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.dialog_menu_all);
-        Kembali = dialog.findViewById(R.id.linearKembali);
+        Kembali = dialog.findViewById(R.id.btnKembali);
         if (SwitchMasuk.isChecked()){
             CheckMasuk.setText("Masuk");
         }else{

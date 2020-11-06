@@ -18,4 +18,7 @@
     <color name="colorGreen">#49C200</color>
     <color name="colorOrange">#FBBC23</color>
     <color name="colorYellow">#F0C423</color>
+    <color name="colorGradientLeft">#25A6A1</color>
+    <color name="colorGradientCenter">#8FB163</color>
+    <color name="colorGradientRight">#FBBC23</color>
 </resources>
