@@ -1,10 +1,12 @@
-package com.destinyapp.kitabelajar;
+package com.destinyapp.kitabelajar.Acitvity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.destinyapp.kitabelajar.R;
 
 public class MainActivity extends AppCompatActivity {
 

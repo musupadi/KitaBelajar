@@ -1,4 +1,4 @@
-package com.destinyapp.kitabelajar;
+package com.destinyapp.kitabelajar.Acitvity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.destinyapp.kitabelajar.R;
 
 public class LoginActivity extends AppCompatActivity {
     Button login;

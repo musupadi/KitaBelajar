@@ -1,4 +1,4 @@
-package com.destinyapp.kitabelajar.ui;
+package com.destinyapp.kitabelajar.Acitvity.ui;
 
 import android.os.Bundle;
 
@@ -10,17 +10,11 @@ import android.view.ViewGroup;
 
 import com.destinyapp.kitabelajar.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AbsenFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class AbsenFragment extends Fragment {
 
-    public AbsenFragment() {
+public class GamesFragment extends Fragment {
+    public GamesFragment() {
         // Required empty public constructor
     }
-
 
 
     @Override
@@ -32,6 +26,6 @@ public class AbsenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_absen, container, false);
+        return inflater.inflate(R.layout.fragment_games, container, false);
     }
 }

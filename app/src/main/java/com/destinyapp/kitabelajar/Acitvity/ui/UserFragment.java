@@ -1,4 +1,4 @@
-package com.destinyapp.kitabelajar.ui;
+package com.destinyapp.kitabelajar.Acitvity.ui;
 
 import android.os.Bundle;
 

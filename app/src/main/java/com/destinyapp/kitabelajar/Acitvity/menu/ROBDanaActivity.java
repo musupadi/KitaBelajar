@@ -1,14 +1,16 @@
-package com.destinyapp.kitabelajar;
+package com.destinyapp.kitabelajar.Acitvity.menu;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class FormulirPPDBActivity extends AppCompatActivity {
+import com.destinyapp.kitabelajar.R;
+
+public class ROBDanaActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_formulir_p_p_d_b);
+        setContentView(R.layout.activity_r_o_b_dana);
     }
 }

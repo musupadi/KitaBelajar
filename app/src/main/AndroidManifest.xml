@@ -1,23 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.destinyapp.kitabelajar">
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo_temporary"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FormulirPPDBActivity"></activity>
         <activity
-            android:name=".HomeActivity"
+            android:name=".Acitvity.menu.ROBDanaActivity"
+            android:label="ROB Dana BOP"
+            android:parentActivityName=".Acitvity.HomeActivity"></activity>
+        <activity
+            android:name=".Acitvity.menu.PembayaranActivity"
+            android:label="Pembayaran"
+            android:parentActivityName=".Acitvity.HomeActivity"/>
+        <activity
+            android:name=".Acitvity.menu.BiayaAkademik"
+            android:label="Biaya Akademik"
+            android:parentActivityName=".Acitvity.HomeActivity"/>
+        <activity
+            android:name=".Acitvity.menu.GuruActivity"
+            android:label="Guru"
+            android:parentActivityName=".Acitvity.HomeActivity"/>
+        <activity
+            android:name=".Acitvity.menu.ERaportActivity"
+            android:label="E-Raport"
+            android:parentActivityName=".Acitvity.HomeActivity"/>
+        <activity android:name=".Acitvity.menu.TugasActivity"
+            android:label="Tugas"
+            android:parentActivityName=".Acitvity.HomeActivity"/>
+        <activity
+            android:name=".Acitvity.menu.MediaPembelajaranActivity"
+            android:label="Media Pembelajaran"
+            android:parentActivityName=".Acitvity.HomeActivity"/>
+        <activity
+            android:name=".Acitvity.menu.EvadirActivity"
+            android:label="Evadir"
+            android:parentActivityName=".Acitvity.HomeActivity" />
+        <activity
+            android:name=".Acitvity.menu.JadwalPelajaranActivity"
+            android:label="Jadwal Pelajaran"
+            android:parentActivityName=".Acitvity.HomeActivity" />
+        <activity
+            android:name=".Acitvity.menu.StrukturOrganisasiActivity"
+            android:label="Struktur Oraganisasi"
+            android:parentActivityName=".Acitvity.HomeActivity" />
+        <activity
+            android:name=".Acitvity.menu.PrestasiActivity"
+            android:label="Prestasi"
+            android:parentActivityName=".Acitvity.HomeActivity" />
+        <activity
+            android:name=".Acitvity.menu.AgendaSekolah.DetailAgendaSekolahActivity"
+            android:label="Agenda Sekolah"
+            android:parentActivityName=".Acitvity.HomeActivity" />
+        <activity
+            android:name=".Acitvity.menu.AgendaSekolah.AgendaSekolahActivity"
+            android:label="Agenda Sekolah"
+            android:parentActivityName=".Acitvity.HomeActivity" />
+        <activity
+            android:name=".Acitvity.menu.ProfileSekolahActivity"
+            android:label="Profile Sekolah"
+            android:parentActivityName=".Acitvity.HomeActivity" />
+        <activity
+            android:name=".Acitvity.menu.FormulirPPDBActivity"
+            android:label="PPDB"
+            android:parentActivityName=".Acitvity.HomeActivity" />
+        <activity
+            android:name=".Acitvity.HomeActivity"
             android:theme="@style/AppThemeNoAction" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Acitvity.LoginActivity"
             android:theme="@style/AppThemeNoAction" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Acitvity.MainActivity"
             android:theme="@style/AppThemeNoAction">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,6 +95,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>

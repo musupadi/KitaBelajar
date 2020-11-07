@@ -1,10 +1,11 @@
-package com.destinyapp.kitabelajar;
+package com.destinyapp.kitabelajar.Acitvity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -12,17 +13,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.destinyapp.kitabelajar.ui.AbsenFragment;
-import com.destinyapp.kitabelajar.ui.GamesFragment;
-import com.destinyapp.kitabelajar.ui.HomeFragment;
-import com.destinyapp.kitabelajar.ui.IzinFragment;
-import com.destinyapp.kitabelajar.ui.UserFragment;
+import com.destinyapp.kitabelajar.Acitvity.ui.AbsenFragment;
+import com.destinyapp.kitabelajar.Acitvity.ui.GamesFragment;
+import com.destinyapp.kitabelajar.Acitvity.ui.HomeFragment;
+import com.destinyapp.kitabelajar.Acitvity.ui.IzinFragment;
+import com.destinyapp.kitabelajar.Acitvity.ui.UserFragment;
+import com.destinyapp.kitabelajar.R;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class HomeActivity extends AppCompatActivity {
     LinearLayout LHome,LIzin,LAbsen,LGames,LUser;
     TextView THome,TIzin,TAbsen,TGames,TUser;
     ImageView IHome,IIzin,IAbsen,IGames,IUser;
     Fragment fragment;
+    private String[] galleryPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +49,7 @@ public class HomeActivity extends AppCompatActivity {
         IGames = findViewById(R.id.ivGames);
         IUser = findViewById(R.id.ivUser);
         //
+
         Home();
         LHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +81,12 @@ public class HomeActivity extends AppCompatActivity {
                 User();
             }
         });
+        if(EasyPermissions.hasPermissions(HomeActivity.this, galleryPermissions)) {
+
+        }else{
+            EasyPermissions.requestPermissions(HomeActivity.this, "Access for storage",
+                    101, galleryPermissions);
+        }
     }
     private void Default(){
         IHome.setImageResource(R.drawable.home);

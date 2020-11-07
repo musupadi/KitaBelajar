@@ -1,6 +1,5 @@
-package com.destinyapp.kitabelajar.ui;
+package com.destinyapp.kitabelajar.Acitvity.ui;
 
-import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,25 +9,21 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.destinyapp.kitabelajar.Mehod.Destiny;
 import com.destinyapp.kitabelajar.R;
 
 
-public class HomeFragment extends Fragment {
-
+public class AbsenFragment extends Fragment {
     Switch SwitchMasuk;
     TextView CheckMasuk;
-    LinearLayout LihatSemua;
-    //Dialog
-    Dialog dialog;
-    Button Kembali;
-    public HomeFragment() {
+    Destiny destiny;
+    public AbsenFragment() {
         // Required empty public constructor
     }
+
 
 
     @Override
@@ -40,18 +35,16 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_absen, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        destiny = new Destiny();
         SwitchMasuk = view.findViewById(R.id.switchMasuk);
         CheckMasuk = view.findViewById(R.id.tvCheckMasuk);
-        LihatSemua = view.findViewById(R.id.linearLihatSemua);
-        dialog = new Dialog(getActivity());
-        dialog.setContentView(R.layout.dialog_menu_all);
-        Kembali = dialog.findViewById(R.id.btnKembali);
+
         if (SwitchMasuk.isChecked()){
             CheckMasuk.setText("Masuk");
         }else{
@@ -65,18 +58,6 @@ public class HomeFragment extends Fragment {
                 }else{
                     CheckMasuk.setText("Tidak\nMasuk");
                 }
-            }
-        });
-        LihatSemua.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.show();
-            }
-        });
-        Kembali.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.hide();
             }
         });
     }
