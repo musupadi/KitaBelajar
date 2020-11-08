@@ -2,11 +2,14 @@ package com.destinyapp.kitabelajar.Acitvity.ui;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +18,26 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.destinyapp.kitabelajar.API.ApiRequest;
+import com.destinyapp.kitabelajar.API.RetroServer;
 import com.destinyapp.kitabelajar.Acitvity.menu.FormulirPPDBActivity;
 import com.destinyapp.kitabelajar.Mehod.Destiny;
+import com.destinyapp.kitabelajar.Model.DataModel;
+import com.destinyapp.kitabelajar.Model.ResponseModel;
 import com.destinyapp.kitabelajar.R;
+import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import Adapter.AdapterKegiatan;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class HomeFragment extends Fragment {
@@ -31,6 +50,13 @@ public class HomeFragment extends Fragment {
     Dialog dialog;
     Button Kembali;
     Destiny destiny;
+    TextView nama,namaSiswa;
+    DB_Helper dbHelper;
+    String Username,Password,Nama,Token,Level,Photo;
+    RecyclerView recycler;
+    private List<DataModel> mItems = new ArrayList<>();
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mManager;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -52,6 +78,9 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         destiny = new Destiny();
+        recycler = view.findViewById(R.id.recyclerHeader);
+        nama = view.findViewById(R.id.tvNama);
+        namaSiswa = view.findViewById(R.id.tvNamaSiswa);
         SwitchMasuk = view.findViewById(R.id.switchMasuk);
         CheckMasuk = view.findViewById(R.id.tvCheckMasuk);
         ProfilSekolah = view.findViewById(R.id.linearProfilSekolah);
@@ -66,7 +95,24 @@ public class HomeFragment extends Fragment {
         LihatSemua = view.findViewById(R.id.linearLihatSemua);
         dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.dialog_menu_all);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.btn_rounded_white);
+
         Kembali = dialog.findViewById(R.id.btnKembali);
+        dbHelper = new DB_Helper(getActivity());
+        Cursor cursor = dbHelper.checkUser();
+        if (cursor.getCount()>0){
+            while (cursor.moveToNext()){
+                Username = cursor.getString(0);
+                Password = cursor.getString(1);
+                Nama = cursor.getString(2);
+                Token = cursor.getString(3);
+                Level = cursor.getString(4);
+                Photo = cursor.getString(5);
+            }
+        }
+        nama.setText("Halo, "+Nama);
+        namaSiswa.setText(Nama);
         DIALOG();
         if (SwitchMasuk.isChecked()){
             CheckMasuk.setText("Masuk");
@@ -85,6 +131,27 @@ public class HomeFragment extends Fragment {
         });
         ONCLICK();
         ONCLICKDIALOG();
+        Header();
+    }
+    private void Header(){
+        mManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        recycler.setLayoutManager(mManager);
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> KabarBerita = api.KabarSekolah(destiny.AUTH(Token));
+        KabarBerita.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                mItems=response.body().getData();
+                mAdapter = new AdapterKegiatan(getActivity(),mItems);
+                recycler.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                Toast.makeText(getActivity(), "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     private void DIALOG(){
         DProfilSekolah = dialog.findViewById(R.id.linearProfilSekolah);

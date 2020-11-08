@@ -4,6 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="header_text">23sp</dimen>
     <dimen name="header_text_smoll">15sp</dimen>
+    <dimen name="text_xtra_smoll">6sp</dimen>
     <dimen name="text_smoll">8sp</dimen>
     <dimen name="text_medium">10sp</dimen>
     <dimen name="text_large">12sp</dimen>

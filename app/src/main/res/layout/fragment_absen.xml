@@ -26,6 +26,8 @@
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
+                        android:layout_margin="10dp"
+                        android:id="@+id/ivProfileBig"
                         android:src="@drawable/childern"/>
                     <LinearLayout
                         android:layout_marginTop="5dp"
@@ -42,6 +44,7 @@
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
+                            android:id="@+id/ivProfile"
                             android:src="@drawable/childern"
                             android:layout_weight="2"/>
                         <LinearLayout

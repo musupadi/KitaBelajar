@@ -1,5 +1,6 @@
 package com.destinyapp.kitabelajar.Acitvity.ui;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,17 +10,24 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.destinyapp.kitabelajar.Mehod.Destiny;
 import com.destinyapp.kitabelajar.R;
+import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 
 
 public class AbsenFragment extends Fragment {
     Switch SwitchMasuk;
     TextView CheckMasuk;
     Destiny destiny;
+    TextView namaSiswa;
+    ImageView ProfileBig,Profile;
+    DB_Helper dbHelper;
+    String Username,Password,Nama,Token,Level,Photo;
     public AbsenFragment() {
         // Required empty public constructor
     }
@@ -44,7 +52,9 @@ public class AbsenFragment extends Fragment {
         destiny = new Destiny();
         SwitchMasuk = view.findViewById(R.id.switchMasuk);
         CheckMasuk = view.findViewById(R.id.tvCheckMasuk);
-
+        namaSiswa = view.findViewById(R.id.tvNamaSiswa);
+        Profile = view.findViewById(R.id.ivProfile);
+        ProfileBig = view.findViewById(R.id.ivProfileBig);
         if (SwitchMasuk.isChecked()){
             CheckMasuk.setText("Masuk");
         }else{
@@ -60,5 +70,24 @@ public class AbsenFragment extends Fragment {
                 }
             }
         });
+        dbHelper = new DB_Helper(getActivity());
+        Cursor cursor = dbHelper.checkUser();
+        if (cursor.getCount()>0){
+            while (cursor.moveToNext()){
+                Username = cursor.getString(0);
+                Password = cursor.getString(1);
+                Nama = cursor.getString(2);
+                Token = cursor.getString(3);
+                Level = cursor.getString(4);
+                Photo = cursor.getString(5);
+            }
+        }
+        namaSiswa.setText(Nama);
+        Glide.with(this)
+                .load(destiny.BASE_URL()+Photo)
+                .into(Profile);
+        Glide.with(this)
+                .load(destiny.BASE_URL()+Photo)
+                .into(ProfileBig);
     }
 }

@@ -20,7 +20,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo_temporary_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:largeHeap="true"
+        android:usesCleartextTraffic="true"
+        android:persistent="true"
+        android:hardwareAccelerated="true">
         <activity
             android:name=".Acitvity.menu.ROBDanaActivity"
             android:label="ROB Dana BOP"
@@ -85,7 +89,7 @@
             android:theme="@style/AppThemeNoAction" />
         <activity
             android:name=".Acitvity.LoginActivity"
-            android:theme="@style/AppThemeNoAction" />
+            android:theme="@style/AppThemeCheck" />
         <activity
             android:name=".Acitvity.MainActivity"
             android:theme="@style/AppThemeNoAction">

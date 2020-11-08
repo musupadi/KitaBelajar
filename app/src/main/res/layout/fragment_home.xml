@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -21,446 +20,505 @@
                     android:layout_height="320dp"
                     android:src="@drawable/header_home"
                     android:scaleType="fitXY"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
                         <TextView
-                            android:layout_marginLeft="10dp"
+                            android:id="@+id/tvNama"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/roboto"
                             android:text="Halo, Muhammad Supriyadi"
                             android:textColor="@color/colorBlack"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/roboto"
-                            android:id="@+id/tvNama"
-                            android:layout_weight="1"/>
+                            android:textStyle="bold" />
+
                         <ImageView
+                            android:id="@+id/ivNotification"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
-                            android:layout_weight="5"
-                            android:src="@drawable/notif"
                             android:layout_margin="10dp"
-                            android:id="@+id/ivNotification"/>
+                            android:layout_weight="5"
+                            android:src="@drawable/notif" />
                     </LinearLayout>
+
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerHeader"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:id="@+id/recyclerHeader">
+                        android:layout_height="200dp">
 
                     </androidx.recyclerview.widget.RecyclerView>
+
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
                         android:id="@+id/linearInfoDinasPendidikan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginBottom="5dp"
+                        android:layout_gravity="center"
                         android:layout_marginTop="5dp"
-                        android:layout_marginRight="5dp">
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_margin="5dp"
                             app:cardCornerRadius="10dp"
                             app:cardElevation="5dp">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:layout_margin="5dp">
+                                android:layout_margin="5dp"
+                                android:orientation="horizontal">
+
                                 <ImageView
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
                                     android:layout_marginTop="5dp"
                                     android:layout_marginBottom="5dp"
                                     android:layout_weight="1"
-                                    android:src="@drawable/logo_bogor"
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp">
-                                </ImageView>
+                                    android:src="@drawable/logo_bogor"></ImageView>
+
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_weight="3"
-                                    android:text="INFO\nDINAS PENDIDIKAN"
                                     android:fontFamily="@font/roboto"
+                                    android:gravity="center"
+                                    android:text="INFO\nDINAS PENDIDIKAN"
                                     android:textColor="@color/colorBlack"
-                                    android:textStyle="bold"
                                     android:textSize="20sp"
-                                    android:gravity="center"/>
+                                    android:textStyle="bold" />
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
+
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginBottom="5dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp">
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:layout_margin="5dp"
                             app:cardCornerRadius="10dp"
                             app:cardElevation="5dp">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="horizontal">
+
                                 <ImageView
-                                    android:layout_marginTop="5dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:layout_weight="2"
-                                    android:src="@drawable/tk"
                                     android:layout_width="match_parent"
                                     android:layout_height="80dp"
-                                    android:layout_gravity="center">
-                                </ImageView>
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_weight="2"
+                                    android:src="@drawable/tk"></ImageView>
+
                                 <LinearLayout
-                                    android:gravity="center"
-                                    android:layout_weight="1"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:orientation="vertical"
-                                    android:layout_margin="5dp">
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
                                     <TextView
+                                        android:id="@+id/tvNamaSiswa"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginBottom="5dp"
                                         android:fontFamily="@font/roboto"
                                         android:text="Muhammad Supriyadi"
-                                        android:textStyle="bold"
                                         android:textSize="12sp"
-                                        android:id="@+id/tvNamaSiswa"
-                                        android:layout_marginBottom="5dp"/>
+                                        android:textStyle="bold" />
+
                                     <TextView
+                                        android:id="@+id/tvTKBesar"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/roboto"
                                         android:text="TK Besar"
-                                        android:textStyle="bold"
                                         android:textColor="@color/colorBlack"
-                                        android:id="@+id/tvTKBesar"/>
+                                        android:textStyle="bold" />
+
                                     <TextView
+                                        android:id="@+id/tvNamaSekolah"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/roboto"
                                         android:text="TK Bina Siswi"
                                         android:textSize="@dimen/text_xtra_large"
-                                        android:textStyle="bold"
-                                        android:id="@+id/tvNamaSekolah"/>
+                                        android:textStyle="bold" />
                                 </LinearLayout>
+
                                 <LinearLayout
-                                    android:layout_gravity="center"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:layout_gravity="center"
                                     android:layout_weight="2"
-                                    android:orientation="vertical"
-                                    android:gravity="center">
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
                                     <Switch
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
+                                        android:id="@+id/switchMasuk"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
                                         android:checked="true"
-                                        android:id="@+id/switchMasuk"
-                                        android:theme="@style/AppThemeCheck"/>
+                                        android:gravity="center"
+                                        android:theme="@style/AppThemeCheck" />
+
                                     <TextView
+                                        android:id="@+id/tvCheckMasuk"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Masuk"
-                                        android:textColor="@color/colorBlack"
                                         android:gravity="center"
-                                        android:id="@+id/tvCheckMasuk"/>
+                                        android:text="Masuk"
+                                        android:textColor="@color/colorBlack" />
+
                                     <LinearLayout
-                                        android:layout_marginTop="5dp"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:orientation="horizontal"
-                                        android:gravity="center">
+                                        android:layout_marginTop="5dp"
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+
                                         <ImageView
                                             android:layout_width="20dp"
                                             android:layout_height="20dp"
-                                            android:src="@drawable/coin"/>
+                                            android:src="@drawable/coin" />
+
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="100"/>
+                                            android:text="100" />
                                     </LinearLayout>
                                 </LinearLayout>
 
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
+
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginBottom="5dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp">
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_margin="5dp"
                             app:cardCornerRadius="10dp"
                             app:cardElevation="5dp">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical">
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="100dp"
                                     android:orientation="horizontal">
+
                                     <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:orientation="vertical"
                                         android:id="@+id/linearProfilSekolah"
-                                        android:layout_margin="5dp">
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="5dp"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
                                         <ImageView
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
-                                            android:src="@drawable/profil_sekolah"/>
+                                            android:src="@drawable/profil_sekolah" />
+
                                         <TextView
-                                            android:fontFamily="@font/roboto"
-                                            android:textStyle="bold"
-                                            android:textColor="@color/colorBlack"
-                                            android:gravity="center|top"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="2"
+                                            android:fontFamily="@font/roboto"
+                                            android:gravity="center|top"
+                                            android:text="Profil\nSekolah"
+                                            android:textColor="@color/colorBlack"
                                             android:textSize="10sp"
-                                            android:text="Profil\nSekolah"/>
+                                            android:textStyle="bold" />
                                     </LinearLayout>
+
                                     <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:orientation="vertical"
                                         android:id="@+id/linearAgendaSekolah"
-                                        android:layout_margin="5dp">
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="5dp"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
                                         <ImageView
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
-                                            android:src="@drawable/agenda_sekolah"/>
+                                            android:src="@drawable/agenda_sekolah" />
+
                                         <TextView
-                                            android:fontFamily="@font/roboto"
-                                            android:textStyle="bold"
-                                            android:textColor="@color/colorBlack"
-                                            android:gravity="center|top"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="2"
+                                            android:fontFamily="@font/roboto"
+                                            android:gravity="center|top"
+                                            android:text="Agenda\nSekolah"
+                                            android:textColor="@color/colorBlack"
                                             android:textSize="10sp"
-                                            android:text="Agenda\nSekolah"/>
+                                            android:textStyle="bold" />
                                     </LinearLayout>
+
                                     <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:orientation="vertical"
                                         android:id="@+id/linearPrestasi"
-                                        android:layout_margin="5dp">
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="5dp"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
                                         <ImageView
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
-                                            android:src="@drawable/prestasi"/>
+                                            android:src="@drawable/prestasi" />
+
                                         <TextView
-                                            android:fontFamily="@font/roboto"
-                                            android:textStyle="bold"
-                                            android:textColor="@color/colorBlack"
-                                            android:gravity="center|top"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="2"
+                                            android:fontFamily="@font/roboto"
+                                            android:gravity="center|top"
+                                            android:text="Prestasi"
+                                            android:textColor="@color/colorBlack"
                                             android:textSize="10sp"
-                                            android:text="Prestasi"/>
+                                            android:textStyle="bold" />
                                     </LinearLayout>
+
                                     <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:orientation="vertical"
                                         android:id="@+id/linearPPDB"
-                                        android:layout_margin="5dp">
-                                        <ImageView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:layout_weight="1"
-                                            android:src="@drawable/ppdb"/>
-                                        <TextView
-                                            android:fontFamily="@font/roboto"
-                                            android:textStyle="bold"
-                                            android:textColor="@color/colorBlack"
-                                            android:gravity="center|top"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:textSize="10sp"
-                                            android:layout_weight="2"
-                                            android:text="PPDB"/>
-                                    </LinearLayout>
-                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:layout_margin="5dp"
                                         android:layout_weight="1"
-                                        android:orientation="vertical"
-                                        android:id="@+id/linearStrukturOrganisasi"
-                                        android:layout_margin="5dp">
+                                        android:orientation="vertical">
+
                                         <ImageView
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
-                                            android:src="@drawable/struktur_organisasi"/>
+                                            android:src="@drawable/ppdb" />
+
                                         <TextView
-                                            android:fontFamily="@font/roboto"
-                                            android:textStyle="bold"
-                                            android:textColor="@color/colorBlack"
-                                            android:gravity="center"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
-                                            android:textSize="10sp"
                                             android:layout_weight="2"
-                                            android:text="Struktur\nSekolah"/>
+                                            android:fontFamily="@font/roboto"
+                                            android:gravity="center|top"
+                                            android:text="PPDB"
+                                            android:textColor="@color/colorBlack"
+                                            android:textSize="10sp"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/linearStrukturOrganisasi"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="5dp"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:src="@drawable/struktur_organisasi" />
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="2"
+                                            android:fontFamily="@font/roboto"
+                                            android:gravity="center"
+                                            android:text="Struktur\nSekolah"
+                                            android:textColor="@color/colorBlack"
+                                            android:textSize="10sp"
+                                            android:textStyle="bold" />
                                     </LinearLayout>
                                 </LinearLayout>
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="100dp"
                                     android:orientation="horizontal">
+
                                     <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:orientation="vertical"
                                         android:id="@+id/linearJadwalPelajaran"
-                                        android:layout_margin="5dp">
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="5dp"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
                                         <ImageView
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
-                                            android:src="@drawable/jadwal_pelajaran"/>
+                                            android:src="@drawable/jadwal_pelajaran" />
+
                                         <TextView
-                                            android:fontFamily="@font/roboto"
-                                            android:textStyle="bold"
-                                            android:textColor="@color/colorBlack"
-                                            android:gravity="center|top"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="2"
+                                            android:fontFamily="@font/roboto"
+                                            android:gravity="center|top"
+                                            android:text="Jadwal\nPelajaran"
+                                            android:textColor="@color/colorBlack"
                                             android:textSize="10sp"
-                                            android:text="Jadwal\nPelajaran"/>
+                                            android:textStyle="bold" />
                                     </LinearLayout>
+
                                     <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:orientation="vertical"
                                         android:id="@+id/linearEvadir"
-                                        android:layout_margin="5dp">
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="5dp"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
                                         <ImageView
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
-                                            android:src="@drawable/evadir"/>
+                                            android:src="@drawable/evadir" />
+
                                         <TextView
-                                            android:textSize="10sp"
-                                            android:fontFamily="@font/roboto"
-                                            android:textStyle="bold"
-                                            android:textColor="@color/colorBlack"
-                                            android:gravity="center|top"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="2"
-                                            android:text="Evadir"/>
+                                            android:fontFamily="@font/roboto"
+                                            android:gravity="center|top"
+                                            android:text="Evadir"
+                                            android:textColor="@color/colorBlack"
+                                            android:textSize="10sp"
+                                            android:textStyle="bold" />
                                     </LinearLayout>
+
                                     <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:orientation="vertical"
                                         android:id="@+id/linearMediaPembelajaran"
-                                        android:layout_margin="5dp">
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="5dp"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
                                         <ImageView
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
-                                            android:src="@drawable/media_pelajaran"/>
+                                            android:src="@drawable/media_pelajaran" />
+
                                         <TextView
-                                            android:fontFamily="@font/roboto"
-                                            android:textStyle="bold"
-                                            android:textColor="@color/colorBlack"
-                                            android:gravity="center|top"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="2"
+                                            android:fontFamily="@font/roboto"
+                                            android:gravity="center|top"
+                                            android:text="Media\nPembelajaran"
+                                            android:textColor="@color/colorBlack"
                                             android:textSize="10sp"
-                                            android:text="Media\nPembelajaran"/>
+                                            android:textStyle="bold" />
                                     </LinearLayout>
+
                                     <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:orientation="vertical"
                                         android:id="@+id/linearTugas"
-                                        android:layout_margin="5dp">
-                                        <ImageView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:layout_weight="1"
-                                            android:src="@drawable/tugas"/>
-                                        <TextView
-                                            android:fontFamily="@font/roboto"
-                                            android:textStyle="bold"
-                                            android:textColor="@color/colorBlack"
-                                            android:gravity="center|top"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:layout_weight="2"
-                                            android:textSize="10sp"
-                                            android:text="Tugas"/>
-                                    </LinearLayout>
-                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:layout_margin="5dp"
                                         android:layout_weight="1"
-                                        android:orientation="vertical"
-                                        android:id="@+id/linearLihatSemua"
-                                        android:layout_margin="5dp">
+                                        android:orientation="vertical">
+
                                         <ImageView
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
-                                            android:src="@drawable/lihat_semua_2"/>
+                                            android:src="@drawable/tugas" />
+
                                         <TextView
-                                            android:fontFamily="@font/roboto"
-                                            android:textStyle="bold"
-                                            android:textColor="@color/colorBlack"
-                                            android:gravity="center"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="2"
+                                            android:fontFamily="@font/roboto"
+                                            android:gravity="center|top"
+                                            android:text="Tugas"
+                                            android:textColor="@color/colorBlack"
                                             android:textSize="10sp"
-                                            android:text="Lihat\nSemua"/>
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/linearLihatSemua"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_margin="5dp"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:src="@drawable/lihat_semua_2" />
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="2"
+                                            android:fontFamily="@font/roboto"
+                                            android:gravity="center"
+                                            android:text="Lihat\nSemua"
+                                            android:textColor="@color/colorBlack"
+                                            android:textSize="10sp"
+                                            android:textStyle="bold" />
                                     </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>
