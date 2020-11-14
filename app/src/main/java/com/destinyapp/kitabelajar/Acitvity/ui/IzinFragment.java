@@ -30,7 +30,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.destinyapp.kitabelajar.BuildConfig;
-import com.destinyapp.kitabelajar.Mehod.Destiny;
+import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.R;
 
 import java.io.File;

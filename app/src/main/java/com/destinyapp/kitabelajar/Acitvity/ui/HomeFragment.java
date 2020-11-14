@@ -22,19 +22,18 @@ import android.widget.Toast;
 
 import com.destinyapp.kitabelajar.API.ApiRequest;
 import com.destinyapp.kitabelajar.API.RetroServer;
-import com.destinyapp.kitabelajar.Acitvity.menu.FormulirPPDBActivity;
-import com.destinyapp.kitabelajar.Mehod.Destiny;
+import com.destinyapp.kitabelajar.Acitvity.LoginActivity;
+import com.destinyapp.kitabelajar.Adapter.AdapterKabarBerita;
+import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
 import com.destinyapp.kitabelajar.R;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import Adapter.AdapterKegiatan;
+import com.destinyapp.kitabelajar.Adapter.AdapterKegiatan;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,7 +52,7 @@ public class HomeFragment extends Fragment {
     TextView nama,namaSiswa;
     DB_Helper dbHelper;
     String Username,Password,Nama,Token,Level,Photo;
-    RecyclerView recycler;
+    RecyclerView recycler,recyclerKabar;
     private List<DataModel> mItems = new ArrayList<>();
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mManager;
@@ -79,6 +78,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         destiny = new Destiny();
         recycler = view.findViewById(R.id.recyclerHeader);
+        recyclerKabar = view.findViewById(R.id.recyclerKabarBerita);
         nama = view.findViewById(R.id.tvNama);
         namaSiswa = view.findViewById(R.id.tvNamaSiswa);
         SwitchMasuk = view.findViewById(R.id.switchMasuk);
@@ -132,6 +132,7 @@ public class HomeFragment extends Fragment {
         ONCLICK();
         ONCLICKDIALOG();
         Header();
+        KabarBerita();
     }
     private void Header(){
         mManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
@@ -141,10 +142,60 @@ public class HomeFragment extends Fragment {
         KabarBerita.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                mItems=response.body().getData();
-                mAdapter = new AdapterKegiatan(getActivity(),mItems);
-                recycler.setAdapter(mAdapter);
-                mAdapter.notifyDataSetChanged();
+                try {
+                    if (response.body().getStatusCode().equals("000")){
+                        mItems=response.body().getData();
+                        mAdapter = new AdapterKegiatan(getActivity(),mItems);
+                        recycler.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
+                    }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
+                        destiny.AutoLogin(Username,Password,getActivity());
+                        Header();
+                    }else{
+                        Toast.makeText(getActivity(), "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(getActivity(), "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
+                    dbHelper.Logout();
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                Toast.makeText(getActivity(), "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void KabarBerita(){
+        mManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
+        recyclerKabar.setLayoutManager(mManager);
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> KabarBerita = api.KabarSekolah(destiny.AUTH(Token));
+        KabarBerita.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    if (response.body().getStatusCode().equals("000")){
+                        mItems=response.body().getData();
+                        mAdapter = new AdapterKabarBerita(getActivity(),mItems);
+                        recyclerKabar.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
+                    }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
+                        destiny.AutoLogin(Username,Password,getActivity());
+                        KabarBerita();
+                    }else{
+                        Toast.makeText(getActivity(), "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(getActivity(), "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
+                    dbHelper.Logout();
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
             }
 
             @Override

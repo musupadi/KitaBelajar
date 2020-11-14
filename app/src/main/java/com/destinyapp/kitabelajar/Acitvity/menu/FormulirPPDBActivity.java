@@ -21,13 +21,14 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.destinyapp.kitabelajar.BuildConfig;
-import com.destinyapp.kitabelajar.Mehod.Destiny;
+import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.R;
 
 import java.io.File;
@@ -101,6 +102,7 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
     Boolean Gambar2 = false;
     Boolean Gambar3 = false;
     Boolean Gambar4 = false;
+    RelativeLayout Back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -271,7 +273,20 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         .show();
             }
         });
+//        Back = findViewById(R.id.relativeBack);
+//        Back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                destiny.Back(FormulirPPDBActivity.this);
+//            }
+//        });
     }
+
+    @Override
+    public void onBackPressed() {
+        destiny.Back(FormulirPPDBActivity.this);
+    }
+
     private void LogicKelamin(){
         Laki.setOnClickListener(new View.OnClickListener() {
             @Override

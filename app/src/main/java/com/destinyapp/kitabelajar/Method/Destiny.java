@@ -1,9 +1,13 @@
-package com.destinyapp.kitabelajar.Mehod;
+package com.destinyapp.kitabelajar.Method;
 
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.destinyapp.kitabelajar.API.ApiRequest;
+import com.destinyapp.kitabelajar.API.RetroServer;
 import com.destinyapp.kitabelajar.Acitvity.HomeActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.AgendaSekolah.AgendaSekolahActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.BiayaAkademik;
@@ -19,6 +23,8 @@ import com.destinyapp.kitabelajar.Acitvity.menu.ProfileSekolahActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.ROBDanaActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.StrukturOrganisasiActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.TugasActivity;
+import com.destinyapp.kitabelajar.Model.ResponseModel;
+import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -26,7 +32,45 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class Destiny {
+    public String SmallDescription(String description){
+        String Des = description;
+        if (description.length() >= 100){
+            Des = description.substring(0,100)+"...";
+        }
+        return Des;
+    }
+    public void AutoLogin(final String username,final String password,final Context ctx){
+        final DB_Helper dbHelper = new DB_Helper(ctx);
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        final Call<ResponseModel> login =api.login(username,password);
+        login.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    if (response.body().getStatusCode().equals("000")){
+                        dbHelper.Logout();
+                        dbHelper.SaveUser(username,password,response.body().getData().get(0).getName(),response.body().getData().get(0).getAccessToken(),response.body().getData().get(0).getAs(),response.body().getData().get(0).getPhoto());
+                    }else{
+                        Toast.makeText(ctx, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(ctx, "Terjadi Kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+//                Toast.makeText(LoginActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ctx, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                Log.i("Login Logic : ",t.toString());
+            }
+        });
+    }
     public void ChangeActivity(Context ctx,String Class){
         if (Class.equals("Profile Sekolah")){
             Intent intent = new Intent(ctx, ProfileSekolahActivity.class);

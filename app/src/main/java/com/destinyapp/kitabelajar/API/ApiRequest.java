@@ -19,4 +19,10 @@ public interface ApiRequest {
     //GET
     @GET("kabarsekolah")
     Call<ResponseModel> KabarSekolah(@Header("Authorization") String authHeader);
+
+    @GET("strukturoganisasi")
+    Call<ResponseModel> StrukturSekolah(@Header("Authorization") String authHeader);
+
+    @GET("prestasi")
+    Call<ResponseModel> Prestasi(@Header("Authorization") String authHeader);
 }

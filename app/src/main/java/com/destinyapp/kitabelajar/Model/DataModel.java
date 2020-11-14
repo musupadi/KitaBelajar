@@ -24,6 +24,7 @@ public class DataModel {
     @Expose
     public String photo;
 
+    //Kabar Sekolah
     @SerializedName("id_kabar_sekolah")
     @Expose
     public String id_kabar_sekolah;
@@ -31,6 +32,10 @@ public class DataModel {
     @SerializedName("id_sekolah")
     @Expose
     public String id_sekolah;
+
+    @SerializedName("judul_kabar")
+    @Expose
+    public String judul_kabar;
 
     @SerializedName("cover_kabar")
     @Expose
@@ -48,6 +53,58 @@ public class DataModel {
     @Expose
     public String created_at_kabar;
 
+
+    //Struktur Organisasi
+    @SerializedName("id_struktur_org")
+    @Expose
+    public String id_struktur_org;
+
+    @SerializedName("nama_guru")
+    @Expose
+    public String nama_guru;
+
+    @SerializedName("jabatan")
+    @Expose
+    public String jabatan;
+
+    @SerializedName("file_foto_struktur")
+    @Expose
+    public String file_foto_struktur;
+
+    @SerializedName("sort_num")
+    @Expose
+    public String sort_num;
+
+    @SerializedName("created_at")
+    @Expose
+    public String created_at;
+
+    //Prestasi
+    @SerializedName("id_prestasi")
+    @Expose
+    public String id_prestasi;
+
+    @SerializedName("judul_prestasi")
+    @Expose
+    public String judul_prestasi;
+
+    @SerializedName("deskripsi_prestasi")
+    @Expose
+    public String deskripsi_prestasi;
+
+    @SerializedName("tgl_prestasi")
+    @Expose
+    public String tgl_prestasi;
+
+    @SerializedName("foto_prestasi")
+    @Expose
+    public String foto_prestasi;
+
+    @SerializedName("created_at_prestasi")
+    @Expose
+    public String created_at_prestasi;
+
+    //GETTER SETTER
     public String getAccessToken() {
         return accessToken;
     }
@@ -134,5 +191,109 @@ public class DataModel {
 
     public void setCreated_at_kabar(String created_at_kabar) {
         this.created_at_kabar = created_at_kabar;
+    }
+
+    public String getId_struktur_org() {
+        return id_struktur_org;
+    }
+
+    public void setId_struktur_org(String id_struktur_org) {
+        this.id_struktur_org = id_struktur_org;
+    }
+
+    public String getNama_guru() {
+        return nama_guru;
+    }
+
+    public void setNama_guru(String nama_guru) {
+        this.nama_guru = nama_guru;
+    }
+
+    public String getJabatan() {
+        return jabatan;
+    }
+
+    public void setJabatan(String jabatan) {
+        this.jabatan = jabatan;
+    }
+
+    public String getFile_foto_struktur() {
+        return file_foto_struktur;
+    }
+
+    public void setFile_foto_struktur(String file_foto_struktur) {
+        this.file_foto_struktur = file_foto_struktur;
+    }
+
+    public String getSort_num() {
+        return sort_num;
+    }
+
+    public void setSort_num(String sort_num) {
+        this.sort_num = sort_num;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    public String getId_prestasi() {
+        return id_prestasi;
+    }
+
+    public void setId_prestasi(String id_prestasi) {
+        this.id_prestasi = id_prestasi;
+    }
+
+    public String getJudul_prestasi() {
+        return judul_prestasi;
+    }
+
+    public void setJudul_prestasi(String judul_prestasi) {
+        this.judul_prestasi = judul_prestasi;
+    }
+
+    public String getDeskripsi_prestasi() {
+        return deskripsi_prestasi;
+    }
+
+    public void setDeskripsi_prestasi(String deskripsi_prestasi) {
+        this.deskripsi_prestasi = deskripsi_prestasi;
+    }
+
+    public String getTgl_prestasi() {
+        return tgl_prestasi;
+    }
+
+    public void setTgl_prestasi(String tgl_prestasi) {
+        this.tgl_prestasi = tgl_prestasi;
+    }
+
+    public String getFoto_prestasi() {
+        return foto_prestasi;
+    }
+
+    public void setFoto_prestasi(String foto_prestasi) {
+        this.foto_prestasi = foto_prestasi;
+    }
+
+    public String getCreated_at_prestasi() {
+        return created_at_prestasi;
+    }
+
+    public void setCreated_at_prestasi(String created_at_prestasi) {
+        this.created_at_prestasi = created_at_prestasi;
+    }
+
+    public String getJudul_kabar() {
+        return judul_kabar;
+    }
+
+    public void setJudul_kabar(String judul_kabar) {
+        this.judul_kabar = judul_kabar;
     }
 }

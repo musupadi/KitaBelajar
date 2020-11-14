@@ -1,27 +1,24 @@
-package Adapter;
+package com.destinyapp.kitabelajar.Adapter;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.destinyapp.kitabelajar.Mehod.Destiny;
+import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
 import com.destinyapp.kitabelajar.R;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 
 import java.util.List;
 
-public class AdapterKegiatan extends RecyclerView.Adapter<AdapterKegiatan.HolderData> {
+public class AdapterPrestasi extends RecyclerView.Adapter<AdapterPrestasi.HolderData> {
     private List<DataModel> mList;
     private Context ctx;
 
@@ -29,7 +26,7 @@ public class AdapterKegiatan extends RecyclerView.Adapter<AdapterKegiatan.Holder
     Boolean onClick=false;
     RecyclerView recyclerView;
     Destiny destiny;
-    public AdapterKegiatan (Context ctx, List<DataModel> mList){
+    public AdapterPrestasi(Context ctx, List<DataModel> mList){
         this.ctx = ctx;
         this.mList = mList;
     }
@@ -37,7 +34,7 @@ public class AdapterKegiatan extends RecyclerView.Adapter<AdapterKegiatan.Holder
     @NonNull
     @Override
     public HolderData onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View layout = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_kegiatan,viewGroup,false);
+        View layout = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_prestasi,viewGroup,false);
         HolderData holder = new HolderData(layout);
         return holder;
     }
@@ -46,8 +43,11 @@ public class AdapterKegiatan extends RecyclerView.Adapter<AdapterKegiatan.Holder
     public void onBindViewHolder(@NonNull final HolderData holderData, int posistion) {
         destiny = new Destiny();
         final DataModel dm = mList.get(posistion);
+        holderData.Judul.setText(dm.getJudul_prestasi());
+        holderData.Deskripsi.setText(destiny.SmallDescription(dm.getDeskripsi_prestasi()));
+        holderData.Tanggal.setText(dm.getTgl_prestasi());
         Glide.with(ctx)
-                .load(destiny.BASE_URL()+dm.getCover_kabar())
+                .load(destiny.BASE_URL()+dm.getFoto_prestasi())
                 .into(holderData.Image);
     }
 
@@ -58,13 +58,13 @@ public class AdapterKegiatan extends RecyclerView.Adapter<AdapterKegiatan.Holder
 
     class HolderData extends RecyclerView.ViewHolder{
         ImageView Image;
+        TextView Judul,Deskripsi,Tanggal;
         public HolderData(View v){
             super(v);
             Image = v.findViewById(R.id.ivGambar);
+            Judul = v.findViewById(R.id.tvJudul);
+            Deskripsi = v.findViewById(R.id.tvDeskripsi);
+            Tanggal = v.findViewById(R.id.tvTanggal);
         }
     }
 }
-
-
-
-

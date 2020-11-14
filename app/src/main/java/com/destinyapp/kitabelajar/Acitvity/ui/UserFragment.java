@@ -17,11 +17,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.destinyapp.kitabelajar.Acitvity.LoginActivity;
-import com.destinyapp.kitabelajar.Mehod.Destiny;
+import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.R;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
-
-import org.w3c.dom.Text;
 
 public class UserFragment extends Fragment {
     Button logout;
