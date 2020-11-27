@@ -1,30 +1,44 @@
 package com.destinyapp.kitabelajar.Acitvity.menu;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.destinyapp.kitabelajar.Method.Destiny;
+import com.destinyapp.kitabelajar.Method.YoutubeConfig;
 import com.destinyapp.kitabelajar.R;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
-public class DetailKabarSekolahActivity extends AppCompatActivity {
+
+public class DetailKabarSekolahActivity extends AppCompatActivity{
     Destiny destiny;
     RelativeLayout Back;
     DB_Helper dbHelper;
     String Username,Password,Nama,Token,Level,Photo;
 
     //DETAIL KABAR
-    String JUDUL,ISI,TANGGAL,GANBAR;
-    TextView judul,isi,tanggal;
+    String JUDUL,ISI,TANGGAL,GANBAR,YOUTUBE;
+    TextView tanggal;
     ImageView gambar;
+    YouTubePlayerView FajarKontol;
+    WebView Web;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +62,10 @@ public class DetailKabarSekolahActivity extends AppCompatActivity {
     }
     private void Declaration(){
 //        judul = findViewById(R.id.tvJudulKabar);
-        isi = findViewById(R.id.tvIsiKabar);
+        Web = findViewById(R.id.web);
         tanggal = findViewById(R.id.tvTanggal);
         gambar = findViewById(R.id.ivGambar);
+
     }
     private void GETDATA(){
         Intent intent = getIntent();
@@ -58,8 +73,26 @@ public class DetailKabarSekolahActivity extends AppCompatActivity {
         ISI = intent.getExtras().getString("ISI");
         TANGGAL = intent.getExtras().getString("TANGGAL");
         GANBAR = intent.getExtras().getString("GAMBAR");
+        YOUTUBE = intent.getExtras().getString("YOUTUBE");
         getSupportActionBar().setTitle(JUDUL);
-        isi.setText(ISI);
+        FajarKontol = findViewById(R.id.youtube);
+        getLifecycle().addObserver(FajarKontol);
+        if (YOUTUBE.isEmpty()){
+            gambar.setVisibility(View.VISIBLE);
+            FajarKontol.setVisibility(View.GONE);
+        }else{
+            FajarKontol.setVisibility(View.VISIBLE);
+            gambar.setVisibility(View.GONE);
+            FajarKontol.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                @Override
+                public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                    String videoId = YOUTUBE;
+                    youTubePlayer.loadVideo(videoId, 0);
+                }
+            });
+        }
+        Web.loadData(ISI,"text/html","UTF-8");
+//        isi.setText(ISI);
         tanggal.setText(TANGGAL);
         Glide.with(this)
                 .load(GANBAR)

@@ -15,11 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.destinyapp.kitabelajar.API.ApiRequest;
 import com.destinyapp.kitabelajar.API.RetroServer;
 import com.destinyapp.kitabelajar.Acitvity.LoginActivity;
@@ -43,9 +45,10 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
 
     Switch SwitchMasuk;
-    TextView CheckMasuk,Poin;
+    ImageView Logo;
+    TextView CheckMasuk,Poin,SekolahBesar,Sekolah;
     LinearLayout ProfilSekolah,AgendaSekolah,Prestasi,PPDB,StrukturSekolah,JadwalPelajaran,Evadir,MediaPembelajaran,Tugas,LihatSemua;
-    LinearLayout DProfilSekolah,DAgendaSekolah,DPrestasi,DPPDB,DStrukturSekolah,DJadwalPelajaran,DEvadir,DMediaPembelajaran,DTugas,DGuru,DBiayaAkademik,DPembayaran,DROB,DERaport;
+    LinearLayout DProfilSekolah,DAgendaSekolah,DPrestasi,DPPDB,DStrukturSekolah,DJadwalPelajaran,DEvadir,DMediaPembelajaran,DTugas,DGuru,DBiayaAkademik,DPembayaran,DROB,DERaport,DGallery;
     //Dialog
     Dialog dialog;
     Button Kembali;
@@ -94,7 +97,10 @@ public class HomeFragment extends Fragment {
         MediaPembelajaran = view.findViewById(R.id.linearMediaPembelajaran);
         Tugas = view.findViewById(R.id.linearTugas);
         LihatSemua = view.findViewById(R.id.linearLihatSemua);
-        Poin = view.findViewById(R.id.tvPoin);
+        Poin = view.findViewById(R.id.tvPoint);
+        Logo = view.findViewById(R.id.ivLogoSekolah);
+        SekolahBesar = view.findViewById(R.id.tvSekolahBesar);
+        Sekolah = view.findViewById(R.id.tvNamaSekolah);
         dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.dialog_menu_all);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -135,7 +141,44 @@ public class HomeFragment extends Fragment {
         ONCLICKDIALOG();
         Header();
         KabarBerita();
-//        GetPoint();
+        GetPoint();
+        GetSekolah();
+    }
+    private void GetSekolah(){
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> Point = api.ProfileSekolah(destiny.AUTH(Token));
+        Point.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    if (response.body().getStatusCode().equals("000")){
+                        Sekolah.setText(response.body().getData().get(0).getNama_sekolah());
+                        SekolahBesar.setText(response.body().getData().get(0).getNama_sekolah());
+                        Glide.with(getActivity())
+                                .load(destiny.BASE_URL()+response.body().getData().get(0).getLogo_sekolah())
+                                .into(Logo);
+                    }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
+                        destiny.AutoLogin(Username,Password,getActivity());
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }else{
+                        Toast.makeText(getActivity(), "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(getActivity(), "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
+                    dbHelper.Logout();
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                Toast.makeText(getActivity(), "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     private void GetPoint(){
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
@@ -254,6 +297,7 @@ public class HomeFragment extends Fragment {
         DPembayaran = dialog.findViewById(R.id.linearPembayaran);
         DROB = dialog.findViewById(R.id.linearROB);
         DERaport = dialog.findViewById(R.id.linearEraport);
+        DGallery = dialog.findViewById(R.id.linearGallery);
     }
     private void ONCLICKDIALOG(){
         DProfilSekolah.setOnClickListener(new View.OnClickListener() {
@@ -344,6 +388,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 destiny.ChangeActivity(getActivity(),"E-Raport");
+            }
+        });
+        DGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                destiny.ChangeActivity(getActivity(),"Gallery");
             }
         });
     }

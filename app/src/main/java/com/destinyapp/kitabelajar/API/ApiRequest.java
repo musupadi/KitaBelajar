@@ -60,4 +60,13 @@ public interface ApiRequest {
 
     @GET("tugas")
     Call<ResponseModel> Tugas(@Header("Authorization") String authHeader);
+
+    @GET("gallery")
+    Call<ResponseModel> Gallery(@Header("Authorization") String authHeader);
+
+    @GET("gurusekolah")
+    Call<ResponseModel> GuruSekolah(@Header("Authorization") String authHeader);
+
+    @GET("profilsekolah")
+    Call<ResponseModel> ProfileSekolah(@Header("Authorization") String authHeader);
 }
