@@ -93,7 +93,7 @@ public class DetailKabarSekolahActivity extends AppCompatActivity{
         }
         Web.loadData(ISI,"text/html","UTF-8");
 //        isi.setText(ISI);
-        tanggal.setText(TANGGAL);
+        tanggal.setText(destiny.MagicDateChange(TANGGAL));
         Glide.with(this)
                 .load(GANBAR)
                 .into(gambar);

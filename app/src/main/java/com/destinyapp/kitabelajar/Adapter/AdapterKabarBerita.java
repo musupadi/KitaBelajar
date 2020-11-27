@@ -48,7 +48,7 @@ public class AdapterKabarBerita extends RecyclerView.Adapter<AdapterKabarBerita.
         final DataModel dm = mList.get(posistion);
         holderData.Judul.setText(dm.getJudul_kabar());
         holderData.Deskripsi.setText(destiny.SmallDescription(destiny.FilterTextToJava(dm.getIsi_kabar())));
-        holderData.Tanggal.setText(dm.getCreated_at_kabar());
+        holderData.Tanggal.setText(destiny.MagicDateChange(dm.getCreated_at_kabar()));
         Glide.with(ctx)
                 .load(destiny.BASE_URL()+dm.getCover_kabar())
                 .into(holderData.Image);
