@@ -104,6 +104,144 @@ public class DataModel {
     @Expose
     public String created_at_prestasi;
 
+    //Jadwal Mata Pelajaran
+    @SerializedName("id_mapel_kelas_jadwal")
+    @Expose
+    public String id_mapel_kelas_jadwal;
+
+    @SerializedName("id_mapel_kelas")
+    @Expose
+    public String id_mapel_kelas;
+
+    @SerializedName("id_mapel")
+    @Expose
+    public String id_mapel;
+
+    @SerializedName("id_guru")
+    @Expose
+    public String id_guru;
+
+    @SerializedName("jam_mulai")
+    @Expose
+    public String jam_mulai;
+
+    @SerializedName("jam_selesai")
+    @Expose
+    public String jam_selesai;
+
+    @SerializedName("id_kelas")
+    @Expose
+    public String id_kelas;
+
+    @SerializedName("tgl_kelas")
+    @Expose
+    public String tgl_kelas;
+
+    @SerializedName("nama_hari")
+    @Expose
+    public String nama_hari;
+
+    @SerializedName("tgl_tambah_mapel_kelas")
+    @Expose
+    public String tgl_tambah_mapel_kelas;
+
+    @SerializedName("nama_mapel")
+    @Expose
+    public String nama_mapel;
+
+    @SerializedName("kode_mapel")
+    @Expose
+    public String kode_mapel;
+
+    @SerializedName("tgl_tambah_mapel")
+    @Expose
+    public String tgl_tambah_mapel;
+
+    @SerializedName("created_at_mapel")
+    @Expose
+    public String created_at_mapel;
+
+    //E-Raport
+    @SerializedName("id_raport_siswa")
+    @Expose
+    public String id_raport_siswa;
+
+    @SerializedName("id_siswa")
+    @Expose
+    public String id_siswa;
+
+    @SerializedName("nama_raport")
+    @Expose
+    public String nama_raport;
+
+    @SerializedName("link_file_raport")
+    @Expose
+    public String link_file_raport;
+
+    @SerializedName("tgl_raport_upload")
+    @Expose
+    public String tgl_raport_upload;
+
+    //Poin
+    @SerializedName("poin")
+    @Expose
+    public String poin;
+
+    //Poin
+    @SerializedName("nama_kelas")
+    @Expose
+    public String nama_kelas;
+
+    @SerializedName("nama_siswa")
+    @Expose
+    public String nama_siswa;
+
+    //Agenda
+    @SerializedName("id_agenda_sekolah")
+    @Expose
+    public String id_agenda_sekolah;
+
+    @SerializedName("judul_agenda")
+    @Expose
+    public String judul_agenda;
+
+    @SerializedName("cover_agenda")
+    @Expose
+    public String cover_agenda;
+
+    @SerializedName("isi_agenda")
+    @Expose
+    public String isi_agenda;
+
+    @SerializedName("status_agenda")
+    @Expose
+    public String status_agenda;
+
+    @SerializedName("created_at_agenda")
+    @Expose
+    public String created_at_agenda;
+
+    //Tugas
+    @SerializedName("id_tugas")
+    @Expose
+    public String id_tugas;
+
+    @SerializedName("isi_tugas")
+    @Expose
+    public String isi_tugas;
+
+    @SerializedName("tgl_mulai")
+    @Expose
+    public String tgl_mulai;
+
+    @SerializedName("tgl_selesai")
+    @Expose
+    public String tgl_selesai;
+
+    @SerializedName("tugas_created_at")
+    @Expose
+    public String tugas_created_at;
+
     //GETTER SETTER
     public String getAccessToken() {
         return accessToken;
@@ -295,5 +433,269 @@ public class DataModel {
 
     public void setJudul_kabar(String judul_kabar) {
         this.judul_kabar = judul_kabar;
+    }
+
+    public String getId_mapel_kelas_jadwal() {
+        return id_mapel_kelas_jadwal;
+    }
+
+    public void setId_mapel_kelas_jadwal(String id_mapel_kelas_jadwal) {
+        this.id_mapel_kelas_jadwal = id_mapel_kelas_jadwal;
+    }
+
+    public String getId_mapel_kelas() {
+        return id_mapel_kelas;
+    }
+
+    public void setId_mapel_kelas(String id_mapel_kelas) {
+        this.id_mapel_kelas = id_mapel_kelas;
+    }
+
+    public String getId_mapel() {
+        return id_mapel;
+    }
+
+    public void setId_mapel(String id_mapel) {
+        this.id_mapel = id_mapel;
+    }
+
+    public String getId_guru() {
+        return id_guru;
+    }
+
+    public void setId_guru(String id_guru) {
+        this.id_guru = id_guru;
+    }
+
+    public String getJam_mulai() {
+        return jam_mulai;
+    }
+
+    public void setJam_mulai(String jam_mulai) {
+        this.jam_mulai = jam_mulai;
+    }
+
+    public String getJam_selesai() {
+        return jam_selesai;
+    }
+
+    public void setJam_selesai(String jam_selesai) {
+        this.jam_selesai = jam_selesai;
+    }
+
+    public String getId_kelas() {
+        return id_kelas;
+    }
+
+    public void setId_kelas(String id_kelas) {
+        this.id_kelas = id_kelas;
+    }
+
+    public String getTgl_kelas() {
+        return tgl_kelas;
+    }
+
+    public void setTgl_kelas(String tgl_kelas) {
+        this.tgl_kelas = tgl_kelas;
+    }
+
+    public String getNama_hari() {
+        return nama_hari;
+    }
+
+    public void setNama_hari(String nama_hari) {
+        this.nama_hari = nama_hari;
+    }
+
+    public String getTgl_tambah_mapel_kelas() {
+        return tgl_tambah_mapel_kelas;
+    }
+
+    public void setTgl_tambah_mapel_kelas(String tgl_tambah_mapel_kelas) {
+        this.tgl_tambah_mapel_kelas = tgl_tambah_mapel_kelas;
+    }
+
+    public String getNama_mapel() {
+        return nama_mapel;
+    }
+
+    public void setNama_mapel(String nama_mapel) {
+        this.nama_mapel = nama_mapel;
+    }
+
+    public String getKode_mapel() {
+        return kode_mapel;
+    }
+
+    public void setKode_mapel(String kode_mapel) {
+        this.kode_mapel = kode_mapel;
+    }
+
+    public String getTgl_tambah_mapel() {
+        return tgl_tambah_mapel;
+    }
+
+    public void setTgl_tambah_mapel(String tgl_tambah_mapel) {
+        this.tgl_tambah_mapel = tgl_tambah_mapel;
+    }
+
+    public String getCreated_at_mapel() {
+        return created_at_mapel;
+    }
+
+    public void setCreated_at_mapel(String created_at_mapel) {
+        this.created_at_mapel = created_at_mapel;
+    }
+
+    public String getId_raport_siswa() {
+        return id_raport_siswa;
+    }
+
+    public void setId_raport_siswa(String id_raport_siswa) {
+        this.id_raport_siswa = id_raport_siswa;
+    }
+
+    public String getId_siswa() {
+        return id_siswa;
+    }
+
+    public void setId_siswa(String id_siswa) {
+        this.id_siswa = id_siswa;
+    }
+
+    public String getNama_raport() {
+        return nama_raport;
+    }
+
+    public void setNama_raport(String nama_raport) {
+        this.nama_raport = nama_raport;
+    }
+
+    public String getLink_file_raport() {
+        return link_file_raport;
+    }
+
+    public void setLink_file_raport(String link_file_raport) {
+        this.link_file_raport = link_file_raport;
+    }
+
+    public String getTgl_raport_upload() {
+        return tgl_raport_upload;
+    }
+
+    public void setTgl_raport_upload(String tgl_raport_upload) {
+        this.tgl_raport_upload = tgl_raport_upload;
+    }
+
+    public String getPoin() {
+        return poin;
+    }
+
+    public void setPoin(String poin) {
+        this.poin = poin;
+    }
+
+    public String getNama_kelas() {
+        return nama_kelas;
+    }
+
+    public void setNama_kelas(String nama_kelas) {
+        this.nama_kelas = nama_kelas;
+    }
+
+    public String getNama_siswa() {
+        return nama_siswa;
+    }
+
+    public void setNama_siswa(String nama_siswa) {
+        this.nama_siswa = nama_siswa;
+    }
+
+    public String getId_agenda_sekolah() {
+        return id_agenda_sekolah;
+    }
+
+    public void setId_agenda_sekolah(String id_agenda_sekolah) {
+        this.id_agenda_sekolah = id_agenda_sekolah;
+    }
+
+    public String getJudul_agenda() {
+        return judul_agenda;
+    }
+
+    public void setJudul_agenda(String judul_agenda) {
+        this.judul_agenda = judul_agenda;
+    }
+
+    public String getCover_agenda() {
+        return cover_agenda;
+    }
+
+    public void setCover_agenda(String cover_agenda) {
+        this.cover_agenda = cover_agenda;
+    }
+
+    public String getIsi_agenda() {
+        return isi_agenda;
+    }
+
+    public void setIsi_agenda(String isi_agenda) {
+        this.isi_agenda = isi_agenda;
+    }
+
+    public String getStatus_agenda() {
+        return status_agenda;
+    }
+
+    public void setStatus_agenda(String status_agenda) {
+        this.status_agenda = status_agenda;
+    }
+
+    public String getCreated_at_agenda() {
+        return created_at_agenda;
+    }
+
+    public void setCreated_at_agenda(String created_at_agenda) {
+        this.created_at_agenda = created_at_agenda;
+    }
+
+    public String getId_tugas() {
+        return id_tugas;
+    }
+
+    public void setId_tugas(String id_tugas) {
+        this.id_tugas = id_tugas;
+    }
+
+    public String getIsi_tugas() {
+        return isi_tugas;
+    }
+
+    public void setIsi_tugas(String isi_tugas) {
+        this.isi_tugas = isi_tugas;
+    }
+
+    public String getTgl_mulai() {
+        return tgl_mulai;
+    }
+
+    public void setTgl_mulai(String tgl_mulai) {
+        this.tgl_mulai = tgl_mulai;
+    }
+
+    public String getTgl_selesai() {
+        return tgl_selesai;
+    }
+
+    public void setTgl_selesai(String tgl_selesai) {
+        this.tgl_selesai = tgl_selesai;
+    }
+
+    public String getTugas_created_at() {
+        return tugas_created_at;
+    }
+
+    public void setTugas_created_at(String tugas_created_at) {
+        this.tugas_created_at = tugas_created_at;
     }
 }

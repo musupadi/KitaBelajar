@@ -114,6 +114,9 @@ public class Destiny {
         }else if(Class.equals("ROB")){
             Intent intent = new Intent(ctx, ROBDanaActivity.class);
             ctx.startActivity(intent);
+        }else if(Class.equals("E-Raport")){
+            Intent intent = new Intent(ctx, ERaportActivity.class);
+            ctx.startActivity(intent);
         }
         
     }

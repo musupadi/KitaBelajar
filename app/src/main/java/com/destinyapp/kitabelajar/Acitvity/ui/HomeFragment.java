@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.destinyapp.kitabelajar.API.ApiRequest;
 import com.destinyapp.kitabelajar.API.RetroServer;
 import com.destinyapp.kitabelajar.Acitvity.LoginActivity;
+import com.destinyapp.kitabelajar.Acitvity.MainActivity;
 import com.destinyapp.kitabelajar.Adapter.AdapterKabarBerita;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
@@ -42,9 +43,9 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
 
     Switch SwitchMasuk;
-    TextView CheckMasuk;
+    TextView CheckMasuk,Poin;
     LinearLayout ProfilSekolah,AgendaSekolah,Prestasi,PPDB,StrukturSekolah,JadwalPelajaran,Evadir,MediaPembelajaran,Tugas,LihatSemua;
-    LinearLayout DProfilSekolah,DAgendaSekolah,DPrestasi,DPPDB,DStrukturSekolah,DJadwalPelajaran,DEvadir,DMediaPembelajaran,DTugas,DGuru,DBiayaAkademik,DPembayaran,DROB;
+    LinearLayout DProfilSekolah,DAgendaSekolah,DPrestasi,DPPDB,DStrukturSekolah,DJadwalPelajaran,DEvadir,DMediaPembelajaran,DTugas,DGuru,DBiayaAkademik,DPembayaran,DROB,DERaport;
     //Dialog
     Dialog dialog;
     Button Kembali;
@@ -93,6 +94,7 @@ public class HomeFragment extends Fragment {
         MediaPembelajaran = view.findViewById(R.id.linearMediaPembelajaran);
         Tugas = view.findViewById(R.id.linearTugas);
         LihatSemua = view.findViewById(R.id.linearLihatSemua);
+        Poin = view.findViewById(R.id.tvPoin);
         dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.dialog_menu_all);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -133,6 +135,39 @@ public class HomeFragment extends Fragment {
         ONCLICKDIALOG();
         Header();
         KabarBerita();
+//        GetPoint();
+    }
+    private void GetPoint(){
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> Point = api.PointSiswa(destiny.AUTH(Token));
+        Point.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    if (response.body().getStatusCode().equals("000")){
+                        Poin.setText(response.body().getData().get(0).getPoin());
+                    }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
+                        destiny.AutoLogin(Username,Password,getActivity());
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }else{
+                        Toast.makeText(getActivity(), "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(getActivity(), "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
+                    dbHelper.Logout();
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                Toast.makeText(getActivity(), "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     private void Header(){
         mManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
@@ -218,6 +253,7 @@ public class HomeFragment extends Fragment {
         DBiayaAkademik = dialog.findViewById(R.id.linearBiayaAkademik);
         DPembayaran = dialog.findViewById(R.id.linearPembayaran);
         DROB = dialog.findViewById(R.id.linearROB);
+        DERaport = dialog.findViewById(R.id.linearEraport);
     }
     private void ONCLICKDIALOG(){
         DProfilSekolah.setOnClickListener(new View.OnClickListener() {
@@ -302,6 +338,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 destiny.ChangeActivity(getActivity(),"ROB");
+            }
+        });
+        DERaport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                destiny.ChangeActivity(getActivity(),"E-Raport");
             }
         });
     }
