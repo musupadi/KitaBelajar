@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Gallery;
 import android.widget.Toast;
 
 import com.destinyapp.kitabelajar.API.ApiRequest;
@@ -14,6 +15,7 @@ import com.destinyapp.kitabelajar.Acitvity.menu.BiayaAkademik;
 import com.destinyapp.kitabelajar.Acitvity.menu.ERaportActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.EvadirActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.FormulirPPDBActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.GalleryActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.GuruActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.JadwalPelajaranActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.MediaPembelajaran.MediaPembelajaranActivity;
@@ -43,6 +45,39 @@ public class Destiny {
             Des = description.substring(0,100)+"...";
         }
         return Des;
+    }
+    public static String getThisDayDB(){
+        DateFormat dateFormat1 = new SimpleDateFormat("dd");
+        DateFormat dateFormat2 = new SimpleDateFormat("MM");
+        DateFormat dateFormat3 = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        String Day = dateFormat1.format(date);
+        String month = dateFormat2.format(date);
+        String Year = dateFormat3.format(date);
+        String dates = Year+"-"+month+"-"+Day;
+        return dates;
+    }
+    public String FilterTextToJava(String text){
+        String replaces = text.replace("</p>\\r\\n<ol>\\r\\n<li>","");
+        String replace1 = replaces.replace("<p>","");
+        String replace2 = replace1.replace("</p>","");
+        String replace3 = replace2.replace("<span style=\"color: #ff6600;\">","");
+        String replace4 = replace3.replace("</span>","");
+        String replace5 = replace4.replace("<strong>","");
+        String replace6 = replace5.replace("</strong>","");
+        String replace7 = replace6.replace("<ol>","");
+        String replace8 = replace7.replace("</ol>","");
+        String replace9 = replace8.replace("<li>","");
+        String replace10 = replace9.replace("</li>","");
+        String replace11 = replace10.replace("<ul>","");
+        String replace12 = replace11.replace("</ul>","");
+        String replace13 = replace12.replace("\\n\\n","\\n");
+        String replace14 = replace13.replace("<div>","");
+        String replace15 = replace14.replace("</div>","");
+        String replace16 = replace15.replace("<p>1.","");
+        String replace17 = replace16.replace("<p style=\\\"text-align: left;\\\">","");
+        String replace18 = replace17.replace("<a href=","");
+        return replace18;
     }
     public void AutoLogin(final String username,final String password,final Context ctx){
         final DB_Helper dbHelper = new DB_Helper(ctx);
@@ -116,6 +151,9 @@ public class Destiny {
             ctx.startActivity(intent);
         }else if(Class.equals("E-Raport")){
             Intent intent = new Intent(ctx, ERaportActivity.class);
+            ctx.startActivity(intent);
+        }else if(Class.equals("Gallery")){
+            Intent intent = new Intent(ctx, GalleryActivity.class);
             ctx.startActivity(intent);
         }
         
@@ -242,8 +280,8 @@ public class Destiny {
     public String MagicDateChange(String dates){
         String result = "";
         String year = dates.substring(0,4);
-        String month = dates.substring(5,6);
-        String day = dates.substring(7,9);
+        String month = dates.substring(5,7);
+        String day = dates.substring(8,10);
 
         String MONTH = "Januari";
         if (month.equals("01") || month.equals("1")){

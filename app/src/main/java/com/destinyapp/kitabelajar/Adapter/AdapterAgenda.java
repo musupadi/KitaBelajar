@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.destinyapp.kitabelajar.Acitvity.menu.DetailKabarSekolahActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.AgendaSekolah.DetailAgendaSekolahActivity;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
 import com.destinyapp.kitabelajar.R;
@@ -21,7 +22,7 @@ import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 
 import java.util.List;
 
-public class AdapterKabarBerita extends RecyclerView.Adapter<AdapterKabarBerita.HolderData> {
+public class AdapterAgenda extends RecyclerView.Adapter<AdapterAgenda.HolderData> {
     private List<DataModel> mList;
     private Context ctx;
 
@@ -29,7 +30,7 @@ public class AdapterKabarBerita extends RecyclerView.Adapter<AdapterKabarBerita.
     Boolean onClick=false;
     RecyclerView recyclerView;
     Destiny destiny;
-    public AdapterKabarBerita(Context ctx, List<DataModel> mList){
+    public AdapterAgenda(Context ctx, List<DataModel> mList){
         this.ctx = ctx;
         this.mList = mList;
     }
@@ -37,7 +38,7 @@ public class AdapterKabarBerita extends RecyclerView.Adapter<AdapterKabarBerita.
     @NonNull
     @Override
     public HolderData onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View layout = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_kabar_home,viewGroup,false);
+        View layout = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_agenda,viewGroup,false);
         HolderData holder = new HolderData(layout);
         return holder;
     }
@@ -46,21 +47,21 @@ public class AdapterKabarBerita extends RecyclerView.Adapter<AdapterKabarBerita.
     public void onBindViewHolder(@NonNull final HolderData holderData, int posistion) {
         destiny = new Destiny();
         final DataModel dm = mList.get(posistion);
-        holderData.Judul.setText(dm.getJudul_kabar());
-        holderData.Deskripsi.setText(destiny.SmallDescription(destiny.FilterTextToJava(dm.getIsi_kabar())));
-        holderData.Tanggal.setText(destiny.MagicDateChange(dm.getCreated_at_kabar()));
+        holderData.Judul.setText(dm.getJudul_agenda());
+        holderData.Deskripsi.setText(destiny.SmallDescription(destiny.FilterTextToJava(dm.getIsi_agenda())));
+        holderData.web.loadData(dm.getIsi_agenda(),"text/html","UTF-8");
+        holderData.Tanggal.setText(dm.getCreated_at_agenda());
         Glide.with(ctx)
-                .load(destiny.BASE_URL()+dm.getCover_kabar())
+                .load(destiny.BASE_URL()+dm.getCover_agenda())
                 .into(holderData.Image);
         holderData.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(ctx, DetailKabarSekolahActivity.class);
-                i.putExtra("JUDUL", dm.getJudul_kabar());
-                i.putExtra("ISI",dm.getIsi_kabar());
-                i.putExtra("TANGGAL",dm.getCreated_at_kabar());
-                i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getCover_kabar());
-                i.putExtra("YOUTUBE",dm.getLink_youtube_kabar());
+                Intent i = new Intent(ctx, DetailAgendaSekolahActivity.class);
+                i.putExtra("JUDUL", dm.getJudul_agenda());
+                i.putExtra("ISI",dm.getIsi_agenda());
+                i.putExtra("TANGGAL",dm.getCreated_at_agenda());
+                i.putExtra("GAMBAR", destiny.BASE_URL()+dm.getCover_agenda());
                 ctx.startActivity(i);
             }
         });
@@ -75,14 +76,17 @@ public class AdapterKabarBerita extends RecyclerView.Adapter<AdapterKabarBerita.
         ImageView Image;
         TextView Judul,Deskripsi,Tanggal;
         LinearLayout card;
+        WebView web;
         public HolderData(View v){
             super(v);
             Image = v.findViewById(R.id.ivGambar);
             Judul = v.findViewById(R.id.tvJudul);
+            web = v.findViewById(R.id.webDeskripsi);
             Deskripsi = v.findViewById(R.id.tvDeskripsi);
             Tanggal = v.findViewById(R.id.tvTanggal);
             card = v.findViewById(R.id.LayoutCardView);
         }
     }
 }
+
 

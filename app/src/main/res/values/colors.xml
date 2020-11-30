@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#25A6A1</color>
     <color name="colorPrimaryDark">#165A58</color>
+    <color name="colorSecondary">#FFE3B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorBlueSky">#01558e</color>
     <color name="colorWhite">#FFFFFF</color>
@@ -21,6 +22,6 @@
     <color name="colorGradientLeft">#25A6A1</color>
     <color name="colorGradientCenter">#8FB163</color>
     <color name="colorGradientRight">#FBBC23</color>
-    <color name="BGMedia">#FFBE2E</color>
-
+    <color name="colorGreens">#00FF33</color>
+    00FF33
 </resources>

@@ -1,11 +1,7 @@
 package com.destinyapp.kitabelajar.Model;
 
-import androidx.annotation.Nullable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 public class DataModel {
     @SerializedName("accessToken")
@@ -56,6 +52,10 @@ public class DataModel {
     @SerializedName("created_at_kabar")
     @Expose
     public String created_at_kabar;
+
+    @SerializedName("link_youtube_kabar")
+    @Expose
+    public String link_youtube_kabar;
 
 
     //Struktur Organisasi
@@ -246,18 +246,61 @@ public class DataModel {
     @Expose
     public String tugas_created_at;
 
-    //Media Pembelajaran
-    @SerializedName("id_media_tema")
+    //Gallery
+    @SerializedName("id_gallery")
     @Expose
-    public String id_media_tema;
+    public String id_gallery;
 
-    @SerializedName("nama_tema")
+    @SerializedName("link_file_foto")
     @Expose
-    public String nama_tema;
+    public String link_file_foto;
 
-    @SerializedName("subtema")
-    @Nullable
-    List<SubTema> subtema;
+    //Guru
+    @SerializedName("foto_guru")
+    @Expose
+    public String foto_guru;
+
+    @SerializedName("nip_guru")
+    @Expose
+    public String nip_guru;
+
+    //Profile
+    //Profile Sekolah
+    @SerializedName("nama_sekolah")
+    @Expose
+    public String nama_sekolah;
+
+    @SerializedName("alamat_sekolah")
+    @Expose
+    public String alamat_sekolah;
+
+    @SerializedName("akreditasi_sekolah")
+    @Expose
+    public String akreditasi_sekolah;
+
+    @SerializedName("npsn")
+    @Expose
+    public String npsn;
+
+    @SerializedName("no_izin_sekolah")
+    @Expose
+    public String no_izin_sekolah;
+
+    @SerializedName("kepala_sekolah")
+    @Expose
+    public String kepala_sekolah;
+
+    @SerializedName("nama_yayasan")
+    @Expose
+    public String nama_yayasan;
+
+    @SerializedName("ketua_yayasan")
+    @Expose
+    public String ketua_yayasan;
+
+    @SerializedName("logo_sekolah")
+    @Expose
+    public String logo_sekolah;
 
     //GETTER SETTER
     public String getAccessToken() {
@@ -716,28 +759,115 @@ public class DataModel {
         this.tugas_created_at = tugas_created_at;
     }
 
-    public String getId_media_tema() {
-        return id_media_tema;
+    public String getId_gallery() {
+        return id_gallery;
     }
 
-    public void setId_media_tema(String id_media_tema) {
-        this.id_media_tema = id_media_tema;
+    public void setId_gallery(String id_gallery) {
+        this.id_gallery = id_gallery;
     }
 
-    public String getNama_tema() {
-        return nama_tema;
+    public String getLink_file_foto() {
+        return link_file_foto;
     }
 
-    public void setNama_tema(String nama_tema) {
-        this.nama_tema = nama_tema;
+    public void setLink_file_foto(String link_file_foto) {
+        this.link_file_foto = link_file_foto;
     }
 
-    @Nullable
-    public List<SubTema> getSubtema() {
-        return subtema;
+    public String getFoto_guru() {
+        return foto_guru;
     }
 
-    public void setSubtema(@Nullable List<SubTema> subtema) {
-        this.subtema = subtema;
+    public void setFoto_guru(String foto_guru) {
+        this.foto_guru = foto_guru;
+    }
+
+    public String getNip_guru() {
+        return nip_guru;
+    }
+
+    public void setNip_guru(String nip_guru) {
+        this.nip_guru = nip_guru;
+    }
+
+    public String getNama_sekolah() {
+        return nama_sekolah;
+    }
+
+    public void setNama_sekolah(String nama_sekolah) {
+        this.nama_sekolah = nama_sekolah;
+    }
+
+    public String getAlamat_sekolah() {
+        return alamat_sekolah;
+    }
+
+    public void setAlamat_sekolah(String alamat_sekolah) {
+        this.alamat_sekolah = alamat_sekolah;
+    }
+
+    public String getAkreditasi_sekolah() {
+        return akreditasi_sekolah;
+    }
+
+    public void setAkreditasi_sekolah(String akreditasi_sekolah) {
+        this.akreditasi_sekolah = akreditasi_sekolah;
+    }
+
+    public String getNpsn() {
+        return npsn;
+    }
+
+    public void setNpsn(String npsn) {
+        this.npsn = npsn;
+    }
+
+    public String getNo_izin_sekolah() {
+        return no_izin_sekolah;
+    }
+
+    public void setNo_izin_sekolah(String no_izin_sekolah) {
+        this.no_izin_sekolah = no_izin_sekolah;
+    }
+
+    public String getKepala_sekolah() {
+        return kepala_sekolah;
+    }
+
+    public void setKepala_sekolah(String kepala_sekolah) {
+        this.kepala_sekolah = kepala_sekolah;
+    }
+
+    public String getNama_yayasan() {
+        return nama_yayasan;
+    }
+
+    public void setNama_yayasan(String nama_yayasan) {
+        this.nama_yayasan = nama_yayasan;
+    }
+
+    public String getKetua_yayasan() {
+        return ketua_yayasan;
+    }
+
+    public void setKetua_yayasan(String ketua_yayasan) {
+        this.ketua_yayasan = ketua_yayasan;
+    }
+
+    public String getLogo_sekolah() {
+        return logo_sekolah;
+    }
+
+    public void setLogo_sekolah(String logo_sekolah) {
+        this.logo_sekolah = logo_sekolah;
+    }
+
+    public String getLink_youtube_kabar() {
+        return link_youtube_kabar;
+    }
+
+    public void setLink_youtube_kabar(String link_youtube_kabar) {
+        this.link_youtube_kabar = link_youtube_kabar;
     }
 }
