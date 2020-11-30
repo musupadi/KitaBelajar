@@ -54,17 +54,42 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:layout_margin="30dp">
+                            <!--Nama Sekolah-->
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Nama Sekolah"
+                                android:textSize="@dimen/text_xtra_large"
+                                android:fontFamily="@font/roboto"
+                                android:layout_marginTop="20dp"
+                                android:textColor="@color/colorBlack"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:id="@+id/tvNamaSekolah"
+                                android:textSize="@dimen/text_xtra_large"
+                                android:fontFamily="@font/roboto"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="TK Exploler"
+                                android:layout_marginBottom="10dp"
+                                android:textColor="@color/colorBlack"
+                                android:textStyle="bold"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/colorBlack"/>
+                            <!--Alamat Sekolah-->
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Alamat Sekolah"
                                 android:textSize="@dimen/text_xtra_large"
                                 android:fontFamily="@font/roboto"
-                                android:layout_marginTop="40dp"
+                                android:layout_marginTop="20dp"
                                 android:textColor="@color/colorBlack"
                                 android:textStyle="bold"/>
                             <TextView
-                                android:id="@+id/tvAlamatSekolah"
+                                android:id="@+id/tvAlamat"
                                 android:textSize="@dimen/text_xtra_large"
                                 android:fontFamily="@font/roboto"
                                 android:layout_width="match_parent"
@@ -77,21 +102,23 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:background="@color/colorBlack"/>
+                            <!--Akreditasi Sekolah-->
                             <TextView
-                                android:textSize="@dimen/text_xtra_large"
-                                android:fontFamily="@font/roboto"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Nomor Telepon"
+                                android:text="Akreditasi Sekolah"
+                                android:textSize="@dimen/text_xtra_large"
+                                android:fontFamily="@font/roboto"
+                                android:layout_marginTop="20dp"
                                 android:textColor="@color/colorBlack"
                                 android:textStyle="bold"/>
                             <TextView
-                                android:id="@+id/tvTelponSekolah"
+                                android:id="@+id/tvAkreditasi"
                                 android:textSize="@dimen/text_xtra_large"
                                 android:fontFamily="@font/roboto"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/nomor_telpon"
+                                android:text="-"
                                 android:layout_marginBottom="10dp"
                                 android:textColor="@color/colorBlack"
                                 android:textStyle="bold"/>
@@ -99,272 +126,126 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:background="@color/colorBlack"/>
+                            <!--NPSN-->
                             <TextView
-                                android:textSize="@dimen/text_xtra_large"
-                                android:fontFamily="@font/roboto"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Nomor Rekening Sekolah"
+                                android:text="NPSN"
+                                android:textSize="@dimen/text_xtra_large"
+                                android:fontFamily="@font/roboto"
+                                android:layout_marginTop="20dp"
                                 android:textColor="@color/colorBlack"
                                 android:textStyle="bold"/>
-                            <TextView
-                                android:id="@+id/tvRekeningSekolah"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                android:fontFamily="@font/roboto"
-                                android:text="@string/rekening_sekolah"
-                                android:textColor="@color/colorBlack"
-                                android:textSize="@dimen/text_xtra_large"
-                                android:textStyle="bold" />
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="@color/colorBlack"/>
-                            <TextView
-                                android:textSize="@dimen/text_xtra_large"
-                                android:fontFamily="@font/roboto"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Nama Bank"
-                                android:textColor="@color/colorBlack"
-                                android:textStyle="bold"/>
-                            <TextView
-                                android:id="@+id/tvNamaBankSekolah"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                android:fontFamily="@font/roboto"
-                                android:text="@string/nama_bank"
-                                android:textColor="@color/colorBlack"
-                                android:textSize="@dimen/text_xtra_large"
-                                android:textStyle="bold" />
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="@color/colorBlack"/>
-                            <TextView
-                                android:textSize="@dimen/text_xtra_large"
-                                android:fontFamily="@font/roboto"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Nama Pemegang Rekening"
-                                android:textColor="@color/colorBlack"
-                                android:textStyle="bold"/>
-                            <TextView
-                                android:id="@+id/tvNamaPemegangRekeningSekolah"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                android:fontFamily="@font/roboto"
-                                android:text="@string/nama_pemegang_bank"
-                                android:textColor="@color/colorBlack"
-                                android:textSize="@dimen/text_xtra_large"
-                                android:textStyle="bold" />
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="@color/colorBlack"/>
-                            <TextView
-                                android:textSize="@dimen/text_xtra_large"
-                                android:fontFamily="@font/roboto"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Nama Yayasan"
-                                android:textColor="@color/colorBlack"
-                                android:textStyle="bold"/>
-                            <TextView
-                                android:id="@+id/tvNamaYayasan"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                android:fontFamily="@font/roboto"
-                                android:text="@string/nama_yayasan"
-                                android:textColor="@color/colorBlack"
-                                android:textSize="@dimen/text_xtra_large"
-                                android:textStyle="bold" />
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="@color/colorBlack"/>
-                            <TextView
-                                android:textSize="@dimen/text_xtra_large"
-                                android:fontFamily="@font/roboto"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Alamat Yayasan"
-                                android:textColor="@color/colorBlack"
-                                android:textStyle="bold"/>
-                            <TextView
-                                android:id="@+id/tvAlanmatYayasan"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                android:fontFamily="@font/roboto"
-                                android:text="@string/alamat_sekolah"
-                                android:textColor="@color/colorBlack"
-                                android:textSize="@dimen/text_xtra_large"
-                                android:textStyle="bold" />
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="@color/colorBlack"/>
                             <TextView
                                 android:id="@+id/tvNPSN"
                                 android:textSize="@dimen/text_xtra_large"
                                 android:fontFamily="@font/roboto"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="NSS/NPSN"
+                                android:text="-"
+                                android:layout_marginBottom="10dp"
                                 android:textColor="@color/colorBlack"
                                 android:textStyle="bold"/>
-                            <TextView
-                                android:id="@+id/tvNISNSekolah"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                android:fontFamily="@font/roboto"
-                                android:text="@string/nisnnpsn"
-                                android:textColor="@color/colorBlack"
-                                android:textSize="@dimen/text_xtra_large"
-                                android:textStyle="bold" />
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:background="@color/colorBlack"/>
+                            <!--NO Izin Sekolah-->
                             <TextView
-                                android:textSize="@dimen/text_xtra_large"
-                                android:fontFamily="@font/roboto"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Tahun Beroperasi"
+                                android:text="NO Izin Sekolah"
+                                android:textSize="@dimen/text_xtra_large"
+                                android:fontFamily="@font/roboto"
+                                android:layout_marginTop="20dp"
                                 android:textColor="@color/colorBlack"
                                 android:textStyle="bold"/>
                             <TextView
-                                android:id="@+id/tvTahunBeroperasiSekolah"
+                                android:id="@+id/tvNoIzinSekolah"
+                                android:textSize="@dimen/text_xtra_large"
+                                android:fontFamily="@font/roboto"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:text="-"
                                 android:layout_marginBottom="10dp"
-                                android:fontFamily="@font/roboto"
-                                android:text="@string/tahun_operasi"
                                 android:textColor="@color/colorBlack"
-                                android:textSize="@dimen/text_xtra_large"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"/>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:background="@color/colorBlack"/>
+                            <!--Kepala Sekolah-->
                             <TextView
-                                android:textSize="@dimen/text_xtra_large"
-                                android:fontFamily="@font/roboto"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Status Sekolah"
+                                android:text="Nama Kepala Sekolah"
+                                android:textSize="@dimen/text_xtra_large"
+                                android:fontFamily="@font/roboto"
+                                android:layout_marginTop="20dp"
                                 android:textColor="@color/colorBlack"
                                 android:textStyle="bold"/>
                             <TextView
-                                android:id="@+id/tvStatusSekolah"
+                                android:id="@+id/tvKepalaSekolah"
+                                android:textSize="@dimen/text_xtra_large"
+                                android:fontFamily="@font/roboto"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:text="Muhammad Ibrahim Yahya"
                                 android:layout_marginBottom="10dp"
-                                android:fontFamily="@font/roboto"
-                                android:text="@string/status_sekolah"
                                 android:textColor="@color/colorBlack"
-                                android:textSize="@dimen/text_xtra_large"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"/>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:background="@color/colorBlack"/>
+                            <!--Nama Yayasan-->
                             <TextView
-                                android:textSize="@dimen/text_xtra_large"
-                                android:fontFamily="@font/roboto"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="SK Kelambangan"
+                                android:text="Nama Yayasan"
+                                android:textSize="@dimen/text_xtra_large"
+                                android:fontFamily="@font/roboto"
+                                android:layout_marginTop="20dp"
                                 android:textColor="@color/colorBlack"
                                 android:textStyle="bold"/>
                             <TextView
-                                android:id="@+id/tvSkKelambanganSekolah"
+                                android:id="@+id/tvYayasan"
+                                android:textSize="@dimen/text_xtra_large"
+                                android:fontFamily="@font/roboto"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:text="-"
                                 android:layout_marginBottom="10dp"
-                                android:fontFamily="@font/roboto"
-                                android:text="@string/sk_kelambangan"
                                 android:textColor="@color/colorBlack"
-                                android:textSize="@dimen/text_xtra_large"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"/>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:background="@color/colorBlack"/>
+                            <!--Ketua Yayasan-->
                             <TextView
-                                android:textSize="@dimen/text_xtra_large"
-                                android:fontFamily="@font/roboto"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Tahun Didirikan"
+                                android:text="Ketua Yayasan"
+                                android:textSize="@dimen/text_xtra_large"
+                                android:fontFamily="@font/roboto"
+                                android:layout_marginTop="20dp"
                                 android:textColor="@color/colorBlack"
                                 android:textStyle="bold"/>
                             <TextView
-                                android:id="@+id/tvTahunDidirikanSekolah"
+                                android:id="@+id/tvKetuaYayasan"
+                                android:textSize="@dimen/text_xtra_large"
+                                android:fontFamily="@font/roboto"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:text="-"
                                 android:layout_marginBottom="10dp"
-                                android:fontFamily="@font/roboto"
-                                android:text="@string/tahun_didirikan"
                                 android:textColor="@color/colorBlack"
-                                android:textSize="@dimen/text_xtra_large"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"/>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:background="@color/colorBlack"/>
-                            <TextView
-                                android:textSize="@dimen/text_xtra_large"
-                                android:fontFamily="@font/roboto"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Status Tanah"
-                                android:textColor="@color/colorBlack"
-                                android:textStyle="bold"/>
-                            <TextView
-                                android:id="@+id/tvStatsTanahSekolah"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                android:fontFamily="@font/roboto"
-                                android:text="@string/status_tanah"
-                                android:textColor="@color/colorBlack"
-                                android:textSize="@dimen/text_xtra_large"
-                                android:textStyle="bold" />
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="@color/colorBlack"/>
-                            <TextView
-                                android:textSize="@dimen/text_xtra_large"
-                                android:fontFamily="@font/roboto"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Luas Tanah"
-                                android:textColor="@color/colorBlack"
-                                android:textStyle="bold"/>
-                            <TextView
-                                android:id="@+id/tvLuasTanahSekolah"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                android:fontFamily="@font/roboto"
-                                android:text="@string/luas_tanah"
-                                android:textColor="@color/colorBlack"
-                                android:textSize="@dimen/text_xtra_large"
-                                android:textStyle="bold" />
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="@color/colorBlack"/>
-
                         </LinearLayout>
 
 

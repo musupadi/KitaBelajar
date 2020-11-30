@@ -23,5 +23,5 @@
     <color name="colorGradientCenter">#8FB163</color>
     <color name="colorGradientRight">#FBBC23</color>
     <color name="colorGreens">#00FF33</color>
-    00FF33
+    <color name="BGMedia">#FFBE2E</color>
 </resources>

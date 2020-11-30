@@ -32,7 +32,7 @@ public class Media {
     @Expose
     public String status_media;
 
-    @SerializedName("created_at_mediaisi_media")
+    @SerializedName("created_at_media")
     @Expose
     public String created_at_media;
 

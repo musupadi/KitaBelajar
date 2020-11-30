@@ -57,6 +57,7 @@ public class HomeFragment extends Fragment {
     DB_Helper dbHelper;
     String Username,Password,Nama,Token,Level,Photo;
     RecyclerView recycler,recyclerKabar;
+    LinearLayout infoDinas;
     private List<DataModel> mItems = new ArrayList<>();
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mManager;
@@ -101,6 +102,7 @@ public class HomeFragment extends Fragment {
         Logo = view.findViewById(R.id.ivLogoSekolah);
         SekolahBesar = view.findViewById(R.id.tvSekolahBesar);
         Sekolah = view.findViewById(R.id.tvNamaSekolah);
+        infoDinas = view.findViewById(R.id.linearInfoDinasPendidikan);
         dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.dialog_menu_all);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -450,6 +452,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 destiny.ChangeActivity(getActivity(),"Tugas");
+            }
+        });
+        infoDinas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                destiny.ChangeActivity(getActivity(),"Dinas Pendidikan");
             }
         });
         LihatSemua.setOnClickListener(new View.OnClickListener() {

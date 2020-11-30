@@ -2,6 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.destinyapp.kitabelajar">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
@@ -14,13 +28,21 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Acitvity.menu.GalleryActivity"
-            android:label="Gallery"
+            android:name=".Acitvity.Games.GamesActivity"
+            android:label="Game Nomor"
             android:parentActivityName=".Acitvity.MainActivity"></activity>
         <activity
-            android:name=".Acitvity.menu.DinasPendidikanActivity"
+            android:name=".Acitvity.InfoDinasActivity"
+            android:label="Info Dinas Pendidikan"
+            android:parentActivityName=".Acitvity.MainActivity" />
+        <activity
+            android:name=".Acitvity.menu.GalleryActivity"
+            android:label="Gallery"
+            android:parentActivityName=".Acitvity.MainActivity" />
+        <activity
+            android:name=".Acitvity.DinasPendidikanActivity"
             android:label="Dinas Pendidikan"
-            android:parentActivityName=".Acitvity.MainActivity"/>
+            android:parentActivityName=".Acitvity.MainActivity" />
         <activity
             android:name=".Acitvity.menu.DetailKabarSekolahActivity"
             android:label="Detail Agenda Sekolah"
@@ -50,7 +72,11 @@
             android:label="Tugas"
             android:parentActivityName=".Acitvity.HomeActivity" />
         <activity
-            android:name=".Acitvity.menu.MediaPembelajaranActivity"
+            android:name=".Acitvity.menu.MediaPembelajaran.DetailMediaPembelajaranActivity"
+            android:label="Detail Media Pembelajaran"
+            android:parentActivityName=".Acitvity.menu.MediaPembelajaran.MediaPembelajaranActivity" />
+        <activity
+            android:name=".Acitvity.menu.MediaPembelajaran.MediaPembelajaranActivity"
             android:label="Media Pembelajaran"
             android:parentActivityName=".Acitvity.HomeActivity" />
         <activity
@@ -87,13 +113,13 @@
             android:parentActivityName=".Acitvity.HomeActivity" />
         <activity
             android:name=".Acitvity.HomeActivity"
-            android:theme="@style/AppThemeNoAction" />
+            android:theme="@style/AppThemeCheck" />
         <activity
             android:name=".Acitvity.LoginActivity"
             android:theme="@style/AppThemeCheck" />
         <activity
             android:name=".Acitvity.MainActivity"
-            android:theme="@style/AppThemeNoAction">
+            android:theme="@style/AppThemeCheck">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -111,19 +137,5 @@
                 android:resource="@xml/provider_paths" />
         </provider>
     </application>
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
 </manifest>

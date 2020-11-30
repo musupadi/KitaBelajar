@@ -1,17 +1,23 @@
 package com.destinyapp.kitabelajar.Acitvity.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.destinyapp.kitabelajar.Acitvity.Games.GamesActivity;
 import com.destinyapp.kitabelajar.R;
 
 
 public class GamesFragment extends Fragment {
+    LinearLayout games1;
     public GamesFragment() {
         // Required empty public constructor
     }
@@ -27,5 +33,18 @@ public class GamesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_games, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        games1 = view.findViewById(R.id.linearGames1);
+        games1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), GamesActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

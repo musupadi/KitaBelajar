@@ -33,9 +33,8 @@ import retrofit2.Response;
 
 public class ProfileSekolahActivity extends AppCompatActivity {
     Destiny destiny;
-    RelativeLayout Back;
     ImageView Logo;
-    TextView NamaSekolah,Alamat,NoTelp,NoRekening,NamaBank,PemegangRekening,Yayasan,AlamatYayasan,NPSN,TahunBeroprasi,StatuSekolah,SK,TahunDidirikan,StatusTanah,LuasTanah;
+    TextView NamaSekolah,NamaSekolah2,AlamatSekolah,AkreditasiSekolah,NPSN,NoIzinSekolah,KepalaSekolah,NamaYayasan,KetuaYayasan;
     DB_Helper dbHelper;
     String Username,Password,Nama,Token,Level,Photo;
     RecyclerView recycler,recyclerKabar;
@@ -50,20 +49,14 @@ public class ProfileSekolahActivity extends AppCompatActivity {
         destiny = new Destiny();
         Logo = findViewById(R.id.ivLogo);
         NamaSekolah = findViewById(R.id.tvNamaProfileSekolah);
-        Alamat = findViewById(R.id.tvAlamatSekolah);
-        NoTelp = findViewById(R.id.tvTelponSekolah);
-        NoRekening = findViewById(R.id.tvRekeningSekolah);
-        NamaBank = findViewById(R.id.tvNamaBankSekolah);
-        PemegangRekening = findViewById(R.id.tvNamaPemegangRekeningSekolah);
-        Yayasan = findViewById(R.id.tvNamaYayasan);
-        AlamatYayasan = findViewById(R.id.tvAlanmatYayasan);
+        NamaSekolah2 = findViewById(R.id.tvNamaSekolah);
+        AlamatSekolah = findViewById(R.id.tvAlamat);
+        AkreditasiSekolah = findViewById(R.id.tvAkreditasi);
         NPSN = findViewById(R.id.tvNPSN);
-        TahunBeroprasi = findViewById(R.id.tvTahunBeroperasiSekolah);
-        StatuSekolah = findViewById(R.id.tvStatusSekolah);
-        SK = findViewById(R.id.tvSkKelambanganSekolah);
-        TahunDidirikan = findViewById(R.id.tvTahunDidirikanSekolah);
-        StatusTanah = findViewById(R.id.tvStatsTanahSekolah);
-        LuasTanah = findViewById(R.id.tvLuasTanahSekolah);
+        NoIzinSekolah = findViewById(R.id.tvNoIzinSekolah);
+        KepalaSekolah = findViewById(R.id.tvKepalaSekolah);
+        NamaYayasan = findViewById(R.id.tvYayasan);
+        KetuaYayasan = findViewById(R.id.tvKetuaYayasan);
         dbHelper = new DB_Helper(this);
         Cursor cursor = dbHelper.checkUser();
         if (cursor.getCount()>0){
@@ -87,8 +80,14 @@ public class ProfileSekolahActivity extends AppCompatActivity {
                 try {
                     if (response.body().getStatusCode().equals("000")){
                         NamaSekolah.setText(response.body().getData().get(0).getNama_sekolah());
-                        Alamat.setText(response.body().getData().get(0).getNama_sekolah());
+                        AlamatSekolah.setText(response.body().getData().get(0).getNama_sekolah());
                         NPSN.setText(response.body().getData().get(0).getNpsn());
+                        NamaSekolah2.setText(response.body().getData().get(0).getNama_sekolah());
+                        AkreditasiSekolah.setText(response.body().getData().get(0).getAkreditasi_sekolah());
+                        NoIzinSekolah.setText(response.body().getData().get(0).getNo_izin_sekolah());
+                        KepalaSekolah.setText(response.body().getData().get(0).getKepala_sekolah());
+                        NamaYayasan.setText(response.body().getData().get(0).getNama_yayasan());
+                        KetuaYayasan.setText(response.body().getData().get(0).getKetua_yayasan());
                         Glide.with(ProfileSekolahActivity.this)
                                 .load(destiny.BASE_URL()+response.body().getData().get(0).getLogo_sekolah())
                                 .into(Logo);
@@ -115,9 +114,5 @@ public class ProfileSekolahActivity extends AppCompatActivity {
                 Toast.makeText(ProfileSekolahActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-    @Override
-    public void onBackPressed() {
-        destiny.Back(ProfileSekolahActivity.this);
     }
 }

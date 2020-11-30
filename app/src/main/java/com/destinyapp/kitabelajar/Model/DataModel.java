@@ -1,7 +1,11 @@
 package com.destinyapp.kitabelajar.Model;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class DataModel {
     @SerializedName("accessToken")
@@ -23,6 +27,11 @@ public class DataModel {
     @SerializedName("photo")
     @Expose
     public String photo;
+
+    @SerializedName("id_environment")
+    @Expose
+    public String id_environment;
+
 
     //Kabar Sekolah
     @SerializedName("id_kabar_sekolah")
@@ -301,6 +310,50 @@ public class DataModel {
     @SerializedName("logo_sekolah")
     @Expose
     public String logo_sekolah;
+
+    //Media Pembelajaran
+    @SerializedName("id_media_tema")
+    @Expose
+    public String id_media_tema;
+
+    @SerializedName("nama_tema")
+    @Expose
+    public String nama_tema;
+
+    @SerializedName("subtema")
+    @Nullable
+    List<SubTema> subtema;
+
+    //Dinas Pendidikan
+    @SerializedName("id_info_dinas")
+    @Expose
+    public String id_info_dinas;
+
+    @SerializedName("id_daerah")
+    @Expose
+    public String id_daerah;
+
+    @SerializedName("tipe_info")
+    @Expose
+    public String tipe_info;
+
+    @SerializedName("nama_info_dinas")
+    @Expose
+    public String nama_info_dinas;
+
+    @SerializedName("deskripsi_info_dinas")
+    @Expose
+    public String deskripsi_info_dinas;
+
+    @SerializedName("file_info_dinas")
+    @Expose
+    public String file_info_dinas;
+
+    @SerializedName("tgl_upload_info")
+    @Expose
+    public String tgl_upload_info;
+
+
 
     //GETTER SETTER
     public String getAccessToken() {
@@ -869,5 +922,99 @@ public class DataModel {
 
     public void setLink_youtube_kabar(String link_youtube_kabar) {
         this.link_youtube_kabar = link_youtube_kabar;
+    }
+
+    public String getId_media_tema() {
+        return id_media_tema;
+    }
+
+    public void setId_media_tema(String id_media_tema) {
+        this.id_media_tema = id_media_tema;
+    }
+
+    public String getNama_tema() {
+        return nama_tema;
+    }
+
+    public void setNama_tema(String nama_tema) {
+        this.nama_tema = nama_tema;
+    }
+
+    public void setSubtema(@Nullable List<SubTema> subtema) {
+        this.subtema = subtema;
+    }
+
+    @Nullable
+    public List<SubTema> getSubTema() {
+        return subtema;
+    }
+
+    @Nullable
+    public List<SubTema> getSubtema() {
+        return subtema;
+    }
+
+    public String getId_info_dinas() {
+        return id_info_dinas;
+    }
+
+    public void setId_info_dinas(String id_info_dinas) {
+        this.id_info_dinas = id_info_dinas;
+    }
+
+    public String getId_daerah() {
+        return id_daerah;
+    }
+
+    public void setId_daerah(String id_daerah) {
+        this.id_daerah = id_daerah;
+    }
+
+    public String getTipe_info() {
+        return tipe_info;
+    }
+
+    public void setTipe_info(String tipe_info) {
+        this.tipe_info = tipe_info;
+    }
+
+    public String getNama_info_dinas() {
+        return nama_info_dinas;
+    }
+
+    public void setNama_info_dinas(String nama_info_dinas) {
+        this.nama_info_dinas = nama_info_dinas;
+    }
+
+    public String getDeskripsi_info_dinas() {
+        return deskripsi_info_dinas;
+    }
+
+    public void setDeskripsi_info_dinas(String deskripsi_info_dinas) {
+        this.deskripsi_info_dinas = deskripsi_info_dinas;
+    }
+
+    public String getFile_info_dinas() {
+        return file_info_dinas;
+    }
+
+    public void setFile_info_dinas(String file_info_dinas) {
+        this.file_info_dinas = file_info_dinas;
+    }
+
+    public String getTgl_upload_info() {
+        return tgl_upload_info;
+    }
+
+    public void setTgl_upload_info(String tgl_upload_info) {
+        this.tgl_upload_info = tgl_upload_info;
+    }
+
+    public String getId_environment() {
+        return id_environment;
+    }
+
+    public void setId_environment(String id_environment) {
+        this.id_environment = id_environment;
     }
 }

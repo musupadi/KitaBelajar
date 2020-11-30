@@ -19,7 +19,7 @@ import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 
 import java.util.List;
 
-public class AdapterEReport extends RecyclerView.Adapter<AdapterEReport.HolderData>  {
+public class AdapterPDFInfoDinas extends RecyclerView.Adapter<AdapterPDFInfoDinas.HolderData>  {
     private List<DataModel> mList;
     private Context ctx;
 
@@ -27,7 +27,7 @@ public class AdapterEReport extends RecyclerView.Adapter<AdapterEReport.HolderDa
     Boolean onClick=false;
     RecyclerView recyclerView;
     Destiny destiny;
-    public AdapterEReport(Context ctx, List<DataModel> mList){
+    public AdapterPDFInfoDinas(Context ctx, List<DataModel> mList){
         this.ctx = ctx;
         this.mList = mList;
     }
@@ -44,11 +44,11 @@ public class AdapterEReport extends RecyclerView.Adapter<AdapterEReport.HolderDa
     public void onBindViewHolder(@NonNull final HolderData holderData, int posistion) {
         destiny = new Destiny();
         final DataModel dm = mList.get(posistion);
-        holderData.Nama.setText(dm.getNama_raport());
+        holderData.Nama.setText(dm.getNama_info_dinas());
         holderData.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(destiny.BASE_URL()+dm.getLink_file_raport()));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(destiny.BASE_URL()+dm.getFile_info_dinas()));
                 ctx.startActivity(browserIntent);
             }
         });

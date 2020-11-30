@@ -67,7 +67,6 @@ public class MediaPembelajaranActivity extends AppCompatActivity {
                 try {
                     SubTema(i);
                 }catch (Exception e){
-                    Toast.makeText(MediaPembelajaranActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
                     Log.i("Message = ",e.toString());
                 }
             }
@@ -85,7 +84,7 @@ public class MediaPembelajaranActivity extends AppCompatActivity {
         rv.setLayoutManager(mManager);
     }
     private void SubTema(int index){
-        SubTema = mItems.get(index).getSubtema();
+        SubTema = mItems.get(index).getSubTema();
         mAdapter = new AdapterTema(MediaPembelajaranActivity.this,SubTema);
         rv.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();

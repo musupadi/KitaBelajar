@@ -2,7 +2,10 @@ package com.destinyapp.kitabelajar.API;
 
 import com.destinyapp.kitabelajar.Model.ResponseModel;
 
+import java.util.ArrayList;
+
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -72,4 +75,28 @@ public interface ApiRequest {
 
     @GET("profilsekolah")
     Call<ResponseModel> ProfileSekolah(@Header("Authorization") String authHeader);
+
+    //FAJAR KONTOL
+    @FormUrlEncoded
+    @POST("info_dinas")
+    Call<ResponseModel> InfoDinas(@Field("id_daerah") String id_daerah,
+                              @Field("tipe_info") String tipe_info);
+
+//    @FormUrlEncoded
+//    @POST("izin")
+//    Call<ResponseModel> Izin(@Field("id_siswa") String id_siswa,
+//                                  @Field("nama_izin") String nama_izin,
+//                                  @Field("deskripsi_izin") String deskripsi_izin,
+//                                  @Field("tgl_mulai") String tgl_mulai,
+//                                  @Field("tgl_akhir") String tgl_akhir,
+//                                  @Field("file_izin") String file_izin);
+
+    @Multipart
+    @POST("izin")
+    Call<ResponseModel> Izin(@Part("id_siswa") RequestBody id_siswa,
+                                @Part("nama_izin") RequestBody nama_izin,
+                                @Part("deskripsi_izin") RequestBody deskripsi_izin,
+                                @Part("tgl_mulai") RequestBody tgl_mulai,
+                                @Part("tgl_akhir") RequestBody tgl_akhir,
+                                @Part MultipartBody.Part photo);
 }

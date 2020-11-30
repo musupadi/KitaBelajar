@@ -22,16 +22,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.destinyapp.kitabelajar.API.ApiRequest;
+import com.destinyapp.kitabelajar.API.FajarKontol;
 import com.destinyapp.kitabelajar.BuildConfig;
 import com.destinyapp.kitabelajar.Method.Destiny;
+import com.destinyapp.kitabelajar.Model.ResponseModel;
 import com.destinyapp.kitabelajar.R;
+import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,6 +46,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Logger;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class IzinFragment extends Fragment implements DatePickerDialog.OnDateSetListener{
@@ -54,7 +67,11 @@ public class IzinFragment extends Fragment implements DatePickerDialog.OnDateSet
     LinearLayout lGambar;
     ImageView ivGambar;
     TextView tvGambar;
-    Button upload;
+    Button upload,ajukan;
+    DB_Helper dbHelper;
+    String Username,Password,Nama,Token,Level,Photo,ID;
+    EditText deskripsi;
+    Spinner izin;
     //Dellaroy Logic
     private static final int REQUEST_TAKE_PHOTO = 0;
     private static final int REQUEST_PICK_PHOTO = 2;
@@ -101,6 +118,7 @@ public class IzinFragment extends Fragment implements DatePickerDialog.OnDateSet
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         destiny = new Destiny();
+        izin = view.findViewById(R.id.spIzin);
         lGambar = view.findViewById(R.id.linearGambar);
         ivGambar = view.findViewById(R.id.ivGambar);
         tvGambar = view.findViewById(R.id.tvGambar);
@@ -110,8 +128,26 @@ public class IzinFragment extends Fragment implements DatePickerDialog.OnDateSet
         linearSampai = view.findViewById(R.id.linearSampaiTanggal);
         dari = view.findViewById(R.id.tvDariTanggal);
         sampai = view.findViewById(R.id.tvSampaiTanggal);
+        ajukan = view.findViewById(R.id.btnAjukan);
+        deskripsi = view.findViewById(R.id.etDeskripsi);
+        dbHelper = new DB_Helper(getActivity());
+        Cursor cursor = dbHelper.checkUser();
+        if (cursor.getCount()>0){
+            while (cursor.moveToNext()){
+                Username = cursor.getString(0);
+                Password = cursor.getString(1);
+                Nama = cursor.getString(2);
+                Token = cursor.getString(3);
+                Level = cursor.getString(4);
+                Photo = cursor.getString(5);
+                ID = cursor.getString(6);
+            }
+        }
+
         dari.setText(destiny.thisDay());
         sampai.setText(destiny.thisDay());
+        Dari = destiny.Today();
+        Sampai = destiny.Today();
         linearDari.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,6 +160,12 @@ public class IzinFragment extends Fragment implements DatePickerDialog.OnDateSet
             public void onClick(View v) {
                 S=true;
                 showDatePicker();
+            }
+        });
+        ajukan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Ajukan();
             }
         });
         upload.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +199,39 @@ public class IzinFragment extends Fragment implements DatePickerDialog.OnDateSet
             }
         });
     }
+    private void Ajukan(){
+        final ProgressDialog pd = new ProgressDialog(getActivity());
+        pd.setMessage("Sedang Menyimpan data ke Server");
+        pd.setCancelable(false);
+        pd.show();
+        File file = new File(postBukti);
+        RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
+        MultipartBody.Part partPhoto = MultipartBody.Part.createFormData("file_izin", file.getName(), fileReqBody);
+        ApiRequest api = FajarKontol.getClient().create(ApiRequest.class);
+        Call<ResponseModel> Data=api.Izin(
+                RequestBody.create(MediaType.parse("text/plain"),ID),
+                RequestBody.create(MediaType.parse("text/plain"),izin.getSelectedItem().toString()),
+                RequestBody.create(MediaType.parse("text/plain"),deskripsi.getText().toString()),
+                RequestBody.create(MediaType.parse("text/plain"),Dari),
+                RequestBody.create(MediaType.parse("text/plain"),Sampai),
+                partPhoto);
+        Data.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    Toast.makeText(getActivity(), "Izin Telah Diajukan", Toast.LENGTH_SHORT).show();
+                }catch (Exception e){
+                    Toast.makeText(getActivity(), "Terjadi Kesalahan Silahkan Coba lagi", Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                pd.hide();
+                Toast.makeText(getActivity(), "Izin Telah Diajukan", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     private void showDatePicker(){
         DatePickerDialog dialog = new DatePickerDialog(getActivity(),
                 this,
@@ -169,12 +243,13 @@ public class IzinFragment extends Fragment implements DatePickerDialog.OnDateSet
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        String date = year+"-"+month+"-"+dayOfMonth;
+        int Month = month+1;
+        String date = year+"-"+Month+"-"+dayOfMonth;
         if(D){
-            dari.setText(destiny.DateChanges(String.valueOf(year),String.valueOf(month),String.valueOf(dayOfMonth)));
+            dari.setText(destiny.DateChanges(String.valueOf(year),String.valueOf(Month),String.valueOf(dayOfMonth)));
             Dari = date;
         }else{
-            sampai.setText(destiny.DateChanges(String.valueOf(year),String.valueOf(month),String.valueOf(dayOfMonth)));
+            sampai.setText(destiny.DateChanges(String.valueOf(year),String.valueOf(Month),String.valueOf(dayOfMonth)));
             Sampai = date;
         }
         D=false;

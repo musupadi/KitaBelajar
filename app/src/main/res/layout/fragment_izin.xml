@@ -137,7 +137,7 @@
                                     android:theme="@style/AppThemeDeskripsi"
                                     android:textColorHint="@color/colorTransparent"
                                     android:gravity="top|left"
-                                    android:id="@+id/etPassword"
+                                    android:id="@+id/etDeskripsi"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:ems="10"

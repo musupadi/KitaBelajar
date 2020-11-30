@@ -4,12 +4,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Gallery;
 import android.widget.Toast;
 
 import com.destinyapp.kitabelajar.API.ApiRequest;
 import com.destinyapp.kitabelajar.API.RetroServer;
 import com.destinyapp.kitabelajar.Acitvity.HomeActivity;
+import com.destinyapp.kitabelajar.Acitvity.InfoDinasActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.AgendaSekolah.AgendaSekolahActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.BiayaAkademik;
 import com.destinyapp.kitabelajar.Acitvity.menu.ERaportActivity;
@@ -45,6 +45,10 @@ public class Destiny {
             Des = description.substring(0,100)+"...";
         }
         return Des;
+    }
+    public String GetIDYoutube(String link){
+        String replace1 = link.replace("https://www.youtube.com/watch?v=","");
+        return replace1;
     }
     public static String getThisDayDB(){
         DateFormat dateFormat1 = new SimpleDateFormat("dd");
@@ -89,7 +93,7 @@ public class Destiny {
                 try {
                     if (response.body().getStatusCode().equals("000")){
                         dbHelper.Logout();
-                        dbHelper.SaveUser(username,password,response.body().getData().get(0).getName(),response.body().getData().get(0).getAccessToken(),response.body().getData().get(0).getAs(),response.body().getData().get(0).getPhoto());
+                        dbHelper.SaveUser(username,password,response.body().getData().get(0).getName(),response.body().getData().get(0).getAccessToken(),response.body().getData().get(0).getAs(),response.body().getData().get(0).getPhoto(),response.body().getData().get(0).getId_environment());
                     }else{
                         Toast.makeText(ctx, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -154,6 +158,9 @@ public class Destiny {
             ctx.startActivity(intent);
         }else if(Class.equals("Gallery")){
             Intent intent = new Intent(ctx, GalleryActivity.class);
+            ctx.startActivity(intent);
+        }else if(Class.equals("Dinas Pendidikan")){
+            Intent intent = new Intent(ctx, InfoDinasActivity.class);
             ctx.startActivity(intent);
         }
         
@@ -312,6 +319,15 @@ public class Destiny {
         result = day+"-"+MONTH+"-"+year;
         return result;
 
+    }
+
+    public static String Today(){
+        DateFormat dateFormat1 = new SimpleDateFormat("dd");
+        DateFormat dateFormat2 = new SimpleDateFormat("MM");
+        DateFormat dateFormat3 = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String dates = dateFormat3.format(date);
+        return dates;
     }
     public static String thisDay(){
         DateFormat dateFormat1 = new SimpleDateFormat("dd");

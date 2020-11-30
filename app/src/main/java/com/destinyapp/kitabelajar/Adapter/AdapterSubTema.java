@@ -1,15 +1,19 @@
 package com.destinyapp.kitabelajar.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.destinyapp.kitabelajar.Acitvity.menu.DetailKabarSekolahActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.MediaPembelajaran.DetailMediaPembelajaranActivity;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.Media;
 import com.destinyapp.kitabelajar.Model.SubTema;
@@ -52,7 +56,14 @@ public class AdapterSubTema extends RecyclerView.Adapter<AdapterSubTema.HolderDa
         holderData.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+//                Toast.makeText(ctx, dm.getCreated_at_media(), Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(ctx, DetailMediaPembelajaranActivity.class);
+                i.putExtra("JUDUL", dm.getJudul_media());
+                i.putExtra("ISI",dm.getIsi_media());
+                i.putExtra("TANGGAL",dm.getCreated_at_media());
+                i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getCover_media());
+                i.putExtra("YOUTUBE",dm.getLink_youtube_media());
+                ctx.startActivity(i);
             }
         });
 //        holderData.Jabatan.setText(dm.getJabatan());
@@ -74,7 +85,7 @@ public class AdapterSubTema extends RecyclerView.Adapter<AdapterSubTema.HolderDa
             super(v);
             Nama = v.findViewById(R.id.tvNama);
             rv= v.findViewById(R.id.recycler);
-            card = v.findViewById(R.id.LayoutCardView);
+            card = v.findViewById(R.id.card_view);
         }
     }
 }

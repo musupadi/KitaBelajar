@@ -1,4 +1,4 @@
-package com.destinyapp.kitabelajar.Acitvity.menu;
+package com.destinyapp.kitabelajar.Acitvity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,26 +8,19 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.destinyapp.kitabelajar.Method.Destiny;
-import com.destinyapp.kitabelajar.Method.YoutubeConfig;
 import com.destinyapp.kitabelajar.R;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
-
-public class DetailKabarSekolahActivity extends AppCompatActivity{
+public class DinasPendidikanActivity extends AppCompatActivity {
     Destiny destiny;
     RelativeLayout Back;
     DB_Helper dbHelper;
@@ -42,7 +35,7 @@ public class DetailKabarSekolahActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_kabar_sekolah);
+        setContentView(R.layout.activity_dinas_pendidikan);
         destiny = new Destiny();
 //        Back = findViewById(R.id.relativeBack);
         dbHelper = new DB_Helper(this);
@@ -86,7 +79,7 @@ public class DetailKabarSekolahActivity extends AppCompatActivity{
             FajarKontol.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
                 @Override
                 public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                    String videoId = YOUTUBE;
+                    String videoId = destiny.GetIDYoutube(YOUTUBE);
                     youTubePlayer.loadVideo(videoId, 0);
                 }
             });
@@ -97,9 +90,5 @@ public class DetailKabarSekolahActivity extends AppCompatActivity{
         Glide.with(this)
                 .load(GANBAR)
                 .into(gambar);
-    }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 }
