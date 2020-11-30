@@ -21,4 +21,6 @@
     <color name="colorGradientLeft">#25A6A1</color>
     <color name="colorGradientCenter">#8FB163</color>
     <color name="colorGradientRight">#FBBC23</color>
+    <color name="BGMedia">#FFBE2E</color>
+
 </resources>

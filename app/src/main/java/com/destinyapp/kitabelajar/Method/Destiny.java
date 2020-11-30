@@ -16,7 +16,7 @@ import com.destinyapp.kitabelajar.Acitvity.menu.EvadirActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.FormulirPPDBActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.GuruActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.JadwalPelajaranActivity;
-import com.destinyapp.kitabelajar.Acitvity.menu.MediaPembelajaranActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.MediaPembelajaran.MediaPembelajaranActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.PembayaranActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.PrestasiActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.ProfileSekolahActivity;

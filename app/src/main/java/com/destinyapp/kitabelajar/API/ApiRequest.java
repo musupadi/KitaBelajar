@@ -51,6 +51,9 @@ public interface ApiRequest {
     @GET("raport")
     Call<ResponseModel> Raport(@Header("Authorization") String authHeader);
 
+    @GET("mediapembelajaran")
+    Call<ResponseModel> MediaPembelajaran(@Header("Authorization") String authHeader);
+
 
     @GET("poinsiswa")
     Call<ResponseModel> PointSiswa(@Header("Authorization") String authHeader);

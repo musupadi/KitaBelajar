@@ -1,7 +1,11 @@
 package com.destinyapp.kitabelajar.Model;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class DataModel {
     @SerializedName("accessToken")
@@ -241,6 +245,19 @@ public class DataModel {
     @SerializedName("tugas_created_at")
     @Expose
     public String tugas_created_at;
+
+    //Media Pembelajaran
+    @SerializedName("id_media_tema")
+    @Expose
+    public String id_media_tema;
+
+    @SerializedName("nama_tema")
+    @Expose
+    public String nama_tema;
+
+    @SerializedName("subtema")
+    @Nullable
+    List<SubTema> subtema;
 
     //GETTER SETTER
     public String getAccessToken() {
@@ -697,5 +714,30 @@ public class DataModel {
 
     public void setTugas_created_at(String tugas_created_at) {
         this.tugas_created_at = tugas_created_at;
+    }
+
+    public String getId_media_tema() {
+        return id_media_tema;
+    }
+
+    public void setId_media_tema(String id_media_tema) {
+        this.id_media_tema = id_media_tema;
+    }
+
+    public String getNama_tema() {
+        return nama_tema;
+    }
+
+    public void setNama_tema(String nama_tema) {
+        this.nama_tema = nama_tema;
+    }
+
+    @Nullable
+    public List<SubTema> getSubtema() {
+        return subtema;
+    }
+
+    public void setSubtema(@Nullable List<SubTema> subtema) {
+        this.subtema = subtema;
     }
 }
