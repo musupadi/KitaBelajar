@@ -16,11 +16,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.destinyapp.kitabelajar.API.ApiRequest;
-import com.destinyapp.kitabelajar.API.FajarKontol;
 import com.destinyapp.kitabelajar.API.RetroServer;
 import com.destinyapp.kitabelajar.Acitvity.menu.MediaPembelajaran.MediaPembelajaranActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.ProfileSekolahActivity;
 import com.destinyapp.kitabelajar.Adapter.AdapterArtikelInfoDinas;
+import com.destinyapp.kitabelajar.Adapter.AdapterDisdik;
 import com.destinyapp.kitabelajar.Adapter.AdapterPDFInfoDinas;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
@@ -64,12 +64,11 @@ public class InfoDinasActivity extends AppCompatActivity {
                 Photo = cursor.getString(5);
             }
         }
-
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 try {
-                    GetSekolah(i);
+                    GetData();
                 }catch (Exception e){
                     Log.i("Message = ",e.toString());
                 }
@@ -87,17 +86,25 @@ public class InfoDinasActivity extends AppCompatActivity {
         mManager = new GridLayoutManager(InfoDinasActivity.this,1);
         rv.setLayoutManager(mManager);
     }
-    private void GetDataArtikel(String id){
-        ApiRequest api = FajarKontol.getClient().create(ApiRequest.class);
-        Call<ResponseModel> Data=api.InfoDinas(id,"artikel");
+    private void GetData(){
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> Data=api.InfoDisdik(destiny.AUTH(Token));
         Data.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
-                    mItems=response.body().getData();
-                    mAdapter = new AdapterArtikelInfoDinas(InfoDinasActivity.this,mItems);
-                    rv.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
+                    if (response.body().getStatusCode().equals("000")){
+                        mItems=response.body().getData();
+                        mAdapter = new AdapterDisdik(InfoDinasActivity.this,mItems,spinner.getSelectedItem().toString());
+                        rv.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
+                    }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
+                        destiny.AutoLogin(Username,Password,InfoDinasActivity.this);
+                        Toast.makeText(InfoDinasActivity.this, "Silahkan Coba Lagi", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(InfoDinasActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
                 }catch (Exception e){
                     Toast.makeText(InfoDinasActivity.this, "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
                     dbHelper.Logout();
@@ -113,6 +120,47 @@ public class InfoDinasActivity extends AppCompatActivity {
             }
         });
     }
+    private void GetDataArtikel(){
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> Data=api.InfoDisdik(destiny.AUTH(Token));
+        Data.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    if (response.body().getStatusCode().equals("000")){
+                        mItems=response.body().getData();
+                        mAdapter = new AdapterArtikelInfoDinas(InfoDinasActivity.this,mItems);
+                        rv.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
+                    }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
+                        destiny.AutoLogin(Username,Password,InfoDinasActivity.this);
+                        Toast.makeText(InfoDinasActivity.this, "Silahkan Coba Lagi", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(InfoDinasActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }catch (Exception e){
+                    Toast.makeText(InfoDinasActivity.this, "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
+                    dbHelper.Logout();
+                    Intent intent = new Intent(InfoDinasActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+
+            }
+        });
+    }
+    private void GetData(int IDS){
+        if (IDS == 0){
+            GetDataPDF();
+        }else{
+            GetDataArtikel();
+        }
+    }
     private void GetSekolah(final int IDS){
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
         Call<ResponseModel> Point = api.ProfileSekolah(destiny.AUTH(Token));
@@ -122,9 +170,9 @@ public class InfoDinasActivity extends AppCompatActivity {
                 try {
                     if (response.body().getStatusCode().equals("000")){
                         if (IDS == 0){
-                            GetDataPDF(response.body().getData().get(0).getId_daerah());
+//                            GetDataPDF(response.body().getData().get(0).getId_daerah());
                         }else{
-                            GetDataArtikel(response.body().getData().get(0).getId_daerah());
+//                            GetDataArtikel(response.body().getData().get(0).getId_daerah());
                         }
                     }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
                         destiny.AutoLogin(Username,Password,InfoDinasActivity.this);
@@ -150,9 +198,9 @@ public class InfoDinasActivity extends AppCompatActivity {
             }
         });
     }
-    private void GetDataPDF(String id){
-        ApiRequest api = FajarKontol.getClient().create(ApiRequest.class);
-        Call<ResponseModel> Data=api.InfoDinas(id,"pdf");
+    private void GetDataPDF(){
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> Data=api.InfoDisdik(destiny.AUTH(Token));
         Data.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {

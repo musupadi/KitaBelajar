@@ -93,7 +93,7 @@ public class Destiny {
                 try {
                     if (response.body().getStatusCode().equals("000")){
                         dbHelper.Logout();
-                        dbHelper.SaveUser(username,password,response.body().getData().get(0).getName(),response.body().getData().get(0).getAccessToken(),response.body().getData().get(0).getAs(),response.body().getData().get(0).getPhoto(),response.body().getData().get(0).getId_environment());
+                        dbHelper.SaveUser(username,password,response.body().getData().get(0).getName(),response.body().getData().get(0).getAccessToken(),response.body().getData().get(0).getAs(),response.body().getData().get(0).getPhoto());
                     }else{
                         Toast.makeText(ctx, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
                     }

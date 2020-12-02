@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,10 +24,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.destinyapp.kitabelajar.API.ApiRequest;
+import com.destinyapp.kitabelajar.API.FajarKontol;
 import com.destinyapp.kitabelajar.API.RetroServer;
 import com.destinyapp.kitabelajar.Acitvity.LoginActivity;
 import com.destinyapp.kitabelajar.Acitvity.MainActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.AgendaSekolah.AgendaSekolahActivity;
+import com.destinyapp.kitabelajar.Adapter.AdapterInfoPublik;
 import com.destinyapp.kitabelajar.Adapter.AdapterKabarBerita;
+import com.destinyapp.kitabelajar.Adapter.AdapterSponsor;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
@@ -56,7 +61,7 @@ public class HomeFragment extends Fragment {
     TextView nama,namaSiswa;
     DB_Helper dbHelper;
     String Username,Password,Nama,Token,Level,Photo;
-    RecyclerView recycler,recyclerKabar;
+    RecyclerView recycler,recyclerKabar,recylerSponsor;
     LinearLayout infoDinas;
     private List<DataModel> mItems = new ArrayList<>();
     private RecyclerView.Adapter mAdapter;
@@ -84,6 +89,7 @@ public class HomeFragment extends Fragment {
         destiny = new Destiny();
         recycler = view.findViewById(R.id.recyclerHeader);
         recyclerKabar = view.findViewById(R.id.recyclerKabarBerita);
+        recylerSponsor = view.findViewById(R.id.recyclerSponsor);
         nama = view.findViewById(R.id.tvNama);
         namaSiswa = view.findViewById(R.id.tvNamaSiswa);
         SwitchMasuk = view.findViewById(R.id.switchMasuk);
@@ -143,6 +149,7 @@ public class HomeFragment extends Fragment {
         ONCLICKDIALOG();
         Header();
         KabarBerita();
+        Sponsor();
         GetPoint();
         GetSekolah();
     }
@@ -214,19 +221,19 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-    private void Header(){
-        mManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
-        recycler.setLayoutManager(mManager);
+    private void Sponsor(){
+        mManager = new GridLayoutManager(getActivity(),3);
+        recylerSponsor.setLayoutManager(mManager);
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
-        Call<ResponseModel> KabarBerita = api.KabarSekolah(destiny.AUTH(Token));
-        KabarBerita.enqueue(new Callback<ResponseModel>() {
+        Call<ResponseModel> sponsor = api.Sponsor(destiny.AUTH(Token));
+        sponsor.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
                     if (response.body().getStatusCode().equals("000")){
                         mItems=response.body().getData();
-                        mAdapter = new AdapterKegiatan(getActivity(),mItems);
-                        recycler.setAdapter(mAdapter);
+                        mAdapter = new AdapterSponsor(getActivity(),mItems);
+                        recylerSponsor.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();
                     }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
                         destiny.AutoLogin(Username,Password,getActivity());
@@ -234,6 +241,34 @@ public class HomeFragment extends Fragment {
                     }else{
                         Toast.makeText(getActivity(), "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
                     }
+                }catch (Exception e){
+                    Toast.makeText(getActivity(), "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
+                    dbHelper.Logout();
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                Toast.makeText(getActivity(), "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void Header(){
+        mManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        recycler.setLayoutManager(mManager);
+        ApiRequest api = FajarKontol.getClient().create(ApiRequest.class);
+        Call<ResponseModel> KabarBerita = api.InfoPublik();
+        KabarBerita.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    mItems=response.body().getData();
+                    mAdapter = new AdapterInfoPublik(getActivity(),mItems);
+                    recycler.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
                 }catch (Exception e){
                     Toast.makeText(getActivity(), "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
                     dbHelper.Logout();

@@ -328,7 +328,7 @@ public class UserFragment extends Fragment {
                                 .load(destiny.BASE_URL()+response.body().getData().get(0).getPhoto())
                                 .into(profile);
                         dbHelper.Logout();
-                        dbHelper.SaveUser(Username,Password,response.body().getData().get(0).getName(),response.body().getData().get(0).getAccessToken(),response.body().getData().get(0).getAs(),response.body().getData().get(0).getPhoto(),response.body().getData().get(0).getId_environment());
+                        dbHelper.SaveUser(Username,Password,response.body().getData().get(0).getName(),response.body().getData().get(0).getAccessToken(),response.body().getData().get(0).getAs(),response.body().getData().get(0).getPhoto());
                     }else{
                         Toast.makeText(getActivity(), response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
                     }

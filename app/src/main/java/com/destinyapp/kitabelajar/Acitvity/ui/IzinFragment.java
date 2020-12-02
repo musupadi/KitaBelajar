@@ -33,6 +33,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.destinyapp.kitabelajar.API.ApiRequest;
 import com.destinyapp.kitabelajar.API.FajarKontol;
+import com.destinyapp.kitabelajar.API.RetroServer;
+import com.destinyapp.kitabelajar.Acitvity.MainActivity;
 import com.destinyapp.kitabelajar.BuildConfig;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
@@ -140,7 +142,6 @@ public class IzinFragment extends Fragment implements DatePickerDialog.OnDateSet
                 Token = cursor.getString(3);
                 Level = cursor.getString(4);
                 Photo = cursor.getString(5);
-                ID = cursor.getString(6);
             }
         }
 
@@ -165,7 +166,7 @@ public class IzinFragment extends Fragment implements DatePickerDialog.OnDateSet
         ajukan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Ajukan();
+                Checker();
             }
         });
         upload.setOnClickListener(new View.OnClickListener() {
@@ -199,6 +200,15 @@ public class IzinFragment extends Fragment implements DatePickerDialog.OnDateSet
             }
         });
     }
+    private void Checker(){
+        if (deskripsi.getText().toString().isEmpty()){
+            Toast.makeText(getActivity(), "Deskripsi Tidak Boleh Kosong", Toast.LENGTH_SHORT).show();
+        }else if(postBukti.isEmpty()){
+            Toast.makeText(getActivity(), "Harap Pilih Foto Bukti", Toast.LENGTH_SHORT).show();
+        }else{
+            Ajukan();
+        }
+    }
     private void Ajukan(){
         final ProgressDialog pd = new ProgressDialog(getActivity());
         pd.setMessage("Sedang Menyimpan data ke Server");
@@ -206,10 +216,10 @@ public class IzinFragment extends Fragment implements DatePickerDialog.OnDateSet
         pd.show();
         File file = new File(postBukti);
         RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
-        MultipartBody.Part partPhoto = MultipartBody.Part.createFormData("file_izin", file.getName(), fileReqBody);
-        ApiRequest api = FajarKontol.getClient().create(ApiRequest.class);
-        Call<ResponseModel> Data=api.Izin(
-                RequestBody.create(MediaType.parse("text/plain"),ID),
+        MultipartBody.Part partPhoto = MultipartBody.Part.createFormData("fileIzin", file.getName(), fileReqBody);
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> Data=api.Izins(
+                destiny.AUTH(Token),
                 RequestBody.create(MediaType.parse("text/plain"),izin.getSelectedItem().toString()),
                 RequestBody.create(MediaType.parse("text/plain"),deskripsi.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"),Dari),
@@ -219,16 +229,27 @@ public class IzinFragment extends Fragment implements DatePickerDialog.OnDateSet
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
-                    Toast.makeText(getActivity(), "Izin Telah Diajukan", Toast.LENGTH_SHORT).show();
+                    if (response.body().getStatusCode().equals("000")){
+                        Toast.makeText(getActivity(), response.body().statusMessage, Toast.LENGTH_SHORT).show();
+                        pd.hide();
+                    }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
+                        destiny.AutoLogin(Username,Password,getActivity());
+                        Toast.makeText(getActivity(), "Silahkan Coba Lagi", Toast.LENGTH_SHORT).show();
+                        pd.hide();
+                    }else{
+                        Toast.makeText(getActivity(), "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                        pd.hide();
+                    }
                 }catch (Exception e){
                     Toast.makeText(getActivity(), "Terjadi Kesalahan Silahkan Coba lagi", Toast.LENGTH_SHORT).show();
+                    pd.hide();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
                 pd.hide();
-                Toast.makeText(getActivity(), "Izin Telah Diajukan", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Koneksi Gagal", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -42,16 +42,20 @@ public class AdapterPDFInfoDinas extends RecyclerView.Adapter<AdapterPDFInfoDina
 
     @Override
     public void onBindViewHolder(@NonNull final HolderData holderData, int posistion) {
+        holderData.card.setVisibility(View.GONE);
         destiny = new Destiny();
         final DataModel dm = mList.get(posistion);
-        holderData.Nama.setText(dm.getNama_info_dinas());
-        holderData.card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(destiny.BASE_URL()+dm.getFile_info_dinas()));
-                ctx.startActivity(browserIntent);
-            }
-        });
+        if (!dm.getTipe_info().equals("artikel")){
+            holderData.card.setVisibility(View.VISIBLE);
+            holderData.Nama.setText(dm.getNama_info_dinas());
+            holderData.card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(destiny.BASE_URL()+dm.getFile_info_dinas()));
+                    ctx.startActivity(browserIntent);
+                }
+            });
+        }
     }
 
     @Override
@@ -65,7 +69,7 @@ public class AdapterPDFInfoDinas extends RecyclerView.Adapter<AdapterPDFInfoDina
         public HolderData(View v){
             super(v);
             Nama = v.findViewById(R.id.tvNama);
-            card = v.findViewById(R.id.LayoutCardView);
+            card = v.findViewById(R.id.card_view);
         }
     }
 }

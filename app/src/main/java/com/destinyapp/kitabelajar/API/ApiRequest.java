@@ -76,6 +76,20 @@ public interface ApiRequest {
     @GET("profilsekolah")
     Call<ResponseModel> ProfileSekolah(@Header("Authorization") String authHeader);
 
+    @GET("infodisdik")
+    Call<ResponseModel> InfoDisdik(@Header("Authorization") String authHeader);
+
+    @GET("sponsor")
+    Call<ResponseModel> Sponsor(@Header("Authorization") String authHeader);
+
+    @Multipart
+    @POST("izin")
+    Call<ResponseModel> Izins(@Header("Authorization") String authHeader,
+                             @Part("namaIzin") RequestBody nama_izin,
+                             @Part("deskripsiIzin") RequestBody deskripsi_izin,
+                             @Part("tanggalMulai") RequestBody tanggalMulai,
+                             @Part("tanggalAkhir") RequestBody tanggalAkhir,
+                             @Part MultipartBody.Part fileIzin);
     //FAJAR KONTOL
     @FormUrlEncoded
     @POST("info_dinas")
@@ -99,4 +113,7 @@ public interface ApiRequest {
                                 @Part("tgl_mulai") RequestBody tgl_mulai,
                                 @Part("tgl_akhir") RequestBody tgl_akhir,
                                 @Part MultipartBody.Part photo);
+
+    @GET("info_publik")
+    Call<ResponseModel> InfoPublik();
 }

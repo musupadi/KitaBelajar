@@ -32,8 +32,7 @@ public class DB_Helper extends SQLiteOpenHelper {
                 COLUMN_NAME+" TEXT NOT NULL, "+
                 COLUMN_TOKEN+" TEXT NOT NULL, "+
                 COLUMN_LEVEL+" TEXT NOT NULL, "+
-                COLUMN_PROFILE+" TEXT NOT NULL, "+
-                COLUMN_ID+" TEXT NOT NULL);"
+                COLUMN_PROFILE+" TEXT NOT NULL);"
         );
     }
 
@@ -43,7 +42,7 @@ public class DB_Helper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
     //Save
-    public void SaveUser(String username,String password,String name,String token,String level,String profile,String ID){
+    public void SaveUser(String username,String password,String name,String token,String level,String profile){
         SQLiteDatabase db =this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_USERNAME, username);
@@ -52,7 +51,6 @@ public class DB_Helper extends SQLiteOpenHelper {
         values.put(COLUMN_TOKEN, token);
         values.put(COLUMN_LEVEL,level);
         values.put(COLUMN_PROFILE,profile);
-        values.put(COLUMN_ID,ID);
         db.insert(TABLE_NAME_ACCOUNT,null,values);
         db.close();
     }

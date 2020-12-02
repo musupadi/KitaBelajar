@@ -28,9 +28,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Acitvity.DetailInfoPublik"
+            android:label="Detail Info Publik"
+            android:parentActivityName=".Acitvity.MainActivity"></activity>
+        <activity
             android:name=".Acitvity.Games.GamesActivity"
             android:label="Game Nomor"
-            android:parentActivityName=".Acitvity.MainActivity"></activity>
+            android:parentActivityName=".Acitvity.MainActivity" />
         <activity
             android:name=".Acitvity.InfoDinasActivity"
             android:label="Info Dinas Pendidikan"

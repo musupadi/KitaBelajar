@@ -67,21 +67,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="170dp"
-        android:layout_centerHorizontal="true">
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:cardCornerRadius="30dp"
-            app:cardElevation="1dp">
-            <TextView
-                android:layout_margin="10dp"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="Games"
-                android:gravity="center"
-                android:textColor="@color/colorBlack"
-                android:textStyle="bold"/>
-        </androidx.cardview.widget.CardView>
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/btn_rounded_white"
+        android:elevation="10dp">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="Games"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold" />
     </LinearLayout>
 
 

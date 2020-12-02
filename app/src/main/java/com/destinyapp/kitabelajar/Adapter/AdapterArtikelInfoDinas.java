@@ -46,25 +46,29 @@ public class AdapterArtikelInfoDinas extends RecyclerView.Adapter<AdapterArtikel
     @Override
     public void onBindViewHolder(@NonNull final HolderData holderData, int posistion) {
         destiny = new Destiny();
+        holderData.card.setVisibility(View.GONE);
         final DataModel dm = mList.get(posistion);
-        holderData.Judul.setText(dm.getNama_info_dinas());
-        holderData.Deskripsi.setText(destiny.SmallDescription(destiny.FilterTextToJava(dm.getDeskripsi_info_dinas())));
-        holderData.Tanggal.setText(destiny.MagicDateChange(dm.getTgl_upload_info()));
-        Glide.with(ctx)
-                .load(destiny.BASE_URL()+dm.getFile_info_dinas())
-                .into(holderData.Image);
-        holderData.card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(ctx, DinasPendidikanActivity.class);
-                i.putExtra("JUDUL", dm.getNama_info_dinas());
-                i.putExtra("ISI",dm.getDeskripsi_info_dinas());
-                i.putExtra("TANGGAL",dm.getTgl_upload_info());
-                i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getFile_info_dinas());
-                i.putExtra("YOUTUBE","");
-                ctx.startActivity(i);
-            }
-        });
+        if (!dm.getTipe_info().equals("dokumen")){
+            holderData.card.setVisibility(View.VISIBLE);
+            holderData.Judul.setText(dm.getNama_info_dinas());
+            holderData.Deskripsi.setText(destiny.SmallDescription(destiny.FilterTextToJava(dm.getDeskripsi_info_dinas())));
+            holderData.Tanggal.setText(destiny.MagicDateChange(dm.getTgl_upload_info()));
+            Glide.with(ctx)
+                    .load(destiny.BASE_URL()+dm.getFile_info_dinas())
+                    .into(holderData.Image);
+            holderData.card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(ctx, DinasPendidikanActivity.class);
+                    i.putExtra("JUDUL", dm.getNama_info_dinas());
+                    i.putExtra("ISI",dm.getDeskripsi_info_dinas());
+                    i.putExtra("TANGGAL",dm.getTgl_upload_info());
+                    i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getFile_info_dinas());
+                    i.putExtra("YOUTUBE","");
+                    ctx.startActivity(i);
+                }
+            });
+        }
     }
 
     @Override
@@ -82,7 +86,7 @@ public class AdapterArtikelInfoDinas extends RecyclerView.Adapter<AdapterArtikel
             Judul = v.findViewById(R.id.tvJudul);
             Deskripsi = v.findViewById(R.id.tvDeskripsi);
             Tanggal = v.findViewById(R.id.tvTanggal);
-            card = v.findViewById(R.id.LayoutCardView);
+            card = v.findViewById(R.id.card_view);
         }
     }
 }

@@ -47,6 +47,13 @@ public class GamesActivity extends AppCompatActivity {
                 SuaraMe.start();
             }
         });
+        Lima.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final MediaPlayer SuaraMe = MediaPlayer.create(GamesActivity.this,R.raw.lima);
+                SuaraMe.start();
+            }
+        });
         Enam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

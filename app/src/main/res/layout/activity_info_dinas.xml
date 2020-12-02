@@ -31,19 +31,15 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true">
-        <androidx.cardview.widget.CardView
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/btn_rounded_white"
+        android:elevation="10dp">
+        <Spinner
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:cardCornerRadius="30dp"
-            app:cardElevation="1dp">
-            <Spinner
-                android:layout_margin="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:entries="@array/dinas_pendidikan"
-                android:id="@+id/spinner"/>
-        </androidx.cardview.widget.CardView>
+            android:entries="@array/dinas_pendidikan"
+            android:id="@+id/spinner"/>
     </LinearLayout>
 
 

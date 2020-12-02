@@ -353,6 +353,53 @@ public class DataModel {
     @Expose
     public String tgl_upload_info;
 
+    //Sponsor
+    @SerializedName("id_sponsor")
+    @Expose
+    public String id_sponsor;
+
+    @SerializedName("judul_sponsor")
+    @Expose
+    public String judul_sponsor;
+
+    @SerializedName("file_image_sponsor")
+    @Expose
+    public String file_image_sponsor;
+
+    @SerializedName("status_sponsor")
+    @Expose
+    public String status_sponsor;
+
+    //INFO Publik
+    @SerializedName("id_info_publik")
+    @Expose
+    public String id_info_publik;
+
+    @SerializedName("judul_info_publik")
+    @Expose
+    public String judul_info_publik;
+
+    @SerializedName("link_youtube_info_publik")
+    @Expose
+    public String link_youtube_info_publik;
+
+    @SerializedName("cover_info_publik")
+    @Expose
+    public String cover_info_publik;
+
+    @SerializedName("isi_info_publik")
+    @Expose
+    public String isi_info_publik;
+
+    @SerializedName("status_info_publik")
+    @Expose
+    public String status_info_publik;
+
+    @SerializedName("created_at_info_publik")
+    @Expose
+    public String created_at_info_publik;
+
+
 
 
     //GETTER SETTER
@@ -1016,5 +1063,93 @@ public class DataModel {
 
     public void setId_environment(String id_environment) {
         this.id_environment = id_environment;
+    }
+
+    public String getId_sponsor() {
+        return id_sponsor;
+    }
+
+    public void setId_sponsor(String id_sponsor) {
+        this.id_sponsor = id_sponsor;
+    }
+
+    public String getJudul_sponsor() {
+        return judul_sponsor;
+    }
+
+    public void setJudul_sponsor(String judul_sponsor) {
+        this.judul_sponsor = judul_sponsor;
+    }
+
+    public String getFile_image_sponsor() {
+        return file_image_sponsor;
+    }
+
+    public void setFile_image_sponsor(String file_image_sponsor) {
+        this.file_image_sponsor = file_image_sponsor;
+    }
+
+    public String getStatus_sponsor() {
+        return status_sponsor;
+    }
+
+    public void setStatus_sponsor(String status_sponsor) {
+        this.status_sponsor = status_sponsor;
+    }
+
+    public String getId_info_publik() {
+        return id_info_publik;
+    }
+
+    public void setId_info_publik(String id_info_publik) {
+        this.id_info_publik = id_info_publik;
+    }
+
+    public String getJudul_info_publik() {
+        return judul_info_publik;
+    }
+
+    public void setJudul_info_publik(String judul_info_publik) {
+        this.judul_info_publik = judul_info_publik;
+    }
+
+    public String getLink_youtube_info_publik() {
+        return link_youtube_info_publik;
+    }
+
+    public void setLink_youtube_info_publik(String link_youtube_info_publik) {
+        this.link_youtube_info_publik = link_youtube_info_publik;
+    }
+
+    public String getCover_info_publik() {
+        return cover_info_publik;
+    }
+
+    public void setCover_info_publik(String cover_info_publik) {
+        this.cover_info_publik = cover_info_publik;
+    }
+
+    public String getIsi_info_publik() {
+        return isi_info_publik;
+    }
+
+    public void setIsi_info_publik(String isi_info_publik) {
+        this.isi_info_publik = isi_info_publik;
+    }
+
+    public String getStatus_info_publik() {
+        return status_info_publik;
+    }
+
+    public void setStatus_info_publik(String status_info_publik) {
+        this.status_info_publik = status_info_publik;
+    }
+
+    public String getCreated_at_info_publik() {
+        return created_at_info_publik;
+    }
+
+    public void setCreated_at_info_publik(String created_at_info_publik) {
+        this.created_at_info_publik = created_at_info_publik;
     }
 }
