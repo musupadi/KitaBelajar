@@ -27,10 +27,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Acitvity.SponsorActivity"
+            android:label="Seluruh Sponsor"
+            android:parentActivityName=".Acitvity.MainActivity"></activity>
+        <activity android:name=".Acitvity.KabarBeritaActivity"
+            android:label="Seluruh Kabar Berita"
+            android:parentActivityName=".Acitvity.MainActivity"/>
         <activity
             android:name=".Acitvity.DetailInfoPublik"
             android:label="Detail Info Publik"
-            android:parentActivityName=".Acitvity.MainActivity"></activity>
+            android:parentActivityName=".Acitvity.MainActivity" />
         <activity
             android:name=".Acitvity.Games.GamesActivity"
             android:label="Game Nomor"

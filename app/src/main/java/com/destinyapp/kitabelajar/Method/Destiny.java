@@ -50,6 +50,10 @@ public class Destiny {
         String replace1 = link.replace("https://www.youtube.com/watch?v=","");
         return replace1;
     }
+    public String FajarNangis(String Jessica){
+        String replace = Jessica.replace("&#39;","'");
+        return replace;
+    }
     public static String getThisDayDB(){
         DateFormat dateFormat1 = new SimpleDateFormat("dd");
         DateFormat dateFormat2 = new SimpleDateFormat("MM");

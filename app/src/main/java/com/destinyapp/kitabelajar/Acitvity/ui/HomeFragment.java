@@ -26,9 +26,14 @@ import com.bumptech.glide.Glide;
 import com.destinyapp.kitabelajar.API.ApiRequest;
 import com.destinyapp.kitabelajar.API.FajarKontol;
 import com.destinyapp.kitabelajar.API.RetroServer;
+import com.destinyapp.kitabelajar.Acitvity.KabarBeritaActivity;
 import com.destinyapp.kitabelajar.Acitvity.LoginActivity;
 import com.destinyapp.kitabelajar.Acitvity.MainActivity;
+import com.destinyapp.kitabelajar.Acitvity.SponsorActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.AgendaSekolah.AgendaSekolahActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.GalleryActivity;
+import com.destinyapp.kitabelajar.Adapter.AdapterGallery;
+import com.destinyapp.kitabelajar.Adapter.AdapterGalleryHome;
 import com.destinyapp.kitabelajar.Adapter.AdapterInfoPublik;
 import com.destinyapp.kitabelajar.Adapter.AdapterKabarBerita;
 import com.destinyapp.kitabelajar.Adapter.AdapterSponsor;
@@ -61,11 +66,12 @@ public class HomeFragment extends Fragment {
     TextView nama,namaSiswa;
     DB_Helper dbHelper;
     String Username,Password,Nama,Token,Level,Photo;
-    RecyclerView recycler,recyclerKabar,recylerSponsor;
+    RecyclerView recycler,recyclerKabar,recylerSponsor,recyclerGallery;
     LinearLayout infoDinas;
     private List<DataModel> mItems = new ArrayList<>();
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mManager;
+    LinearLayout LihatSemuaKabarBerita,LihatSemuaSponsor,LihatSemuaGallery;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -90,6 +96,7 @@ public class HomeFragment extends Fragment {
         recycler = view.findViewById(R.id.recyclerHeader);
         recyclerKabar = view.findViewById(R.id.recyclerKabarBerita);
         recylerSponsor = view.findViewById(R.id.recyclerSponsor);
+        recyclerGallery = view.findViewById(R.id.recyclerGallery);
         nama = view.findViewById(R.id.tvNama);
         namaSiswa = view.findViewById(R.id.tvNamaSiswa);
         SwitchMasuk = view.findViewById(R.id.switchMasuk);
@@ -104,6 +111,9 @@ public class HomeFragment extends Fragment {
         MediaPembelajaran = view.findViewById(R.id.linearMediaPembelajaran);
         Tugas = view.findViewById(R.id.linearTugas);
         LihatSemua = view.findViewById(R.id.linearLihatSemua);
+        LihatSemuaKabarBerita = view.findViewById(R.id.linearLihatSemuaKabarBerita);
+        LihatSemuaSponsor = view.findViewById(R.id.linearLihatSemuaSponsor);
+        LihatSemuaGallery = view.findViewById(R.id.linearLihatGallery);
         Poin = view.findViewById(R.id.tvPoint);
         Logo = view.findViewById(R.id.ivLogoSekolah);
         SekolahBesar = view.findViewById(R.id.tvSekolahBesar);
@@ -147,11 +157,47 @@ public class HomeFragment extends Fragment {
         });
         ONCLICK();
         ONCLICKDIALOG();
+        Gallery();
         Header();
         KabarBerita();
         Sponsor();
         GetPoint();
         GetSekolah();
+    }
+    private void Gallery(){
+        mManager = new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
+        recyclerGallery.setLayoutManager(mManager);
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> sponsor = api.Gallery(destiny.AUTH(Token));
+        sponsor.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    if (response.body().getStatusCode().equals("000")){
+                        mItems=response.body().getData();
+                        mAdapter = new AdapterGalleryHome(getActivity(),mItems);
+                        recyclerGallery.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
+                    }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
+                        destiny.AutoLogin(Username,Password,getActivity());
+                        Header();
+                    }else{
+                        Toast.makeText(getActivity(), "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(getActivity(), "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
+                    dbHelper.Logout();
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                Toast.makeText(getActivity(), "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     private void GetSekolah(){
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
@@ -505,6 +551,27 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 dialog.hide();
+            }
+        });
+        LihatSemuaKabarBerita.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), KabarBeritaActivity.class);
+                startActivity(intent);
+            }
+        });
+        LihatSemuaSponsor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SponsorActivity.class);
+                startActivity(intent);
+            }
+        });
+        LihatSemuaGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), GalleryActivity.class);
+                startActivity(intent);
             }
         });
     }

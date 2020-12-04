@@ -85,7 +85,6 @@ public class DetailInfoPublik extends AppCompatActivity {
             });
         }
         Web.loadData(ISI,"text/html","UTF-8");
-//        isi.setText(ISI);
         tanggal.setText(destiny.MagicDateChange(TANGGAL));
         Glide.with(this)
                 .load(GANBAR)

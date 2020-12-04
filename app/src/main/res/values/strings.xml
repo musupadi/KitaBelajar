@@ -16,8 +16,10 @@
     <string name="status_tanah">-</string>
     <string name="luas_tanah">3000 Meter</string>
     <string-array name="Izin">
-        <item>Sakit</item>
-        <item>Izin</item>
+        <item>Sakit Istirahat Dirumah</item>
+        <item>Izin Dengan Surat Dokter</item>
+        <item>Izin Istirahat Dirumah</item>
+        <item>Izin Dengan Alasan Lain</item>
     </string-array>
     <string-array name="SuratPendidikan">
         <item>PDF</item>
