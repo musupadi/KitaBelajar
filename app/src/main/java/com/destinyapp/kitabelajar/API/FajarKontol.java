@@ -7,7 +7,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FajarKontol {
-    private static final String base_url = "http://kitabelajar.mitradanacepat.com/api/";
+    private static final String base_url = "https://kitabelajar.rumahcantikratu.com/api/";
     private static Retrofit retrofit;
 
     public static Retrofit getClient(){

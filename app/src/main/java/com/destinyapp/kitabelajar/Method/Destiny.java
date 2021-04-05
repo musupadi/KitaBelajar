@@ -170,7 +170,7 @@ public class Destiny {
         
     }
     public String BASE_URL(){
-        String BASE_URL = "http://kitabelajar.mitradanacepat.com/";
+        String BASE_URL = "http://kitabelajar.rumahcantikratu.com/";
         return BASE_URL;
     }
     public String AUTH(String auth){
