@@ -18,6 +18,9 @@ import com.destinyapp.kitabelajar.Acitvity.menu.FormulirPPDBActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.GalleryActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.GuruActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.JadwalPelajaranActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.JumatNgaji.JumatNgajiActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.KemisNyunda.KemisNyundaActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.MediaInformasi.MediaInformasiActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.MediaPembelajaran.MediaPembelajaranActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.PembayaranActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.PrestasiActivity;
@@ -165,6 +168,15 @@ public class Destiny {
             ctx.startActivity(intent);
         }else if(Class.equals("Dinas Pendidikan")){
             Intent intent = new Intent(ctx, InfoDinasActivity.class);
+            ctx.startActivity(intent);
+        }else if(Class.equals("Kemis Nyunda")){
+            Intent intent = new Intent(ctx, KemisNyundaActivity.class);
+            ctx.startActivity(intent);
+        }else if(Class.equals("Jumat Ngaji")){
+            Intent intent = new Intent(ctx, JumatNgajiActivity.class);
+            ctx.startActivity(intent);
+        }else if(Class.equals("Media Informasi")){
+            Intent intent = new Intent(ctx, MediaInformasiActivity.class);
             ctx.startActivity(intent);
         }
         

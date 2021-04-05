@@ -399,6 +399,67 @@ public class DataModel {
     @Expose
     public String created_at_info_publik;
 
+    //Kemis Nyunda
+    @SerializedName("id_kemis_nyunda")
+    @Expose
+    public String id_kemis_nyunda;
+
+    @SerializedName("tipe_kemis_nyunda")
+    @Expose
+    public String tipe_kemis_nyunda;
+
+    @SerializedName("judul_kemis_nyunda")
+    @Expose
+    public String judul_kemis_nyunda;
+
+    @SerializedName("link_youtube_nyunda")
+    @Expose
+    public String link_youtube_nyunda;
+
+    @SerializedName("cover_kemis_nyunda")
+    @Expose
+    public String cover_kemis_nyunda;
+
+    @SerializedName("deskripsi_kemis_nyunda")
+    @Expose
+    public String deskripsi_kemis_nyunda;
+
+    @SerializedName("status_kemis_nyunda")
+    @Expose
+    public String status_kemis_nyunda;
+
+    @SerializedName("created_at_kemis_nyunda")
+    @Expose
+    public String created_at_kemis_nyunda;
+
+    //Khutbah
+    @SerializedName("id_khutbah")
+    @Expose
+    public String id_khutbah;
+
+    @SerializedName("judul_khutbah")
+    @Expose
+    public String judul_khutbah;
+
+    @SerializedName("link_youtube_khutbah")
+    @Expose
+    public String link_youtube_khutbah;
+
+    @SerializedName("cover_khutbah")
+    @Expose
+    public String cover_khutbah;
+
+    @SerializedName("deskripsi_khutbah")
+    @Expose
+    public String deskripsi_khutbah;
+
+    @SerializedName("status_khutbah")
+    @Expose
+    public String status_khutbah;
+
+    @SerializedName("created_at_khutbah")
+    @Expose
+    public String created_at_khutbah;
 
 
 
@@ -1151,5 +1212,125 @@ public class DataModel {
 
     public void setCreated_at_info_publik(String created_at_info_publik) {
         this.created_at_info_publik = created_at_info_publik;
+    }
+
+    public String getId_kemis_nyunda() {
+        return id_kemis_nyunda;
+    }
+
+    public void setId_kemis_nyunda(String id_kemis_nyunda) {
+        this.id_kemis_nyunda = id_kemis_nyunda;
+    }
+
+    public String getTipe_kemis_nyunda() {
+        return tipe_kemis_nyunda;
+    }
+
+    public void setTipe_kemis_nyunda(String tipe_kemis_nyunda) {
+        this.tipe_kemis_nyunda = tipe_kemis_nyunda;
+    }
+
+    public String getJudul_kemis_nyunda() {
+        return judul_kemis_nyunda;
+    }
+
+    public void setJudul_kemis_nyunda(String judul_kemis_nyunda) {
+        this.judul_kemis_nyunda = judul_kemis_nyunda;
+    }
+
+    public String getLink_youtube_nyunda() {
+        return link_youtube_nyunda;
+    }
+
+    public void setLink_youtube_nyunda(String link_youtube_nyunda) {
+        this.link_youtube_nyunda = link_youtube_nyunda;
+    }
+
+    public String getCover_kemis_nyunda() {
+        return cover_kemis_nyunda;
+    }
+
+    public void setCover_kemis_nyunda(String cover_kemis_nyunda) {
+        this.cover_kemis_nyunda = cover_kemis_nyunda;
+    }
+
+    public String getDeskripsi_kemis_nyunda() {
+        return deskripsi_kemis_nyunda;
+    }
+
+    public void setDeskripsi_kemis_nyunda(String deskripsi_kemis_nyunda) {
+        this.deskripsi_kemis_nyunda = deskripsi_kemis_nyunda;
+    }
+
+    public String getStatus_kemis_nyunda() {
+        return status_kemis_nyunda;
+    }
+
+    public void setStatus_kemis_nyunda(String status_kemis_nyunda) {
+        this.status_kemis_nyunda = status_kemis_nyunda;
+    }
+
+    public String getCreated_at_kemis_nyunda() {
+        return created_at_kemis_nyunda;
+    }
+
+    public void setCreated_at_kemis_nyunda(String created_at_kemis_nyunda) {
+        this.created_at_kemis_nyunda = created_at_kemis_nyunda;
+    }
+
+    public String getId_khutbah() {
+        return id_khutbah;
+    }
+
+    public void setId_khutbah(String id_khutbah) {
+        this.id_khutbah = id_khutbah;
+    }
+
+    public String getJudul_khutbah() {
+        return judul_khutbah;
+    }
+
+    public void setJudul_khutbah(String judul_khutbah) {
+        this.judul_khutbah = judul_khutbah;
+    }
+
+    public String getLink_youtube_khutbah() {
+        return link_youtube_khutbah;
+    }
+
+    public void setLink_youtube_khutbah(String link_youtube_khutbah) {
+        this.link_youtube_khutbah = link_youtube_khutbah;
+    }
+
+    public String getCover_khutbah() {
+        return cover_khutbah;
+    }
+
+    public void setCover_khutbah(String cover_khutbah) {
+        this.cover_khutbah = cover_khutbah;
+    }
+
+    public String getDeskripsi_khutbah() {
+        return deskripsi_khutbah;
+    }
+
+    public void setDeskripsi_khutbah(String deskripsi_khutbah) {
+        this.deskripsi_khutbah = deskripsi_khutbah;
+    }
+
+    public String getStatus_khutbah() {
+        return status_khutbah;
+    }
+
+    public void setStatus_khutbah(String status_khutbah) {
+        this.status_khutbah = status_khutbah;
+    }
+
+    public String getCreated_at_khutbah() {
+        return created_at_khutbah;
+    }
+
+    public void setCreated_at_khutbah(String created_at_khutbah) {
+        this.created_at_khutbah = created_at_khutbah;
     }
 }

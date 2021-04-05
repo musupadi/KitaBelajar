@@ -47,6 +47,13 @@ public interface ApiRequest {
     Call<ResponseModel> GetMapel(@Header("Authorization") String authHeader,
                                  @Query("tglKelas") String tglKelas);
 
+    @GET("kamis_nyunda")
+    Call<ResponseModel> GetKemisNyunda(@Header("Authorization") String authHeader,
+                                 @Query("tipe") String tipe);
+
+    @GET("khutbah")
+    Call<ResponseModel> GetKhutbah(@Header("Authorization") String authHeader);
+
     @GET("teman")
     Call<ResponseModel> Teman(@Header("Authorization") String authHeader,
                               @Query("idKelas") String idKelas);

@@ -59,6 +59,7 @@ public class HomeFragment extends Fragment {
     TextView CheckMasuk,Poin,SekolahBesar,Sekolah;
     LinearLayout ProfilSekolah,AgendaSekolah,Prestasi,PPDB,StrukturSekolah,JadwalPelajaran,Evadir,MediaPembelajaran,Tugas,LihatSemua;
     LinearLayout DProfilSekolah,DAgendaSekolah,DPrestasi,DPPDB,DStrukturSekolah,DJadwalPelajaran,DEvadir,DMediaPembelajaran,DTugas,DGuru,DBiayaAkademik,DPembayaran,DROB,DERaport,DGallery;
+    LinearLayout KemisNyunda,JumatNgaji,MediaInformasi;
     //Dialog
     Dialog dialog;
     Button Kembali;
@@ -119,6 +120,9 @@ public class HomeFragment extends Fragment {
         SekolahBesar = view.findViewById(R.id.tvSekolahBesar);
         Sekolah = view.findViewById(R.id.tvNamaSekolah);
         infoDinas = view.findViewById(R.id.linearInfoDinasPendidikan);
+        KemisNyunda = view.findViewById(R.id.linearKemisNyunda);
+        JumatNgaji = view.findViewById(R.id.linearJumatNgaji);
+        MediaInformasi = view.findViewById(R.id.linearMediaInformasi);
         dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.dialog_menu_all);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -157,12 +161,12 @@ public class HomeFragment extends Fragment {
         });
         ONCLICK();
         ONCLICKDIALOG();
-        Gallery();
-        Header();
-        KabarBerita();
-        Sponsor();
-        GetPoint();
-        GetSekolah();
+//        Gallery();
+//        Header();
+//        KabarBerita();
+//        Sponsor();
+//        GetPoint();
+//        GetSekolah();
     }
     private void Gallery(){
         mManager = new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
@@ -539,6 +543,24 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 destiny.ChangeActivity(getActivity(),"Dinas Pendidikan");
+            }
+        });
+        KemisNyunda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                destiny.ChangeActivity(getActivity(),"Kemis Nyunda");
+            }
+        });
+        JumatNgaji.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                destiny.ChangeActivity(getActivity(),"Jumat Ngaji");
+            }
+        });
+        MediaInformasi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                destiny.ChangeActivity(getActivity(),"Media Informasi");
             }
         });
         LihatSemua.setOnClickListener(new View.OnClickListener() {

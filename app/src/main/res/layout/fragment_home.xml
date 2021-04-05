@@ -602,7 +602,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:src="@drawable/user"/>
+                                    android:src="@drawable/kemis_nyunda"
+                                    android:layout_margin="5dp"/>
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -631,7 +632,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:src="@drawable/user"/>
+                                    android:src="@drawable/jumat_mengaji"
+                                    android:layout_margin="5dp"/>
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -660,7 +662,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:src="@drawable/user"/>
+                                    android:layout_margin="5dp"
+                                    android:src="@drawable/media_informasi"/>
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
