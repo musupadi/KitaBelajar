@@ -161,12 +161,12 @@ public class HomeFragment extends Fragment {
         });
         ONCLICK();
         ONCLICKDIALOG();
-//        Gallery();
-//        Header();
-//        KabarBerita();
-//        Sponsor();
-//        GetPoint();
-//        GetSekolah();
+        Gallery();
+        Header();
+        KabarBerita();
+        Sponsor();
+        GetPoint();
+        GetSekolah();
     }
     private void Gallery(){
         mManager = new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);

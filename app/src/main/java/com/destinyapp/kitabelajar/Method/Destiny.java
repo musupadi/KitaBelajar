@@ -3,6 +3,7 @@ package com.destinyapp.kitabelajar.Method;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -48,6 +49,15 @@ public class Destiny {
             Des = description.substring(0,100)+"...";
         }
         return Des;
+    }
+    public String AUTH_BASE_64(){
+        String username = "destiny_pss_tk";
+        String password = "45sq2355sqav139ewxza";
+
+        String base = username+":"+password;
+
+        String authHeader = "Basic "+ Base64.encodeToString(base.getBytes(),Base64.NO_WRAP);
+        return authHeader;
     }
     public String GetIDYoutube(String link){
         String replace1 = link.replace("https://www.youtube.com/watch?v=","");

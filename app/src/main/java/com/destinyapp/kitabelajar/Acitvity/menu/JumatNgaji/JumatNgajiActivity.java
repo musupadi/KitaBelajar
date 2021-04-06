@@ -20,6 +20,13 @@ public class JumatNgajiActivity extends AppCompatActivity {
         Alquran = findViewById(R.id.cardAlquranDanDoa);
         Kiblat = findViewById(R.id.cardArahKiblat);
         Mesjid = findViewById(R.id.cardMesjidTerdekat);
+        Kiblat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(JumatNgajiActivity.this,KiblatActivity.class);
+                startActivity(intent);
+            }
+        });
         Khutbah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

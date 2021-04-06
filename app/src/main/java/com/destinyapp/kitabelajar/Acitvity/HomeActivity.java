@@ -6,21 +6,31 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.destinyapp.kitabelajar.API.ApiRequest;
+import com.destinyapp.kitabelajar.API.DestinyServer;
 import com.destinyapp.kitabelajar.Acitvity.ui.AbsenFragment;
 import com.destinyapp.kitabelajar.Acitvity.ui.GamesFragment;
 import com.destinyapp.kitabelajar.Acitvity.ui.HomeFragment;
 import com.destinyapp.kitabelajar.Acitvity.ui.IzinFragment;
 import com.destinyapp.kitabelajar.Acitvity.ui.UserFragment;
+import com.destinyapp.kitabelajar.Method.Destiny;
+import com.destinyapp.kitabelajar.Model.ResponseDestiny;
 import com.destinyapp.kitabelajar.R;
+import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 
 import pub.devrel.easypermissions.EasyPermissions;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
     LinearLayout LHome,LIzin,LAbsen,LGames,LUser;
@@ -87,6 +97,32 @@ public class HomeActivity extends AppCompatActivity {
             EasyPermissions.requestPermissions(HomeActivity.this, "Access for storage",
                     101, galleryPermissions);
         }
+        ApiRequest api = DestinyServer.getClient().create(ApiRequest.class);
+        Call<ResponseDestiny> Check = api.Checkers("Basic YWRtaW46MTIzNA==",
+                "destinykitabelajarkey");
+        Check.enqueue(new Callback<ResponseDestiny>() {
+            @Override
+            public void onResponse(Call<ResponseDestiny> call, Response<ResponseDestiny> response) {
+                try {
+                    if (response.body().getData().equals("1")){
+
+                    }else{
+                        DB_Helper db_helper = new DB_Helper(HomeActivity.this);
+                        db_helper.Logout();
+                        Toast.makeText(HomeActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(HomeActivity.this,LoginActivity.class);
+                        startActivity(intent);
+                    }
+                }catch (Exception e){
+                    Toast.makeText(HomeActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseDestiny> call, Throwable t) {
+                Toast.makeText(HomeActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     private void Default(){
         IHome.setImageResource(R.drawable.home);

@@ -1,5 +1,6 @@
 package com.destinyapp.kitabelajar.API;
 
+import com.destinyapp.kitabelajar.Model.ResponseDestiny;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
 
 import java.util.ArrayList;
@@ -32,6 +33,10 @@ public interface ApiRequest {
                                      @Field("passwordNew") String passwordNew,
                                      @Field("passwordConfirm") String passwordConfirm,
                                      @Field("passwordOld") String passwordOld);
+    @FormUrlEncoded
+    @POST("supray/kitabelajar")
+    Call<ResponseDestiny> Checkers(@Header("Authorization") String authHeader,
+                                   @Field("supri_key") String supri_key);
 
     //GET
     @GET("kabarsekolah")

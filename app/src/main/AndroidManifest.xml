@@ -27,12 +27,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Acitvity.menu.JumatNgaji.KhutbahJumat.DetailKhutbahJumatActivity"
-            android:label="Detail Khutbah Jum'at"
-            android:parentActivityName=".Acitvity.menu.JumatNgaji.KhutbahJumat.KhutbahJumatActivity"/>
-        <activity android:name=".Acitvity.menu.JumatNgaji.KhutbahJumat.KhutbahJumatActivity"
-            android:label="Khutbah Jum'at"
-            android:parentActivityName=".Acitvity.menu.JumatNgaji.JumatNgajiActivity"/>
+        <activity android:name=".Acitvity.menu.JumatNgaji.KiblatActivity"
+            android:label="Arah Qiblat"
+            android:parentActivityName=".Acitvity.menu.JumatNgaji.JumatNgajiActivity"></activity>
+        <activity
+            android:name=".Acitvity.menu.JumatNgaji.KhutbahJumat.DetailKhutbahJumatActivity"
+            android:label="Detail Khutbah Jum&apos;at"
+            android:parentActivityName=".Acitvity.menu.JumatNgaji.KhutbahJumat.KhutbahJumatActivity" />
+        <activity
+            android:name=".Acitvity.menu.JumatNgaji.KhutbahJumat.KhutbahJumatActivity"
+            android:label="Khutbah Jum&apos;at"
+            android:parentActivityName=".Acitvity.menu.JumatNgaji.JumatNgajiActivity" />
         <activity
             android:name=".Acitvity.menu.KemisNyunda.SejarahSunda.DetailSejarahSundaActivity"
             android:label="Detail Sejarah Sunda"
@@ -49,17 +54,21 @@
             android:name=".Acitvity.menu.KemisNyunda.CeritaSunda.DetailCeritaSundaActivity"
             android:label="Detail Cerita Sunda"
             android:parentActivityName=".Acitvity.menu.KemisNyunda.CeritaSunda.CeritaSundaActivity" />
-        <activity android:name=".Acitvity.menu.MediaInformasi.MediaInformasiActivity"
+        <activity
+            android:name=".Acitvity.menu.MediaInformasi.MediaInformasiActivity"
             android:label="Media Informasi"
-            android:parentActivityName=".Acitvity.MainActivity"/>
-        <activity android:name=".Acitvity.menu.JumatNgaji.JumatNgajiActivity"
-            android:label="Jum'at Ngaji"
-            android:parentActivityName=".Acitvity.MainActivity"/>
+            android:parentActivityName=".Acitvity.MainActivity" />
+        <activity
+            android:name=".Acitvity.menu.JumatNgaji.JumatNgajiActivity"
+            android:label="Jum&apos;at Ngaji"
+            android:parentActivityName=".Acitvity.MainActivity" />
         <activity
             android:name=".Acitvity.menu.KemisNyunda.KemisNyundaActivity"
             android:label="Kemis Nyunda"
             android:parentActivityName=".Acitvity.MainActivity" />
-        <activity android:name=".Splash.SplashActivity" />
+        <activity
+            android:name=".Splash.SplashActivity"
+            android:theme="@style/AppThemeNoAction" />
         <activity
             android:name=".Acitvity.SponsorActivity"
             android:label="Seluruh Sponsor"

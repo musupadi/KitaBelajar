@@ -26,51 +26,23 @@ public class SliderAdapter extends PagerAdapter {
             0,
             1,
             2,
-            3,
-            4,
-            5
+            3
     };
 
     public int[] slide_image ={
-            R.drawable.absen,
-            R.drawable.absen,
-            R.drawable.absen,
-            R.drawable.absen,
-            R.drawable.absen,
-            R.drawable.absen
+            R.drawable.kita_belajar,
+            R.drawable.gambar_1,
+            R.drawable.gambar_2,
+            R.drawable.gambar_3,
     };
 
     public String[] slide_nama ={
-            "Muhammad Supriyadi",
-            "Mochammad Ardjun Adinugraha",
-            "Liviana Febriyanti",
-            "Richi Apriyanto",
-            "Hayyilah Al Marzuki",
-            "Resma Panjaitan"
+            "Sistem Informasi Yang Berkearifan Serta Cerdas dan Mencerdaskan",
+            "Media Pembelajaran Yang Interaktif dan Mudah dipelajari oleh Siswa",
+            "Membantu Mendampingi Guru Untuk Maju dan Hebat Dengan Kekuatannya Sendiri",
+            "Memudahkan Siswa dan Guru Dalam Melaksanakan Proses Belajar Mengajar"
     };
 
-    public String[] slide_title = {
-            "Full Stack Developer",
-            "Front End Programmer",
-            "Database Manager",
-            "Back End Programmer",
-            "Back End Programmer",
-            "Database Manager"
-    };
-
-    public int[] slide_deskripsi = {
-            R.string.app_name,
-            R.string.app_name
-    };
-
-    public int[] suara_saya = {
-//            R.raw.therisingshieldhero,
-//            R.raw.therisingshieldhero,
-//            R.raw.therisingshieldhero,
-//            R.raw.therisingshieldhero,
-//            R.raw.therisingshieldhero,
-//            R.raw.therisingshieldhero
-    };
 
     @Override
     public int getCount() {
@@ -88,29 +60,14 @@ public class SliderAdapter extends PagerAdapter {
         layoutInflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.splash_slider,container,false);
 
-//        ImageView slideImageView = view.findViewById(R.id.imgProfileMe);
-//        TextView Nama = view.findViewById(R.id.Nama);
-//        TextView Tittle = view.findViewById(R.id.Tittle);
-//        final TextView Deskripsi = view.findViewById(R.id.DeskripsiSaya);
-
-//        slideImageView.setImageResource(slide_image[position]);
-//        Nama.setText(slide_nama[position]);
-//        Tittle.setText(slide_title[position]);
-//        Deskripsi.setText(slide_deskripsi[position]);
-//        final MediaPlayer SuaraMe = MediaPlayer.create(context,suara_saya[position]);
-//        Deskripsi.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(context,"Tekan Untuk mendengarkan Suara Saya",Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        Deskripsi.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                SuaraMe.start();
-//                return true;
-//            }
-//        });
+        ImageView ivGambar = view.findViewById(R.id.ivImage);
+        TextView textGambar = view.findViewById(R.id.tvTextImage);
+        TextView text = view.findViewById(R.id.tvText);
+        ivGambar.setImageResource(slide_image[position]);
+        text.setText(slide_nama[position]);
+        if (position>0){
+            textGambar.setVisibility(View.GONE);
+        }
         container.addView(view);
         return view;
     }
