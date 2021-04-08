@@ -27,9 +27,39 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Acitvity.menu.JumatNgaji.KiblatActivity"
+        <activity android:name=".Acitvity.menu.MediaInformasi.Giveaway.DetailGiveawayActivity"
+            android:label="Detail Giveaway"
+            android:parentActivityName=".Acitvity.menu.MediaInformasi.Giveaway.GiveawayActivity"/>
+        <activity android:name=".Acitvity.menu.MediaInformasi.EducationTalkshow.DetailEducationTalkshowActivity"
+            android:label="Detail Education Talkshow"
+            android:parentActivityName=".Acitvity.menu.MediaInformasi.EducationTalkshow.EducationTalkshowActivity"/>
+        <activity android:name=".Acitvity.menu.MediaInformasi.EducationPodcast.DetailEducationPodcastActivity"
+            android:label="Detail Education Podcast"
+            android:parentActivityName=".Acitvity.menu.MediaInformasi.EducationPodcast.EducationPodcastActivity"/>
+        <activity
+            android:name=".Acitvity.menu.MediaInformasi.Giveaway.GiveawayActivity"
+            android:label="Giveaway"
+            android:parentActivityName=".Acitvity.menu.MediaInformasi.MediaInformasiActivity" />
+        <activity
+            android:name=".Acitvity.menu.MediaInformasi.EducationTalkshow.EducationTalkshowActivity"
+            android:label="Education Talkshow"
+            android:parentActivityName=".Acitvity.menu.MediaInformasi.MediaInformasiActivity" />
+        <activity
+            android:name=".Acitvity.menu.MediaInformasi.EducationPodcast.EducationPodcastActivity"
+            android:label="Education Podcast"
+            android:parentActivityName=".Acitvity.menu.MediaInformasi.MediaInformasiActivity" />
+        <activity
+            android:name=".Acitvity.menu.MediaInformasi.EducationNews.DetailEducationNewsActivity"
+            android:label="Detail Education News"
+            android:parentActivityName=".Acitvity.menu.MediaInformasi.EducationNews.EducationNewsActivity" />
+        <activity
+            android:name=".Acitvity.menu.MediaInformasi.EducationNews.EducationNewsActivity"
+            android:label="Education News"
+            android:parentActivityName=".Acitvity.menu.MediaInformasi.MediaInformasiActivity" />
+        <activity
+            android:name=".Acitvity.menu.JumatNgaji.KiblatActivity"
             android:label="Arah Qiblat"
-            android:parentActivityName=".Acitvity.menu.JumatNgaji.JumatNgajiActivity"></activity>
+            android:parentActivityName=".Acitvity.menu.JumatNgaji.JumatNgajiActivity" />
         <activity
             android:name=".Acitvity.menu.JumatNgaji.KhutbahJumat.DetailKhutbahJumatActivity"
             android:label="Detail Khutbah Jum&apos;at"

@@ -461,6 +461,38 @@ public class DataModel {
     @Expose
     public String created_at_khutbah;
 
+    //Media Informasi
+    @SerializedName("id_media_informasi")
+    @Expose
+    public String id_media_informasi;
+
+    @SerializedName("tipe_media_informasi")
+    @Expose
+    public String tipe_media_informasi;
+
+    @SerializedName("judul_media_informasi")
+    @Expose
+    public String judul_media_informasi;
+
+    @SerializedName("link_youtube_media_informasi")
+    @Expose
+    public String link_youtube_media_informasi;
+
+    @SerializedName("cover_media_informasi")
+    @Expose
+    public String cover_media_informasi;
+
+    @SerializedName("deskripsi_media_informasi")
+    @Expose
+    public String deskripsi_media_informasi;
+
+    @SerializedName("status_media_informasi")
+    @Expose
+    public String status_media_informasi;
+
+    @SerializedName("created_at_media_informasi")
+    @Expose
+    public String created_at_media_informasi;
 
 
     //GETTER SETTER
@@ -1332,5 +1364,69 @@ public class DataModel {
 
     public void setCreated_at_khutbah(String created_at_khutbah) {
         this.created_at_khutbah = created_at_khutbah;
+    }
+
+    public String getId_media_informasi() {
+        return id_media_informasi;
+    }
+
+    public void setId_media_informasi(String id_media_informasi) {
+        this.id_media_informasi = id_media_informasi;
+    }
+
+    public String getTipe_media_informasi() {
+        return tipe_media_informasi;
+    }
+
+    public void setTipe_media_informasi(String tipe_media_informasi) {
+        this.tipe_media_informasi = tipe_media_informasi;
+    }
+
+    public String getJudul_media_informasi() {
+        return judul_media_informasi;
+    }
+
+    public void setJudul_media_informasi(String judul_media_informasi) {
+        this.judul_media_informasi = judul_media_informasi;
+    }
+
+    public String getLink_youtube_media_informasi() {
+        return link_youtube_media_informasi;
+    }
+
+    public void setLink_youtube_media_informasi(String link_youtube_media_informasi) {
+        this.link_youtube_media_informasi = link_youtube_media_informasi;
+    }
+
+    public String getCover_media_informasi() {
+        return cover_media_informasi;
+    }
+
+    public void setCover_media_informasi(String cover_media_informasi) {
+        this.cover_media_informasi = cover_media_informasi;
+    }
+
+    public String getDeskripsi_media_informasi() {
+        return deskripsi_media_informasi;
+    }
+
+    public void setDeskripsi_media_informasi(String deskripsi_media_informasi) {
+        this.deskripsi_media_informasi = deskripsi_media_informasi;
+    }
+
+    public String getStatus_media_informasi() {
+        return status_media_informasi;
+    }
+
+    public void setStatus_media_informasi(String status_media_informasi) {
+        this.status_media_informasi = status_media_informasi;
+    }
+
+    public String getCreated_at_media_informasi() {
+        return created_at_media_informasi;
+    }
+
+    public void setCreated_at_media_informasi(String created_at_media_informasi) {
+        this.created_at_media_informasi = created_at_media_informasi;
     }
 }

@@ -56,6 +56,10 @@ public interface ApiRequest {
     Call<ResponseModel> GetKemisNyunda(@Header("Authorization") String authHeader,
                                  @Query("tipe") String tipe);
 
+    @GET("mediainformasi")
+    Call<ResponseModel> GetMediaInformasi(@Header("Authorization") String authHeader,
+                                       @Query("tipe_media") String tipe_media);
+
     @GET("khutbah")
     Call<ResponseModel> GetKhutbah(@Header("Authorization") String authHeader);
 
