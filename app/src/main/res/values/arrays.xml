@@ -16,6 +16,13 @@
         <item>Artikel</item>
     </string-array>
 
+    <string-array name="lembaga">
+        <item>TK</item>
+        <item>RA</item>
+        <item>SD</item>
+        <item>SMP</item>
+    </string-array>
+
 
 
 </resources>

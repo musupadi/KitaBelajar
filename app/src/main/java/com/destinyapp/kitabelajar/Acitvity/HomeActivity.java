@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -38,6 +39,8 @@ public class HomeActivity extends AppCompatActivity {
     ImageView IHome,IIzin,IAbsen,IGames,IUser;
     Fragment fragment;
     private String[] galleryPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
+    DB_Helper dbHelper;
+    String Username,Password,Nama,Token,Level,Photo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +64,24 @@ public class HomeActivity extends AppCompatActivity {
         //
 
         Home();
+        dbHelper = new DB_Helper(HomeActivity.this);
+        Cursor cursor = dbHelper.checkUser();
+        if (cursor.getCount()>0){
+            while (cursor.moveToNext()){
+                Username = cursor.getString(0);
+                Password = cursor.getString(1);
+                Nama = cursor.getString(2);
+                Token = cursor.getString(3);
+                Level = cursor.getString(4);
+                Photo = cursor.getString(5);
+            }
+        }
+        if (Level.equals("guest")){
+            LAbsen.setVisibility(View.GONE);
+            LIzin.setVisibility(View.GONE);
+            IUser.setImageResource(R.drawable.ic_baseline_exit_to_app_24);
+            TUser.setText("Login");
+        }
         LHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,15 +147,15 @@ public class HomeActivity extends AppCompatActivity {
     }
     private void Default(){
         IHome.setImageResource(R.drawable.home);
-        THome.setTextColor(Color.rgb(255,255,255));
+        THome.setTextColor(Color.rgb(0,0,0));
         IIzin.setImageResource(R.drawable.izin);
-        TIzin.setTextColor(Color.rgb(255,255,255));
+        TIzin.setTextColor(Color.rgb(0,0,0));
         IAbsen.setImageResource(R.drawable.absen);
-        TAbsen.setTextColor(Color.rgb(255,255,255));
+        TAbsen.setTextColor(Color.rgb(0,0,0));
         IGames.setImageResource(R.drawable.games);
-        TGames.setTextColor(Color.rgb(255,255,255));
+        TGames.setTextColor(Color.rgb(0,0,0));
         IUser.setImageResource(R.drawable.user);
-        TUser.setTextColor(Color.rgb(255,255,255));
+        TUser.setTextColor(Color.rgb(0,0,0));
     }
     private void Home(){
         Default();
@@ -165,11 +186,17 @@ public class HomeActivity extends AppCompatActivity {
         ChangeFragment(fragment);
     }
     private void User(){
-        Default();
-        IUser.setImageResource(R.drawable.user_active);
-        TUser.setTextColor(Color.rgb(37,166,161));
-        fragment = new UserFragment();
-        ChangeFragment(fragment);
+        if (Level.equals("guest")){
+            dbHelper.Logout();
+            Intent intent = new Intent(HomeActivity.this,LoginActivity.class);
+            startActivity(intent);
+        }else{
+            Default();
+            IUser.setImageResource(R.drawable.user_active);
+            TUser.setTextColor(Color.rgb(37,166,161));
+            fragment = new UserFragment();
+            ChangeFragment(fragment);
+        }
     }
     private void ChangeFragment(Fragment fragment){
         if(fragment != null){

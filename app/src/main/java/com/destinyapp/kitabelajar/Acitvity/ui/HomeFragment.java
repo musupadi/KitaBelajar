@@ -159,6 +159,16 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
+        if (Level.equals("guest")){
+            JadwalPelajaran.setAlpha(0.2f);
+            DJadwalPelajaran.setAlpha(0.2f);
+            Evadir.setAlpha(0.2f);
+            DEvadir.setAlpha(0.2f);
+            Tugas.setAlpha(0.2f);
+            DTugas.setAlpha(0.2f);
+            DERaport.setAlpha(0.2f);
+            DPembayaran.setAlpha(0.2f);
+        }
         ONCLICK();
         ONCLICKDIALOG();
         Gallery();
@@ -390,97 +400,97 @@ public class HomeFragment extends Fragment {
         DProfilSekolah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Profile Sekolah");
+                destiny.ChangeActivity(getActivity(),"Profile Sekolah",Level);
             }
         });
         DAgendaSekolah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Agenda Sekolah");
+                destiny.ChangeActivity(getActivity(),"Agenda Sekolah",Level);
             }
         });
         DPrestasi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Prestasi");
+                destiny.ChangeActivity(getActivity(),"Prestasi",Level);
             }
         });
         DPPDB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"PPDB");
+                destiny.ChangeActivity(getActivity(),"PPDB",Level);
             }
         });
         DStrukturSekolah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Struktur Sekolah");
+                destiny.ChangeActivity(getActivity(),"Struktur Sekolah",Level);
             }
         });
         DJadwalPelajaran.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Jadwal Pelajaran");
+                destiny.ChangeActivity(getActivity(),"Jadwal Pelajaran",Level);
             }
         });
         DEvadir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Evadir");
+                destiny.ChangeActivity(getActivity(),"Evadir",Level);
             }
         });
         DMediaPembelajaran.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Media Pembelajaran");
+                destiny.ChangeActivity(getActivity(),"Media Pembelajaran",Level);
             }
         });
         DTugas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Tugas");
+                destiny.ChangeActivity(getActivity(),"Tugas",Level);
             }
         });
         DGuru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Tugas");
+                destiny.ChangeActivity(getActivity(),"Tugas",Level);
             }
         });
         DGuru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Guru");
+                destiny.ChangeActivity(getActivity(),"Guru",Level);
             }
         });
         DBiayaAkademik.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Biaya Akademik");
+                destiny.ChangeActivity(getActivity(),"Biaya Akademik",Level);
             }
         });
         DPembayaran.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Pembayaran");
+                destiny.ChangeActivity(getActivity(),"Pembayaran",Level);
             }
         });
         DROB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"ROB");
+                destiny.ChangeActivity(getActivity(),"ROB",Level);
             }
         });
         DERaport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                destiny.ChangeActivity(getActivity(),"E-Raport");
+                destiny.ChangeActivity(getActivity(),"E-Raport",Level);
             }
         });
         DGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                destiny.ChangeActivity(getActivity(),"Gallery");
+                destiny.ChangeActivity(getActivity(),"Gallery",Level);
             }
         });
     }
@@ -488,79 +498,79 @@ public class HomeFragment extends Fragment {
         ProfilSekolah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Profile Sekolah");
+                destiny.ChangeActivity(getActivity(),"Profile Sekolah",Level);
             }
         });
         AgendaSekolah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Agenda Sekolah");
+                destiny.ChangeActivity(getActivity(),"Agenda Sekolah",Level);
             }
         });
         Prestasi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Prestasi");
+                destiny.ChangeActivity(getActivity(),"Prestasi",Level);
             }
         });
         PPDB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"PPDB");
+                destiny.ChangeActivity(getActivity(),"PPDB",Level);
             }
         });
         StrukturSekolah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Struktur Sekolah");
+                destiny.ChangeActivity(getActivity(),"Struktur Sekolah",Level);
             }
         });
         JadwalPelajaran.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Jadwal Pelajaran");
+                destiny.ChangeActivity(getActivity(),"Jadwal Pelajaran",Level);
             }
         });
         Evadir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Evadir");
+                destiny.ChangeActivity(getActivity(),"Evadir",Level);
             }
         });
         MediaPembelajaran.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Media Pembelajaran");
+                destiny.ChangeActivity(getActivity(),"Media Pembelajaran",Level);
             }
         });
         Tugas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Tugas");
+                destiny.ChangeActivity(getActivity(),"Tugas",Level);
             }
         });
         infoDinas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                destiny.ChangeActivity(getActivity(),"Dinas Pendidikan");
+                destiny.ChangeActivity(getActivity(),"Dinas Pendidikan",Level);
             }
         });
         KemisNyunda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Kemis Nyunda");
+                destiny.ChangeActivity(getActivity(),"Kemis Nyunda",Level);
             }
         });
         JumatNgaji.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Jumat Ngaji");
+                destiny.ChangeActivity(getActivity(),"Jumat Ngaji",Level);
             }
         });
         MediaInformasi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"Media Informasi");
+                destiny.ChangeActivity(getActivity(),"Media Informasi",Level);
             }
         });
         LihatSemua.setOnClickListener(new View.OnClickListener() {

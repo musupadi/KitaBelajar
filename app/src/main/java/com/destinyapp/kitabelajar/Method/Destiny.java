@@ -127,7 +127,7 @@ public class Destiny {
             }
         });
     }
-    public void ChangeActivity(Context ctx,String Class){
+    public void ChangeActivity(Context ctx,String Class,String id){
         if (Class.equals("Profile Sekolah")){
             Intent intent = new Intent(ctx, ProfileSekolahActivity.class);
             ctx.startActivity(intent);
@@ -144,20 +144,36 @@ public class Destiny {
             Intent intent = new Intent(ctx, StrukturOrganisasiActivity.class);
             ctx.startActivity(intent);
         }else if(Class.equals("Jadwal Pelajaran")){
-            Intent intent = new Intent(ctx, JadwalPelajaranActivity.class);
-            ctx.startActivity(intent);
+            if (id.equals("guest")){
+                Toast.makeText(ctx, "Mohon Login Untuk Mengakses Menu", Toast.LENGTH_SHORT).show();
+            }else{
+                Intent intent = new Intent(ctx, JadwalPelajaranActivity.class);
+                ctx.startActivity(intent);
+            }
         }else if(Class.equals("Evadir")){
-            Intent intent = new Intent(ctx, EvadirActivity.class);
-            ctx.startActivity(intent);
+            if (id.equals("guest")){
+                Toast.makeText(ctx, "Mohon Login Untuk Mengakses Menu", Toast.LENGTH_SHORT).show();
+            }else{
+                Intent intent = new Intent(ctx, EvadirActivity.class);
+                ctx.startActivity(intent);
+            }
         }else if(Class.equals("Media Pembelajaran")){
             Intent intent = new Intent(ctx, MediaPembelajaranActivity.class);
             ctx.startActivity(intent);
         }else if(Class.equals("Tugas")){
-            Intent intent = new Intent(ctx, TugasActivity.class);
-            ctx.startActivity(intent);
+            if (id.equals("guest")){
+                Toast.makeText(ctx, "Mohon Login Untuk Mengakses Menu", Toast.LENGTH_SHORT).show();
+            }else{
+                Intent intent = new Intent(ctx, TugasActivity.class);
+                ctx.startActivity(intent);
+            }
         }else if(Class.equals("E Raport")){
-            Intent intent = new Intent(ctx, ERaportActivity.class);
-            ctx.startActivity(intent);
+            if (id.equals("guest")){
+                Toast.makeText(ctx, "Mohon Login Untuk Mengakses Menu", Toast.LENGTH_SHORT).show();
+            }else{
+                Intent intent = new Intent(ctx, ERaportActivity.class);
+                ctx.startActivity(intent);
+            }
         }else if(Class.equals("Guru")){
             Intent intent = new Intent(ctx, GuruActivity.class);
             ctx.startActivity(intent);
@@ -165,14 +181,22 @@ public class Destiny {
             Intent intent = new Intent(ctx, BiayaAkademik.class);
             ctx.startActivity(intent);
         }else if(Class.equals("Pembayaran")){
-            Intent intent = new Intent(ctx, PembayaranActivity.class);
-            ctx.startActivity(intent);
+            if (id.equals("guest")){
+                Toast.makeText(ctx, "Mohon Login Untuk Mengakses Menu", Toast.LENGTH_SHORT).show();
+            }else{
+                Intent intent = new Intent(ctx, PembayaranActivity.class);
+                ctx.startActivity(intent);
+            }
         }else if(Class.equals("ROB")){
             Intent intent = new Intent(ctx, ROBDanaActivity.class);
             ctx.startActivity(intent);
         }else if(Class.equals("E-Raport")){
-            Intent intent = new Intent(ctx, ERaportActivity.class);
-            ctx.startActivity(intent);
+            if (id.equals("guest")){
+                Toast.makeText(ctx, "Mohon Login Untuk Mengakses Menu", Toast.LENGTH_SHORT).show();
+            }else{
+                Intent intent = new Intent(ctx, ERaportActivity.class);
+                ctx.startActivity(intent);
+            }
         }else if(Class.equals("Gallery")){
             Intent intent = new Intent(ctx, GalleryActivity.class);
             ctx.startActivity(intent);
@@ -192,7 +216,7 @@ public class Destiny {
         
     }
     public String BASE_URL(){
-        String BASE_URL = "http://kitabelajar.rumahcantikratu.com/";
+        String BASE_URL = "https://kitabelajar.penaedu.id/";
         return BASE_URL;
     }
     public String AUTH(String auth){

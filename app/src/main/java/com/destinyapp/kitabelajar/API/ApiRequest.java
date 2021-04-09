@@ -98,6 +98,9 @@ public interface ApiRequest {
     @GET("sponsor")
     Call<ResponseModel> Sponsor(@Header("Authorization") String authHeader);
 
+    @GET("sekolahguest")
+    Call<ResponseModel> SekolahGuest(@Query("lembaga") String lembaga);
+
     @Multipart
     @POST("izin")
     Call<ResponseModel> Izins(@Header("Authorization") String authHeader,

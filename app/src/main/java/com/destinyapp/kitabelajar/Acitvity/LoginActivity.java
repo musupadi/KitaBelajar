@@ -1,21 +1,35 @@
 package com.destinyapp.kitabelajar.Acitvity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.destinyapp.kitabelajar.API.ApiRequest;
 import com.destinyapp.kitabelajar.API.RetroServer;
+import com.destinyapp.kitabelajar.Adapter.AdapterKabarBerita;
+import com.destinyapp.kitabelajar.Adapter.AdapterSekolah;
+import com.destinyapp.kitabelajar.Method.Destiny;
+import com.destinyapp.kitabelajar.Model.DataModel;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
 import com.destinyapp.kitabelajar.R;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,6 +39,16 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     EditText user,password;
     DB_Helper dbHelper;
+    TextView FajarKontol;
+    //Dialog
+    Dialog dialog;
+    RecyclerView ImamKontol;
+    Spinner TitidUcupKecil;
+    Button FajarNangis,KontolFajar;
+    private List<DataModel> mItems = new ArrayList<>();
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mManager;
+    Destiny destiny;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +57,79 @@ public class LoginActivity extends AppCompatActivity {
         login = findViewById(R.id.btnLogin);
         user = findViewById(R.id.etEmail);
         password = findViewById(R.id.etPassword);
+        FajarKontol = findViewById(R.id.tvTamu);
+        //Dialog
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_pilih_sekolah);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.btn_rounded_white);
+
+        ImamKontol = dialog.findViewById(R.id.recycler);
+        TitidUcupKecil = dialog.findViewById(R.id.spLembaga);
+        FajarNangis = dialog.findViewById(R.id.btnSubmit);
+        KontolFajar = dialog.findViewById(R.id.btnCancel);
+        destiny = new Destiny();
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Logic();
+            }
+        });
+        FajarKontol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.show();
+            }
+        });
+        FajarNangis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        KontolFajar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.hide();
+            }
+        });
+        TitidUcupKecil.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                GetData(TitidUcupKecil.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+    private void GetData(String lembaga){
+        mManager = new LinearLayoutManager(LoginActivity.this, LinearLayoutManager.VERTICAL,false);
+        ImamKontol.setLayoutManager(mManager);
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> KabarBerita = api.SekolahGuest(lembaga);
+        KabarBerita.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    if (response.body().getStatusCode().equals("000")){
+                        mItems=response.body().getData();
+                        mAdapter = new AdapterSekolah(LoginActivity.this,mItems);
+                        ImamKontol.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
+                    }else{
+                        Toast.makeText(LoginActivity.this, "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(LoginActivity.this, "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
             }
         });
     }

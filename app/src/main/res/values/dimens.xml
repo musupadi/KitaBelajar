@@ -9,4 +9,6 @@
     <dimen name="text_medium">10sp</dimen>
     <dimen name="text_large">12sp</dimen>
     <dimen name="text_xtra_large">15sp</dimen>
+    <dimen name="text_titid_imam">18sp</dimen>
+    <dimen name="text_titid_baim">30sp</dimen>
 </resources>
