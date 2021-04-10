@@ -101,6 +101,9 @@ public interface ApiRequest {
     @GET("sekolahguest")
     Call<ResponseModel> SekolahGuest(@Query("lembaga") String lembaga);
 
+    @GET("banner")
+    Call<ResponseModel> Banner();
+
     @Multipart
     @POST("izin")
     Call<ResponseModel> Izins(@Header("Authorization") String authHeader,
@@ -109,6 +112,97 @@ public interface ApiRequest {
                              @Part("tanggalMulai") RequestBody tanggalMulai,
                              @Part("tanggalAkhir") RequestBody tanggalAkhir,
                              @Part MultipartBody.Part fileIzin);
+
+    @Multipart
+    @POST("ppdb")
+    Call<ResponseModel> PPDB(@Header("Authorization") String authHeader,
+                             @Part("nomorujian") RequestBody nomorujian,
+                             @Part("nisn") RequestBody nisn,
+                             @Part("nik") RequestBody nik,
+                             @Part("idsekolah") RequestBody idsekolah,
+                             @Part("namalengkapsiswa") RequestBody namalengkapsiswa,
+                             @Part("nomortelepon") RequestBody nomortelepon,
+                             @Part("jeniskelamin") RequestBody jeniskelamin,
+                             @Part("tempatlahir") RequestBody tempatlahir,
+                             @Part("tanggallahir") RequestBody tanggallahir,
+                             @Part("namaayahkandung") RequestBody namaayahkandung,
+                             @Part("namaibukandung") RequestBody namaibukandung,
+                             @Part("whatsappwaliortu") RequestBody whatsappwaliortu);
+
+    @Multipart
+    @POST("ppdb")
+    Call<ResponseModel> PPDB(@Header("Authorization") String authHeader,
+                              @Part("nomorujian") RequestBody nama_izin,
+                              @Part("nisn") RequestBody deskripsi_izin,
+                              @Part("nik") RequestBody tanggalMulai,
+                              @Part("idsekolah") RequestBody idsekolah,
+                              @Part("namalengkapsiswa") RequestBody namalengkapsiswa,
+                              @Part("nomortelepon") RequestBody nomortelepon,
+                              @Part("jeniskelamin") RequestBody jeniskelamin,
+                              @Part("tempatlahir") RequestBody tempatlahir,
+                              @Part("tanggallahir") RequestBody tanggallahir,
+                              @Part("namaayahkandung") RequestBody namaayahkandung,
+                              @Part("namaibukandung") RequestBody namaibukandung,
+                              @Part("whatsappwaliortu") RequestBody whatsappwaliortu,
+                              @Part MultipartBody.Part Foto1);
+
+    @Multipart
+    @POST("ppdb")
+    Call<ResponseModel> PPDB(@Header("Authorization") String authHeader,
+                             @Part("nomorujian") RequestBody nama_izin,
+                             @Part("nisn") RequestBody deskripsi_izin,
+                             @Part("nik") RequestBody tanggalMulai,
+                             @Part("idsekolah") RequestBody idsekolah,
+                             @Part("namalengkapsiswa") RequestBody namalengkapsiswa,
+                             @Part("nomortelepon") RequestBody nomortelepon,
+                             @Part("jeniskelamin") RequestBody jeniskelamin,
+                             @Part("tempatlahir") RequestBody tempatlahir,
+                             @Part("tanggallahir") RequestBody tanggallahir,
+                             @Part("namaayahkandung") RequestBody namaayahkandung,
+                             @Part("namaibukandung") RequestBody namaibukandung,
+                             @Part("whatsappwaliortu") RequestBody whatsappwaliortu,
+                             @Part MultipartBody.Part Foto1,
+                             @Part MultipartBody.Part foto2);
+
+    @Multipart
+    @POST("ppdb")
+    Call<ResponseModel> PPDB(@Header("Authorization") String authHeader,
+                             @Part("nomorujian") RequestBody nama_izin,
+                             @Part("nisn") RequestBody deskripsi_izin,
+                             @Part("nik") RequestBody tanggalMulai,
+                             @Part("idsekolah") RequestBody idsekolah,
+                             @Part("namalengkapsiswa") RequestBody namalengkapsiswa,
+                             @Part("nomortelepon") RequestBody nomortelepon,
+                             @Part("jeniskelamin") RequestBody jeniskelamin,
+                             @Part("tempatlahir") RequestBody tempatlahir,
+                             @Part("tanggallahir") RequestBody tanggallahir,
+                             @Part("namaayahkandung") RequestBody namaayahkandung,
+                             @Part("namaibukandung") RequestBody namaibukandung,
+                             @Part("whatsappwaliortu") RequestBody whatsappwaliortu,
+                             @Part MultipartBody.Part Foto1,
+                             @Part MultipartBody.Part foto2,
+                             @Part MultipartBody.Part Foto3);
+
+    @Multipart
+    @POST("ppdb")
+    Call<ResponseModel> PPDB(@Header("Authorization") String authHeader,
+                             @Part("nomorujian") RequestBody nama_izin,
+                             @Part("nisn") RequestBody deskripsi_izin,
+                             @Part("nik") RequestBody tanggalMulai,
+                             @Part("idsekolah") RequestBody idsekolah,
+                             @Part("namalengkapsiswa") RequestBody namalengkapsiswa,
+                             @Part("nomortelepon") RequestBody nomortelepon,
+                             @Part("jeniskelamin") RequestBody jeniskelamin,
+                             @Part("tempatlahir") RequestBody tempatlahir,
+                             @Part("tanggallahir") RequestBody tanggallahir,
+                             @Part("namaayahkandung") RequestBody namaayahkandung,
+                             @Part("namaibukandung") RequestBody namaibukandung,
+                             @Part("whatsappwaliortu") RequestBody whatsappwaliortu,
+                             @Part MultipartBody.Part Foto1,
+                             @Part MultipartBody.Part foto2,
+                             @Part MultipartBody.Part Foto3,
+                             @Part MultipartBody.Part Foto4);
+
     //FAJAR KONTOL
     @FormUrlEncoded
     @POST("info_dinas")

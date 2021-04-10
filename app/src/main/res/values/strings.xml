@@ -15,6 +15,7 @@
     <string name="tahun_didirikan">2015</string>
     <string name="status_tanah">-</string>
     <string name="luas_tanah">3000 Meter</string>
+    <string name="evadir">Pada menu ini, orang tua maupun siswa dapat memberikan penilaian terkait evaluasi pelayanan dan fasilitas di sekolah. Kirimkan kritik dan saran yang bersifat membangun ya agar bisa diperbaiki lebih baik lagi !</string>
     <string-array name="Izin">
         <item>Sakit Istirahat Dirumah</item>
         <item>Izin Dengan Surat Dokter</item>

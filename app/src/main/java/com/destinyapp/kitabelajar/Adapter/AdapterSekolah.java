@@ -91,7 +91,7 @@ public class AdapterSekolah extends RecyclerView.Adapter<AdapterSekolah.HolderDa
 
     private void Logic(final String user, final String id){
         final ProgressDialog pd = new ProgressDialog(ctx);
-        pd.setMessage("Sedang Mencoba Login");
+        pd.setMessage("Sedang Memasuki Halaman Sekolah");
         pd.show();
         pd.setCancelable(false);
         dbHelper = new DB_Helper(ctx);

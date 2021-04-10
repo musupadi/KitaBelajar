@@ -22,6 +22,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.destinyapp.kitabelajar.API.ApiRequest;
 import com.destinyapp.kitabelajar.API.FajarKontol;
@@ -32,8 +33,10 @@ import com.destinyapp.kitabelajar.Acitvity.MainActivity;
 import com.destinyapp.kitabelajar.Acitvity.SponsorActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.AgendaSekolah.AgendaSekolahActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.GalleryActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.GuruActivity;
 import com.destinyapp.kitabelajar.Adapter.AdapterGallery;
 import com.destinyapp.kitabelajar.Adapter.AdapterGalleryHome;
+import com.destinyapp.kitabelajar.Adapter.AdapterGuru;
 import com.destinyapp.kitabelajar.Adapter.AdapterInfoPublik;
 import com.destinyapp.kitabelajar.Adapter.AdapterKabarBerita;
 import com.destinyapp.kitabelajar.Adapter.AdapterSponsor;
@@ -68,8 +71,13 @@ public class HomeFragment extends Fragment {
     DB_Helper dbHelper;
     String Username,Password,Nama,Token,Level,Photo;
     RecyclerView recycler,recyclerKabar,recylerSponsor,recyclerGallery;
+    LottieAnimationView AHeader,ABerita,ASponsor;
+    LinearLayout LAHeader,LABerita,LASponsor;
+    TextView TAHeader,TABerita,TASponsor;
     LinearLayout infoDinas;
     private List<DataModel> mItems = new ArrayList<>();
+    private List<DataModel> mItems2 = new ArrayList<>();
+    private List<DataModel> mItems3 = new ArrayList<>();
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mManager;
     LinearLayout LihatSemuaKabarBerita,LihatSemuaSponsor,LihatSemuaGallery;
@@ -123,6 +131,19 @@ public class HomeFragment extends Fragment {
         KemisNyunda = view.findViewById(R.id.linearKemisNyunda);
         JumatNgaji = view.findViewById(R.id.linearJumatNgaji);
         MediaInformasi = view.findViewById(R.id.linearMediaInformasi);
+
+        //ANIM
+        AHeader = view.findViewById(R.id.lottieHeader);
+        LAHeader = view.findViewById(R.id.linearAHeader);
+        TAHeader = view.findViewById(R.id.tvAHeader);
+        ABerita = view.findViewById(R.id.lottieBerita);
+        LABerita = view.findViewById(R.id.linearABerita);
+        TABerita = view.findViewById(R.id.tvABerita);
+        ASponsor = view.findViewById(R.id.lottieSponsor);
+        LASponsor = view.findViewById(R.id.linearASponsor);
+        TASponsor = view.findViewById(R.id.tvASponsor);
+
+
         dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.dialog_menu_all);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -284,6 +305,10 @@ public class HomeFragment extends Fragment {
     private void Sponsor(){
         mManager = new GridLayoutManager(getActivity(),3);
         recylerSponsor.setLayoutManager(mManager);
+        LASponsor.setVisibility(View.VISIBLE);
+        TASponsor.setVisibility(View.GONE);
+        ASponsor.setAnimation("loading.json");
+        ASponsor.playAnimation();
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
         Call<ResponseModel> sponsor = api.Sponsor(destiny.AUTH(Token));
         sponsor.enqueue(new Callback<ResponseModel>() {
@@ -292,9 +317,17 @@ public class HomeFragment extends Fragment {
                 try {
                     if (response.body().getStatusCode().equals("000")){
                         mItems=response.body().getData();
-                        mAdapter = new AdapterSponsor(getActivity(),mItems);
-                        recylerSponsor.setAdapter(mAdapter);
-                        mAdapter.notifyDataSetChanged();
+                        if (mItems.size()<1){
+                            TASponsor.setVisibility(View.VISIBLE);
+                            TASponsor.setText("Sponsor Belum Ada");
+                            ASponsor.setAnimation("notfound.json");
+                            ASponsor.playAnimation();
+                        }else{
+                            LASponsor.setVisibility(View.GONE);
+                            mAdapter = new AdapterSponsor(getActivity(),mItems);
+                            recylerSponsor.setAdapter(mAdapter);
+                            mAdapter.notifyDataSetChanged();
+                        }
                     }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
                         destiny.AutoLogin(Username,Password,getActivity());
                         Header();
@@ -319,16 +352,28 @@ public class HomeFragment extends Fragment {
     private void Header(){
         mManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         recycler.setLayoutManager(mManager);
-        ApiRequest api = FajarKontol.getClient().create(ApiRequest.class);
-        Call<ResponseModel> KabarBerita = api.InfoPublik();
+        LAHeader.setVisibility(View.VISIBLE);
+        TAHeader.setVisibility(View.GONE);
+        AHeader.setAnimation("loading.json");
+        AHeader.playAnimation();
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> KabarBerita = api.Banner();
         KabarBerita.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
                     mItems=response.body().getData();
-                    mAdapter = new AdapterInfoPublik(getActivity(),mItems);
-                    recycler.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
+                    if (mItems.size()<1){
+                        TAHeader.setVisibility(View.VISIBLE);
+                        TAHeader.setText("Banner Belum Ada");
+                        AHeader.setAnimation("notfound.json");
+                        AHeader.playAnimation();
+                    }else{
+                        LAHeader.setVisibility(View.GONE);
+                        mAdapter = new AdapterInfoPublik(getActivity(),mItems);
+                        recycler.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
+                    }
                 }catch (Exception e){
                     Toast.makeText(getActivity(), "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
                     dbHelper.Logout();
@@ -347,6 +392,10 @@ public class HomeFragment extends Fragment {
     private void KabarBerita(){
         mManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
         recyclerKabar.setLayoutManager(mManager);
+        LABerita.setVisibility(View.VISIBLE);
+        TABerita.setVisibility(View.GONE);
+        ABerita.setAnimation("loading.json");
+        ABerita.playAnimation();
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
         Call<ResponseModel> KabarBerita = api.KabarSekolah(destiny.AUTH(Token));
         KabarBerita.enqueue(new Callback<ResponseModel>() {
@@ -355,9 +404,17 @@ public class HomeFragment extends Fragment {
                 try {
                     if (response.body().getStatusCode().equals("000")){
                         mItems=response.body().getData();
-                        mAdapter = new AdapterKabarBerita(getActivity(),mItems);
-                        recyclerKabar.setAdapter(mAdapter);
-                        mAdapter.notifyDataSetChanged();
+                        if (mItems.size()<1){
+                            TABerita.setVisibility(View.VISIBLE);
+                            TABerita.setText("Berita Belum Ada");
+                            ABerita.setAnimation("notfound.json");
+                            ABerita.playAnimation();
+                        }else{
+                            LABerita.setVisibility(View.GONE);
+                            mAdapter = new AdapterKabarBerita(getActivity(),mItems);
+                            recyclerKabar.setAdapter(mAdapter);
+                            mAdapter.notifyDataSetChanged();
+                        }
                     }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
                         destiny.AutoLogin(Username,Password,getActivity());
                         KabarBerita();

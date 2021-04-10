@@ -66,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
 
         ImamKontol = dialog.findViewById(R.id.recycler);
         TitidUcupKecil = dialog.findViewById(R.id.spLembaga);
-        FajarNangis = dialog.findViewById(R.id.btnSubmit);
         KontolFajar = dialog.findViewById(R.id.btnCancel);
         destiny = new Destiny();
         login.setOnClickListener(new View.OnClickListener() {
@@ -79,12 +78,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dialog.show();
-            }
-        });
-        FajarNangis.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
             }
         });
         KontolFajar.setOnClickListener(new View.OnClickListener() {

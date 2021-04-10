@@ -51,13 +51,42 @@
                             android:layout_weight="5"
                             android:src="@drawable/notif" />
                     </LinearLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerHeader"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="200dp">
+                        android:layout_height="wrap_content">
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerHeader"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp">
 
-                    </androidx.recyclerview.widget.RecyclerView>
+                        </androidx.recyclerview.widget.RecyclerView>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:orientation="vertical"
+                            android:id="@+id/linearAHeader">
+                            <com.airbnb.lottie.LottieAnimationView
+                                android:id="@+id/lottieHeader"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:lottie_loop="true"
+                                app:lottie_fileName="loading.json"
+                                app:lottie_autoPlay="true"
+                                android:layout_weight="1"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:text="Loading"
+                                android:gravity="center|top"
+                                android:textColor="@color/colorBlack"
+                                android:fontFamily="@font/gotham"
+                                android:textSize="@dimen/text_titid_imam"
+                                android:id="@+id/tvAHeader"/>
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
 
                     <LinearLayout
                         android:id="@+id/linearInfoDinasPendidikan"
@@ -729,12 +758,41 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/gradient_background"/>
-                    <androidx.recyclerview.widget.RecyclerView
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/recyclerKabarBerita">
+                        android:layout_height="wrap_content">
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:id="@+id/recyclerKabarBerita">
 
-                    </androidx.recyclerview.widget.RecyclerView>
+                        </androidx.recyclerview.widget.RecyclerView>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:orientation="vertical"
+                            android:id="@+id/linearABerita">
+                            <com.airbnb.lottie.LottieAnimationView
+                                android:id="@+id/lottieBerita"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                app:lottie_loop="true"
+                                app:lottie_fileName="loading.json"
+                                app:lottie_autoPlay="true"
+                                android:layout_weight="1"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:text="Loading"
+                                android:gravity="center|top"
+                                android:textColor="@color/colorBlack"
+                                android:fontFamily="@font/gotham"
+                                android:textSize="@dimen/text_titid_imam"
+                                android:id="@+id/tvABerita"/>
+
+                        </LinearLayout>
+                    </RelativeLayout>
                     <LinearLayout
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="10dp"
@@ -787,12 +845,42 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/gradient_background"/>
-                    <androidx.recyclerview.widget.RecyclerView
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/recyclerSponsor">
+                        android:layout_height="wrap_content">
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/recyclerSponsor">
 
-                    </androidx.recyclerview.widget.RecyclerView>
+                        </androidx.recyclerview.widget.RecyclerView>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:orientation="vertical"
+                            android:id="@+id/linearASponsor">
+                            <com.airbnb.lottie.LottieAnimationView
+                                android:id="@+id/lottieSponsor"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:lottie_loop="true"
+                                app:lottie_fileName="loading.json"
+                                app:lottie_autoPlay="true"
+                                android:layout_weight="1"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:text="Loading"
+                                android:gravity="center|top"
+                                android:textColor="@color/colorBlack"
+                                android:fontFamily="@font/gotham"
+                                android:textSize="@dimen/text_titid_imam"
+                                android:id="@+id/tvASponsor"/>
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
 
                 </LinearLayout>
 

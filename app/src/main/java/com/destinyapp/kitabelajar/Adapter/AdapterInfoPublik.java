@@ -46,19 +46,23 @@ public class AdapterInfoPublik extends RecyclerView.Adapter<AdapterInfoPublik.Ho
     public void onBindViewHolder(@NonNull final HolderData holderData, int posistion) {
         destiny = new Destiny();
         final DataModel dm = mList.get(posistion);
-        Glide.with(ctx)
-                .load(destiny.BASE_URL()+dm.getCover_info_publik())
-                .into(holderData.Image);
+        if (dm.getFile_foto_banner().equals("") || dm.getFile_foto_banner().isEmpty() || dm.getFile_foto_banner().equals("/files/")){
+            holderData.Image.setImageResource(R.drawable.kita_belajar);
+        }else{
+            Glide.with(ctx)
+                    .load(destiny.BASE_URL()+dm.getFile_foto_banner())
+                    .into(holderData.Image);
+        }
         holderData.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(ctx, DetailInfoPublik.class);
-                i.putExtra("JUDUL", dm.getJudul_info_publik());
-                i.putExtra("ISI",dm.getIsi_info_publik());
-                i.putExtra("TANGGAL",dm.getCreated_at_info_publik());
-                i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getCover_info_publik());
-                i.putExtra("YOUTUBE",dm.getLink_youtube_info_publik());
-                ctx.startActivity(i);
+//                Intent i = new Intent(ctx, DetailInfoPublik.class);
+//                i.putExtra("JUDUL", dm.getJudul_info_publik());
+//                i.putExtra("ISI",dm.getIsi_info_publik());
+//                i.putExtra("TANGGAL",dm.getCreated_at_info_publik());
+//                i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getCover_info_publik());
+//                i.putExtra("YOUTUBE",dm.getLink_youtube_info_publik());
+//                ctx.startActivity(i);
             }
         });
     }

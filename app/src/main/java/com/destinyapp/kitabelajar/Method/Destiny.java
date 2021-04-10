@@ -127,6 +127,9 @@ public class Destiny {
             }
         });
     }
+    public void Toast(Context context,String message){
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
     public void ChangeActivity(Context ctx,String Class,String id){
         if (Class.equals("Profile Sekolah")){
             Intent intent = new Intent(ctx, ProfileSekolahActivity.class);
@@ -138,8 +141,12 @@ public class Destiny {
             Intent intent = new Intent(ctx, PrestasiActivity.class);
             ctx.startActivity(intent);
         }else if(Class.equals("PPDB")){
-            Intent intent = new Intent(ctx, FormulirPPDBActivity.class);
-            ctx.startActivity(intent);
+            if (id.equals("guest")){
+                Intent intent = new Intent(ctx, FormulirPPDBActivity.class);
+                ctx.startActivity(intent);
+            }else{
+                Toast.makeText(ctx, "Harap Logout dahulu dan menggunakan Akun Guest untuk Mendaftar PPDB", Toast.LENGTH_SHORT).show();
+            }
         }else if(Class.equals("Struktur Sekolah")){
             Intent intent = new Intent(ctx, StrukturOrganisasiActivity.class);
             ctx.startActivity(intent);

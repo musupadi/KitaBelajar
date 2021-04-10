@@ -494,6 +494,22 @@ public class DataModel {
     @Expose
     public String created_at_media_informasi;
 
+    //Banner
+    @SerializedName("id_banner")
+    @Expose
+    public String id_banner;
+
+    @SerializedName("nama_banner")
+    @Expose
+    public String nama_banner;
+
+    @SerializedName("file_foto_banner")
+    @Expose
+    public String file_foto_banner;
+
+    @SerializedName("created_at_banner")
+    @Expose
+    public String created_at_banner;
 
     //GETTER SETTER
     public String getAccessToken() {
@@ -1428,5 +1444,37 @@ public class DataModel {
 
     public void setCreated_at_media_informasi(String created_at_media_informasi) {
         this.created_at_media_informasi = created_at_media_informasi;
+    }
+
+    public String getId_banner() {
+        return id_banner;
+    }
+
+    public void setId_banner(String id_banner) {
+        this.id_banner = id_banner;
+    }
+
+    public String getNama_banner() {
+        return nama_banner;
+    }
+
+    public void setNama_banner(String nama_banner) {
+        this.nama_banner = nama_banner;
+    }
+
+    public String getFile_foto_banner() {
+        return file_foto_banner;
+    }
+
+    public void setFile_foto_banner(String file_foto_banner) {
+        this.file_foto_banner = file_foto_banner;
+    }
+
+    public String getCreated_at_banner() {
+        return created_at_banner;
+    }
+
+    public void setCreated_at_banner(String created_at_banner) {
+        this.created_at_banner = created_at_banner;
     }
 }

@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -27,9 +28,16 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.destinyapp.kitabelajar.API.ApiRequest;
+import com.destinyapp.kitabelajar.API.RetroServer;
+import com.destinyapp.kitabelajar.Acitvity.HomeActivity;
+import com.destinyapp.kitabelajar.Acitvity.LoginActivity;
+import com.destinyapp.kitabelajar.Acitvity.MainActivity;
 import com.destinyapp.kitabelajar.BuildConfig;
 import com.destinyapp.kitabelajar.Method.Destiny;
+import com.destinyapp.kitabelajar.Model.ResponseModel;
 import com.destinyapp.kitabelajar.R;
+import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,12 +47,21 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Logger;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class FormulirPPDBActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
     LinearLayout LTanggalLahir;
     TextView TanggalLahir;
     String tanggal;
     Destiny destiny;
     Button uploadAkta,uploadKK,uploadDataPribadi,uploadFoto;
+    TextView form;
+    ImageView LogoSekolah;
     //Jenis Kelamin
     RadioButton Laki,Perempuan;
     Boolean Kelamin = false;
@@ -66,12 +83,18 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
     LinearLayout lGambar3;
     ImageView ivGambar3;
     TextView tvGambar3;
+    Button simpan;
     //Foto
     RadioButton AdaFoto,TidakAdaFoto;
     Boolean Foto = false;
     LinearLayout lGambar4;
     ImageView ivGambar4;
     TextView tvGambar4;
+
+    DB_Helper dbHelper;
+    String Username,Password,Nama,Token,Level,Photo;
+
+    EditText NomorUjian,NISN,NIK,NamaLengkap,NomorTelpon,TempatLahir,NamaAyah,NamaIbu,Telpon;
 
     //Dellaroy Logic
     private static final int REQUEST_TAKE_PHOTO = 0;
@@ -108,6 +131,33 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulir_p_p_d_b);
         destiny = new Destiny();
+        dbHelper = new DB_Helper(this);
+        Cursor cursor = dbHelper.checkUser();
+        if (cursor.getCount()>0){
+            while (cursor.moveToNext()){
+                Username = cursor.getString(0);
+                Password = cursor.getString(1);
+                Nama = cursor.getString(2);
+                Token = cursor.getString(3);
+                Level = cursor.getString(4);
+                Photo = cursor.getString(5);
+            }
+        }
+        //
+        form = findViewById(R.id.tvForm);
+        LogoSekolah = findViewById(R.id.ivLogoSekolah);
+        //Data Edit Text
+        NomorUjian = findViewById(R.id.etNomorUjian);
+        NISN = findViewById(R.id.etNISN);
+        NIK = findViewById(R.id.etNIK);
+        NamaLengkap = findViewById(R.id.etNamaLengkapSiswa);
+        NomorTelpon = findViewById(R.id.etNomorTelpon);
+        TempatLahir = findViewById(R.id.etTempatLahir);
+        NamaAyah = findViewById(R.id.etNamaAyahKandung);
+        NamaIbu = findViewById(R.id.etNamaIbuKandung);
+        Telpon = findViewById(R.id.etNoTelponOrtu);
+
+        simpan = findViewById(R.id.btnSimpan);
         LTanggalLahir = findViewById(R.id.linearTanggalLahir);
         TanggalLahir = findViewById(R.id.tvTanggalLahir);
         uploadAkta = findViewById(R.id.btnUploadAkta);
@@ -151,6 +201,7 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                 showDatePicker();
             }
         });
+        GetSekolah();
         TanggalLahir.setText(destiny.thisDay());
         LogicKelamin();
         LogicAkta();
@@ -273,6 +324,1014 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         .show();
             }
         });
+        simpan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Checker().equals("OK")){
+                    String k = "L";
+                    if (!Kelamin){
+                        k="P";
+                    }
+                    if (!Akta && !KK && !DataPribadi && !Foto){
+                        //0000
+                        final ProgressDialog pd = new ProgressDialog(FormulirPPDBActivity.this);
+                        pd.setMessage("Sedang Memasukan Data Peserta");
+                        pd.show();
+                        pd.setCancelable(false);
+                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                        Call<ResponseModel> FormPPDB = api.PPDB(
+                                destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Password),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaLengkap.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorTelpon.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),k),
+                                RequestBody.create(MediaType.parse("text/plain"),TempatLahir.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),tanggal),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Telpon.getText().toString())
+                        );
+                        FormPPDB.enqueue(new Callback<ResponseModel>() {
+                            @Override
+                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                                try {
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                    if (response.body().getStatusCode().equals("000")){
+                                        Intent intent = new Intent(FormulirPPDBActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }catch (Exception e){
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                                pd.hide();
+                                Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+//                    File fileGallery1 = new File(postGallery1);
+//                    RequestBody fileReqBodyGallery1 = RequestBody.create(MediaType.parse("image/*"), fileGallery1);
+//                    MultipartBody.Part partGallery1 = MultipartBody.Part.createFormData("file_syarat[]", fileGallery1.getName(), fileReqBodyGallery1);
+
+
+                    }else if (!Akta && !KK && !DataPribadi && Foto){
+                        //0001
+                        final ProgressDialog pd = new ProgressDialog(FormulirPPDBActivity.this);
+                        pd.setMessage("Sedang Memasukan Data Peserta");
+                        pd.show();
+                        pd.setCancelable(false);
+
+                        File file4 = new File(postFoto4);
+                        RequestBody fileReqBody4 = RequestBody.create(MediaType.parse("image/*"), file4);
+                        MultipartBody.Part PasFoto = MultipartBody.Part.createFormData("pasfoto3x4", file4.getName(), fileReqBody4);
+
+                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                        Call<ResponseModel> FormPPDB = api.PPDB(
+                                destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Password),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaLengkap.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorTelpon.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),k),
+                                RequestBody.create(MediaType.parse("text/plain"),TempatLahir.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),tanggal),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Telpon.getText().toString()),
+                                PasFoto
+                        );
+                        FormPPDB.enqueue(new Callback<ResponseModel>() {
+                            @Override
+                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                                try {
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                    if (response.body().getStatusCode().equals("000")){
+                                        Intent intent = new Intent(FormulirPPDBActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }catch (Exception e){
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                                pd.hide();
+                                Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else if (!Akta && !KK && DataPribadi && !Foto){
+                        //0010
+                        final ProgressDialog pd = new ProgressDialog(FormulirPPDBActivity.this);
+                        pd.setMessage("Sedang Memasukan Data Peserta");
+                        pd.show();
+                        pd.setCancelable(false);
+
+                        File file3 = new File(postFoto3);
+                        RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+                        MultipartBody.Part DataPribadis = MultipartBody.Part.createFormData("datapribadisiswa", file3.getName(), fileReqBody3);
+
+//                        File file4 = new File(postFoto4);
+//                        RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file4);
+//                        MultipartBody.Part PasFoto = MultipartBody.Part.createFormData("pasfoto3x4", file4.getName(), fileReqBody);
+
+                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                        Call<ResponseModel> FormPPDB = api.PPDB(
+                                destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Password),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaLengkap.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorTelpon.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),k),
+                                RequestBody.create(MediaType.parse("text/plain"),TempatLahir.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),tanggal),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Telpon.getText().toString()),
+                                DataPribadis
+                        );
+                        FormPPDB.enqueue(new Callback<ResponseModel>() {
+                            @Override
+                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                                try {
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                    if (response.body().getStatusCode().equals("000")){
+                                        Intent intent = new Intent(FormulirPPDBActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }catch (Exception e){
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                                pd.hide();
+                                Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else if (!Akta && !KK && DataPribadi && Foto){
+                        //0011
+                        final ProgressDialog pd = new ProgressDialog(FormulirPPDBActivity.this);
+                        pd.setMessage("Sedang Memasukan Data Peserta");
+                        pd.show();
+                        pd.setCancelable(false);
+
+                        File file3 = new File(postFoto3);
+                        RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+                        MultipartBody.Part DataPribadis = MultipartBody.Part.createFormData("datapribadisiswa", file3.getName(), fileReqBody3);
+
+                        File file4 = new File(postFoto4);
+                        RequestBody fileReqBody4 = RequestBody.create(MediaType.parse("image/*"), file4);
+                        MultipartBody.Part PasFoto = MultipartBody.Part.createFormData("pasfoto3x4", file4.getName(), fileReqBody4);
+
+                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                        Call<ResponseModel> FormPPDB = api.PPDB(
+                                destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Password),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaLengkap.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorTelpon.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),k),
+                                RequestBody.create(MediaType.parse("text/plain"),TempatLahir.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),tanggal),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Telpon.getText().toString()),
+                                DataPribadis,
+                                PasFoto
+                        );
+                        FormPPDB.enqueue(new Callback<ResponseModel>() {
+                            @Override
+                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                                try {
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                    if (response.body().getStatusCode().equals("000")){
+                                        Intent intent = new Intent(FormulirPPDBActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }else{
+                                        Toast.makeText(FormulirPPDBActivity.this, "NISN Sudah Terdaftar", Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (Exception e){
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                                pd.hide();
+                                Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else if (!Akta && KK && !DataPribadi && !Foto){
+                        //0100
+                        final ProgressDialog pd = new ProgressDialog(FormulirPPDBActivity.this);
+                        pd.setMessage("Sedang Memasukan Data Peserta");
+                        pd.show();
+                        pd.setCancelable(false);
+
+                        File file2 = new File(postFoto2);
+                        RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
+                        MultipartBody.Part KartuKeluarga = MultipartBody.Part.createFormData("kartukeluargafotocopy", file2.getName(), fileReqBody2);
+
+//                        File file3 = new File(postFoto3);
+//                        RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+//                        MultipartBody.Part DataPribadis = MultipartBody.Part.createFormData("datapribadisiswa", file3.getName(), fileReqBody3);
+//
+//                        File file4 = new File(postFoto4);
+//                        RequestBody fileReqBody4 = RequestBody.create(MediaType.parse("image/*"), file4);
+//                        MultipartBody.Part PasFoto = MultipartBody.Part.createFormData("pasfoto3x4", file4.getName(), fileReqBody4);
+
+                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                        Call<ResponseModel> FormPPDB = api.PPDB(
+                                destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Password),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaLengkap.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorTelpon.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),k),
+                                RequestBody.create(MediaType.parse("text/plain"),TempatLahir.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),tanggal),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Telpon.getText().toString()),
+                                KartuKeluarga
+                        );
+                        FormPPDB.enqueue(new Callback<ResponseModel>() {
+                            @Override
+                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                                try {
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                    if (response.body().getStatusCode().equals("000")){
+                                        Intent intent = new Intent(FormulirPPDBActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }else{
+                                        Toast.makeText(FormulirPPDBActivity.this, "NISN Sudah Terdaftar", Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (Exception e){
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                                pd.hide();
+                                Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else if (!Akta && KK && !DataPribadi && Foto){
+                        //0101
+                        final ProgressDialog pd = new ProgressDialog(FormulirPPDBActivity.this);
+                        pd.setMessage("Sedang Memasukan Data Peserta");
+                        pd.show();
+                        pd.setCancelable(false);
+
+                        File file2 = new File(postFoto2);
+                        RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
+                        MultipartBody.Part KartuKeluarga = MultipartBody.Part.createFormData("kartukeluargafotocopy", file2.getName(), fileReqBody2);
+
+//                        File file3 = new File(postFoto3);
+//                        RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+//                        MultipartBody.Part DataPribadis = MultipartBody.Part.createFormData("datapribadisiswa", file3.getName(), fileReqBody3);
+//
+                        File file4 = new File(postFoto4);
+                        RequestBody fileReqBody4 = RequestBody.create(MediaType.parse("image/*"), file4);
+                        MultipartBody.Part PasFoto = MultipartBody.Part.createFormData("pasfoto3x4", file4.getName(), fileReqBody4);
+
+                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                        Call<ResponseModel> FormPPDB = api.PPDB(
+                                destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Password),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaLengkap.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorTelpon.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),k),
+                                RequestBody.create(MediaType.parse("text/plain"),TempatLahir.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),tanggal),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Telpon.getText().toString()),
+                                KartuKeluarga,
+                                PasFoto
+                        );
+                        FormPPDB.enqueue(new Callback<ResponseModel>() {
+                            @Override
+                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                                try {
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                    if (response.body().getStatusCode().equals("000")){
+                                        Intent intent = new Intent(FormulirPPDBActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }else{
+                                        Toast.makeText(FormulirPPDBActivity.this, "NISN Sudah Terdaftar", Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (Exception e){
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                                pd.hide();
+                                Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else if (!Akta && KK && DataPribadi && !Foto){
+                        //0110
+                        final ProgressDialog pd = new ProgressDialog(FormulirPPDBActivity.this);
+                        pd.setMessage("Sedang Memasukan Data Peserta");
+                        pd.show();
+                        pd.setCancelable(false);
+
+                        File file2 = new File(postFoto2);
+                        RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
+                        MultipartBody.Part KartuKeluarga = MultipartBody.Part.createFormData("kartukeluargafotocopy", file2.getName(), fileReqBody2);
+
+                        File file3 = new File(postFoto3);
+                        RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+                        MultipartBody.Part DataPribadis = MultipartBody.Part.createFormData("datapribadisiswa", file3.getName(), fileReqBody3);
+//
+//                        File file4 = new File(postFoto4);
+//                        RequestBody fileReqBody4 = RequestBody.create(MediaType.parse("image/*"), file4);
+//                        MultipartBody.Part PasFoto = MultipartBody.Part.createFormData("pasfoto3x4", file4.getName(), fileReqBody4);
+
+                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                        Call<ResponseModel> FormPPDB = api.PPDB(
+                                destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Password),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaLengkap.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorTelpon.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),k),
+                                RequestBody.create(MediaType.parse("text/plain"),TempatLahir.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),tanggal),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Telpon.getText().toString()),
+                                KartuKeluarga,
+                                DataPribadis
+                        );
+                        FormPPDB.enqueue(new Callback<ResponseModel>() {
+                            @Override
+                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                                try {
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                    if (response.body().getStatusCode().equals("000")){
+                                        Intent intent = new Intent(FormulirPPDBActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }else{
+                                        Toast.makeText(FormulirPPDBActivity.this, "NISN Sudah Terdaftar", Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (Exception e){
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                                pd.hide();
+                                Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else if (!Akta && KK && DataPribadi && Foto){
+                        //0111
+                        final ProgressDialog pd = new ProgressDialog(FormulirPPDBActivity.this);
+                        pd.setMessage("Sedang Memasukan Data Peserta");
+                        pd.show();
+                        pd.setCancelable(false);
+
+                        File file2 = new File(postFoto2);
+                        RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
+                        MultipartBody.Part KartuKeluarga = MultipartBody.Part.createFormData("kartukeluargafotocopy", file2.getName(), fileReqBody2);
+
+                        File file3 = new File(postFoto3);
+                        RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+                        MultipartBody.Part DataPribadis = MultipartBody.Part.createFormData("datapribadisiswa", file3.getName(), fileReqBody3);
+//
+                        File file4 = new File(postFoto4);
+                        RequestBody fileReqBody4 = RequestBody.create(MediaType.parse("image/*"), file4);
+                        MultipartBody.Part PasFoto = MultipartBody.Part.createFormData("pasfoto3x4", file4.getName(), fileReqBody4);
+
+                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                        Call<ResponseModel> FormPPDB = api.PPDB(
+                                destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Password),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaLengkap.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorTelpon.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),k),
+                                RequestBody.create(MediaType.parse("text/plain"),TempatLahir.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),tanggal),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Telpon.getText().toString()),
+                                KartuKeluarga,
+                                DataPribadis,
+                                PasFoto
+                        );
+                        FormPPDB.enqueue(new Callback<ResponseModel>() {
+                            @Override
+                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                                try {
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                    if (response.body().getStatusCode().equals("000")){
+                                        Intent intent = new Intent(FormulirPPDBActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }else{
+                                        Toast.makeText(FormulirPPDBActivity.this, "NISN Sudah Terdaftar", Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (Exception e){
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                                pd.hide();
+                                Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else if (Akta && !KK && !DataPribadi && !Foto){
+                        //1000
+                        final ProgressDialog pd = new ProgressDialog(FormulirPPDBActivity.this);
+                        pd.setMessage("Sedang Memasukan Data Peserta");
+                        pd.show();
+                        pd.setCancelable(false);
+
+                        File file1 = new File(postFoto1);
+                        RequestBody fileReqBody1 = RequestBody.create(MediaType.parse("image/*"), file1);
+                        MultipartBody.Part AktaKelahiran = MultipartBody.Part.createFormData("aktakelahiranfotocopy", file1.getName(), fileReqBody1);
+
+//                        File file2 = new File(postFoto2);
+//                        RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
+//                        MultipartBody.Part KartuKeluarga = MultipartBody.Part.createFormData("kartukeluargafotocopy", file2.getName(), fileReqBody2);
+//
+//                        File file3 = new File(postFoto3);
+//                        RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+//                        MultipartBody.Part DataPribadis = MultipartBody.Part.createFormData("datapribadisiswa", file3.getName(), fileReqBody3);
+//
+//                        File file4 = new File(postFoto4);
+//                        RequestBody fileReqBody4 = RequestBody.create(MediaType.parse("image/*"), file4);
+//                        MultipartBody.Part PasFoto = MultipartBody.Part.createFormData("pasfoto3x4", file4.getName(), fileReqBody4);
+
+                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                        Call<ResponseModel> FormPPDB = api.PPDB(
+                                destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Password),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaLengkap.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorTelpon.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),k),
+                                RequestBody.create(MediaType.parse("text/plain"),TempatLahir.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),tanggal),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Telpon.getText().toString()),
+                                AktaKelahiran
+                        );
+                        FormPPDB.enqueue(new Callback<ResponseModel>() {
+                            @Override
+                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                                try {
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                    if (response.body().getStatusCode().equals("000")){
+                                        Intent intent = new Intent(FormulirPPDBActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }else{
+                                        Toast.makeText(FormulirPPDBActivity.this, "NISN Sudah Terdaftar", Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (Exception e){
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                                pd.hide();
+                                Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else if (Akta && !KK && !DataPribadi && Foto){
+                        //1001
+                        final ProgressDialog pd = new ProgressDialog(FormulirPPDBActivity.this);
+                        pd.setMessage("Sedang Memasukan Data Peserta");
+                        pd.show();
+                        pd.setCancelable(false);
+
+                        File file1 = new File(postFoto1);
+                        RequestBody fileReqBody1 = RequestBody.create(MediaType.parse("image/*"), file1);
+                        MultipartBody.Part AktaKelahiran = MultipartBody.Part.createFormData("aktakelahiranfotocopy", file1.getName(), fileReqBody1);
+
+//                        File file2 = new File(postFoto2);
+//                        RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
+//                        MultipartBody.Part KartuKeluarga = MultipartBody.Part.createFormData("kartukeluargafotocopy", file2.getName(), fileReqBody2);
+//
+//                        File file3 = new File(postFoto3);
+//                        RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+//                        MultipartBody.Part DataPribadis = MultipartBody.Part.createFormData("datapribadisiswa", file3.getName(), fileReqBody3);
+//
+                        File file4 = new File(postFoto4);
+                        RequestBody fileReqBody4 = RequestBody.create(MediaType.parse("image/*"), file4);
+                        MultipartBody.Part PasFoto = MultipartBody.Part.createFormData("pasfoto3x4", file4.getName(), fileReqBody4);
+
+                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                        Call<ResponseModel> FormPPDB = api.PPDB(
+                                destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Password),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaLengkap.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorTelpon.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),k),
+                                RequestBody.create(MediaType.parse("text/plain"),TempatLahir.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),tanggal),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Telpon.getText().toString()),
+                                AktaKelahiran,
+                                PasFoto
+                        );
+                        FormPPDB.enqueue(new Callback<ResponseModel>() {
+                            @Override
+                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                                try {
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                    if (response.body().getStatusCode().equals("000")){
+                                        Intent intent = new Intent(FormulirPPDBActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }else{
+                                        Toast.makeText(FormulirPPDBActivity.this, "NISN Sudah Terdaftar", Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (Exception e){
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                                pd.hide();
+                                Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else if (Akta && !KK && DataPribadi && !Foto){
+                        //1010
+                        final ProgressDialog pd = new ProgressDialog(FormulirPPDBActivity.this);
+                        pd.setMessage("Sedang Memasukan Data Peserta");
+                        pd.show();
+                        pd.setCancelable(false);
+
+                        File file1 = new File(postFoto1);
+                        RequestBody fileReqBody1 = RequestBody.create(MediaType.parse("image/*"), file1);
+                        MultipartBody.Part AktaKelahiran = MultipartBody.Part.createFormData("aktakelahiranfotocopy", file1.getName(), fileReqBody1);
+
+//                        File file2 = new File(postFoto2);
+//                        RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
+//                        MultipartBody.Part KartuKeluarga = MultipartBody.Part.createFormData("kartukeluargafotocopy", file2.getName(), fileReqBody2);
+//
+                        File file3 = new File(postFoto3);
+                        RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+                        MultipartBody.Part DataPribadis = MultipartBody.Part.createFormData("datapribadisiswa", file3.getName(), fileReqBody3);
+//
+//                        File file4 = new File(postFoto4);
+//                        RequestBody fileReqBody4 = RequestBody.create(MediaType.parse("image/*"), file4);
+//                        MultipartBody.Part PasFoto = MultipartBody.Part.createFormData("pasfoto3x4", file4.getName(), fileReqBody4);
+
+                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                        Call<ResponseModel> FormPPDB = api.PPDB(
+                                destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Password),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaLengkap.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorTelpon.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),k),
+                                RequestBody.create(MediaType.parse("text/plain"),TempatLahir.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),tanggal),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Telpon.getText().toString()),
+                                AktaKelahiran,
+                                DataPribadis
+                        );
+                        FormPPDB.enqueue(new Callback<ResponseModel>() {
+                            @Override
+                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                                try {
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                    if (response.body().getStatusCode().equals("000")){
+                                        Intent intent = new Intent(FormulirPPDBActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }else{
+                                        Toast.makeText(FormulirPPDBActivity.this, "NISN Sudah Terdaftar", Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (Exception e){
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                                pd.hide();
+                                Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else if (Akta && !KK && DataPribadi && Foto){
+                        //1011
+                        final ProgressDialog pd = new ProgressDialog(FormulirPPDBActivity.this);
+                        pd.setMessage("Sedang Memasukan Data Peserta");
+                        pd.show();
+                        pd.setCancelable(false);
+
+                        File file1 = new File(postFoto1);
+                        RequestBody fileReqBody1 = RequestBody.create(MediaType.parse("image/*"), file1);
+                        MultipartBody.Part AktaKelahiran = MultipartBody.Part.createFormData("aktakelahiranfotocopy", file1.getName(), fileReqBody1);
+
+//                        File file2 = new File(postFoto2);
+//                        RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
+//                        MultipartBody.Part KartuKeluarga = MultipartBody.Part.createFormData("kartukeluargafotocopy", file2.getName(), fileReqBody2);
+//
+                        File file3 = new File(postFoto3);
+                        RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+                        MultipartBody.Part DataPribadis = MultipartBody.Part.createFormData("datapribadisiswa", file3.getName(), fileReqBody3);
+
+                        File file4 = new File(postFoto4);
+                        RequestBody fileReqBody4 = RequestBody.create(MediaType.parse("image/*"), file4);
+                        MultipartBody.Part PasFoto = MultipartBody.Part.createFormData("pasfoto3x4", file4.getName(), fileReqBody4);
+
+                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                        Call<ResponseModel> FormPPDB = api.PPDB(
+                                destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Password),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaLengkap.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorTelpon.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),k),
+                                RequestBody.create(MediaType.parse("text/plain"),TempatLahir.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),tanggal),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Telpon.getText().toString()),
+                                AktaKelahiran,
+                                DataPribadis,
+                                PasFoto
+                        );
+                        FormPPDB.enqueue(new Callback<ResponseModel>() {
+                            @Override
+                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                                try {
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                    if (response.body().getStatusCode().equals("000")){
+                                        Intent intent = new Intent(FormulirPPDBActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }else{
+                                        Toast.makeText(FormulirPPDBActivity.this, "NISN Sudah Terdaftar", Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (Exception e){
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                                pd.hide();
+                                Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else if (Akta && KK && !DataPribadi && !Foto){
+                        //1100
+                        final ProgressDialog pd = new ProgressDialog(FormulirPPDBActivity.this);
+                        pd.setMessage("Sedang Memasukan Data Peserta");
+                        pd.show();
+                        pd.setCancelable(false);
+
+                        File file1 = new File(postFoto1);
+                        RequestBody fileReqBody1 = RequestBody.create(MediaType.parse("image/*"), file1);
+                        MultipartBody.Part AktaKelahiran = MultipartBody.Part.createFormData("aktakelahiranfotocopy", file1.getName(), fileReqBody1);
+
+                        File file2 = new File(postFoto2);
+                        RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
+                        MultipartBody.Part KartuKeluarga = MultipartBody.Part.createFormData("kartukeluargafotocopy", file2.getName(), fileReqBody2);
+
+//                        File file3 = new File(postFoto3);
+//                        RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+//                        MultipartBody.Part DataPribadis = MultipartBody.Part.createFormData("datapribadisiswa", file3.getName(), fileReqBody3);
+//
+//                        File file4 = new File(postFoto4);
+//                        RequestBody fileReqBody4 = RequestBody.create(MediaType.parse("image/*"), file4);
+//                        MultipartBody.Part PasFoto = MultipartBody.Part.createFormData("pasfoto3x4", file4.getName(), fileReqBody4);
+
+                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                        Call<ResponseModel> FormPPDB = api.PPDB(
+                                destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Password),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaLengkap.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorTelpon.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),k),
+                                RequestBody.create(MediaType.parse("text/plain"),TempatLahir.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),tanggal),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Telpon.getText().toString()),
+                                AktaKelahiran,
+                                KartuKeluarga
+                        );
+                        FormPPDB.enqueue(new Callback<ResponseModel>() {
+                            @Override
+                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                                try {
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                    if (response.body().getStatusCode().equals("000")){
+                                        Intent intent = new Intent(FormulirPPDBActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }else{
+                                        Toast.makeText(FormulirPPDBActivity.this, "NISN Sudah Terdaftar", Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (Exception e){
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                                pd.hide();
+                                Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else if (Akta && KK && !DataPribadi && Foto){
+                        //1101
+                        final ProgressDialog pd = new ProgressDialog(FormulirPPDBActivity.this);
+                        pd.setMessage("Sedang Memasukan Data Peserta");
+                        pd.show();
+                        pd.setCancelable(false);
+
+                        File file1 = new File(postFoto1);
+                        RequestBody fileReqBody1 = RequestBody.create(MediaType.parse("image/*"), file1);
+                        MultipartBody.Part AktaKelahiran = MultipartBody.Part.createFormData("aktakelahiranfotocopy", file1.getName(), fileReqBody1);
+
+                        File file2 = new File(postFoto2);
+                        RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
+                        MultipartBody.Part KartuKeluarga = MultipartBody.Part.createFormData("kartukeluargafotocopy", file2.getName(), fileReqBody2);
+
+//                        File file3 = new File(postFoto3);
+//                        RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+//                        MultipartBody.Part DataPribadis = MultipartBody.Part.createFormData("datapribadisiswa", file3.getName(), fileReqBody3);
+//
+                        File file4 = new File(postFoto4);
+                        RequestBody fileReqBody4 = RequestBody.create(MediaType.parse("image/*"), file4);
+                        MultipartBody.Part PasFoto = MultipartBody.Part.createFormData("pasfoto3x4", file4.getName(), fileReqBody4);
+
+                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                        Call<ResponseModel> FormPPDB = api.PPDB(
+                                destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Password),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaLengkap.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorTelpon.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),k),
+                                RequestBody.create(MediaType.parse("text/plain"),TempatLahir.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),tanggal),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Telpon.getText().toString()),
+                                AktaKelahiran,
+                                KartuKeluarga,
+                                PasFoto
+                        );
+                        FormPPDB.enqueue(new Callback<ResponseModel>() {
+                            @Override
+                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                                try {
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                    if (response.body().getStatusCode().equals("000")){
+                                        Intent intent = new Intent(FormulirPPDBActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }else{
+                                        Toast.makeText(FormulirPPDBActivity.this, "NISN Sudah Terdaftar", Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (Exception e){
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                                pd.hide();
+                                Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else if (Akta && KK && DataPribadi && !Foto){
+                        //1110
+                        final ProgressDialog pd = new ProgressDialog(FormulirPPDBActivity.this);
+                        pd.setMessage("Sedang Memasukan Data Peserta");
+                        pd.show();
+                        pd.setCancelable(false);
+
+                        File file1 = new File(postFoto1);
+                        RequestBody fileReqBody1 = RequestBody.create(MediaType.parse("image/*"), file1);
+                        MultipartBody.Part AktaKelahiran = MultipartBody.Part.createFormData("aktakelahiranfotocopy", file1.getName(), fileReqBody1);
+
+                        File file2 = new File(postFoto2);
+                        RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
+                        MultipartBody.Part KartuKeluarga = MultipartBody.Part.createFormData("kartukeluargafotocopy", file2.getName(), fileReqBody2);
+
+                        File file3 = new File(postFoto3);
+                        RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+                        MultipartBody.Part DataPribadis = MultipartBody.Part.createFormData("datapribadisiswa", file3.getName(), fileReqBody3);
+
+//                        File file4 = new File(postFoto4);
+//                        RequestBody fileReqBody4 = RequestBody.create(MediaType.parse("image/*"), file4);
+//                        MultipartBody.Part PasFoto = MultipartBody.Part.createFormData("pasfoto3x4", file4.getName(), fileReqBody4);
+
+                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                        Call<ResponseModel> FormPPDB = api.PPDB(
+                                destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Password),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaLengkap.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorTelpon.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),k),
+                                RequestBody.create(MediaType.parse("text/plain"),TempatLahir.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),tanggal),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Telpon.getText().toString()),
+                                AktaKelahiran,
+                                KartuKeluarga,
+                                DataPribadis
+                        );
+                        FormPPDB.enqueue(new Callback<ResponseModel>() {
+                            @Override
+                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                                try {
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                    if (response.body().getStatusCode().equals("000")){
+                                        Intent intent = new Intent(FormulirPPDBActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }else{
+                                        Toast.makeText(FormulirPPDBActivity.this, "NISN Sudah Terdaftar", Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (Exception e){
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                                pd.hide();
+                                Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else if (Akta && KK && DataPribadi && Foto){
+                        //1111
+                        final ProgressDialog pd = new ProgressDialog(FormulirPPDBActivity.this);
+                        pd.setMessage("Sedang Memasukan Data Peserta");
+                        pd.show();
+                        pd.setCancelable(false);
+
+                        File file1 = new File(postFoto1);
+                        RequestBody fileReqBody1 = RequestBody.create(MediaType.parse("image/*"), file1);
+                        MultipartBody.Part AktaKelahiran = MultipartBody.Part.createFormData("aktakelahiranfotocopy", file1.getName(), fileReqBody1);
+
+                        File file2 = new File(postFoto2);
+                        RequestBody fileReqBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
+                        MultipartBody.Part KartuKeluarga = MultipartBody.Part.createFormData("kartukeluargafotocopy", file2.getName(), fileReqBody2);
+
+                        File file3 = new File(postFoto3);
+                        RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+                        MultipartBody.Part DataPribadis = MultipartBody.Part.createFormData("datapribadisiswa", file3.getName(), fileReqBody3);
+
+                        File file4 = new File(postFoto4);
+                        RequestBody fileReqBody4 = RequestBody.create(MediaType.parse("image/*"), file4);
+                        MultipartBody.Part PasFoto = MultipartBody.Part.createFormData("pasfoto3x4", file4.getName(), fileReqBody4);
+
+                        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+                        Call<ResponseModel> FormPPDB = api.PPDB(
+                                destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Password),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaLengkap.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NomorTelpon.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),k),
+                                RequestBody.create(MediaType.parse("text/plain"),TempatLahir.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),tanggal),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NamaIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Telpon.getText().toString()),
+                                AktaKelahiran,
+                                KartuKeluarga,
+                                DataPribadis,
+                                PasFoto
+                        );
+                        FormPPDB.enqueue(new Callback<ResponseModel>() {
+                            @Override
+                            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                                try {
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                    if (response.body().getStatusCode().equals("000")){
+                                        Intent intent = new Intent(FormulirPPDBActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }else{
+                                        Toast.makeText(FormulirPPDBActivity.this, "NISN Sudah Terdaftar", Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (Exception e){
+                                    pd.hide();
+                                    Toast.makeText(FormulirPPDBActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                                pd.hide();
+                                Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }else{
+                    Toast.makeText(FormulirPPDBActivity.this, Checker(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 //        Back = findViewById(R.id.relativeBack);
 //        Back.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -280,6 +1339,30 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
 //                destiny.Back(FormulirPPDBActivity.this);
 //            }
 //        });
+    }
+
+    private String Checker(){
+        String OK = "OK";
+        if (NomorUjian.getText().toString().isEmpty()){
+            OK = "Nomor Ujian Tidak Boleh Kosong";
+        }else if (NISN.getText().toString().isEmpty()){
+            OK = "NISN Tidak Boleh Kosong";
+        }else if (NIK.getText().toString().isEmpty()){
+            OK = "NIK Tidak Boleh Kosong";
+        }else if (NamaLengkap.getText().toString().isEmpty()){
+            OK = "Nama Lengkap Tidak Boleh Kosong";
+        }else if (NomorTelpon.getText().toString().isEmpty()){
+            OK = "Nomor Telpon Tidak Boleh Kosong";
+        }else if (TempatLahir.getText().toString().isEmpty()){
+            OK = "Tempat Lahir Tidak Boleh Kosong";
+        }else if (NamaAyah.getText().toString().isEmpty()){
+            OK = "Nama Ayah Kandung Tidak Boleh Kosong";
+        }else if (NamaIbu.getText().toString().isEmpty()){
+            OK = "Nama Ibu Kandung Tidak Boleh Kosong";
+        }else if (Telpon.getText().toString().isEmpty()){
+            OK = "Nomor Telpon orang Tua Tidak Boleh Kosong";
+        }
+        return OK;
     }
 
     @Override
@@ -615,5 +1698,40 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                 Gambar4=false;
             }
         }
+    }
+    private void GetSekolah(){
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> Point = api.ProfileSekolah(destiny.AUTH(Token));
+        Point.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    if (response.body().getStatusCode().equals("000")){
+                        form.setText("Formulir Pendaftaran Peserta Didik Baru \n"+response.body().getData().get(0).getNama_sekolah());
+                        Glide.with(FormulirPPDBActivity.this)
+                                .load(destiny.BASE_URL()+response.body().getData().get(0).getLogo_sekolah())
+                                .into(LogoSekolah);
+                    }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
+                        destiny.AutoLogin(Username,Password,FormulirPPDBActivity.this);
+                        Intent intent = new Intent(FormulirPPDBActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }else{
+                        Toast.makeText(FormulirPPDBActivity.this, "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(FormulirPPDBActivity.this, "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
+                    dbHelper.Logout();
+                    Intent intent = new Intent(FormulirPPDBActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
