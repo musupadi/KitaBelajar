@@ -8,10 +8,12 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.media.MediaBrowserCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -22,6 +24,7 @@ import com.destinyapp.kitabelajar.API.ApiRequest;
 import com.destinyapp.kitabelajar.API.RetroServer;
 import com.destinyapp.kitabelajar.Adapter.AdapterKabarBerita;
 import com.destinyapp.kitabelajar.Adapter.AdapterSekolah;
+import com.destinyapp.kitabelajar.Adapter.AutoCompleteSekolahAdapter;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
@@ -49,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mManager;
     Destiny destiny;
+    AutoCompleteTextView Search;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +71,8 @@ public class LoginActivity extends AppCompatActivity {
         ImamKontol = dialog.findViewById(R.id.recycler);
         TitidUcupKecil = dialog.findViewById(R.id.spLembaga);
         KontolFajar = dialog.findViewById(R.id.btnCancel);
+        FajarNangis = dialog.findViewById(R.id.btnSubmit);
+        Search = dialog.findViewById(R.id.autoComplete);
         destiny = new Destiny();
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +92,13 @@ public class LoginActivity extends AppCompatActivity {
                 dialog.hide();
             }
         });
+        GetAutoComplete();
+        FajarNangis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         TitidUcupKecil.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -95,6 +108,31 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+    }
+    private void GetAutoComplete(){
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> KabarBerita = api.SekolahGuest("");
+        KabarBerita.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    if (response.body().getStatusCode().equals("000")){
+                        mItems=response.body().getData();
+                        AutoCompleteSekolahAdapter adapters = new AutoCompleteSekolahAdapter(LoginActivity.this,mItems);
+                        Search.setAdapter(adapters);
+                    }else{
+                        Toast.makeText(LoginActivity.this, "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(LoginActivity.this, "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
             }
         });
     }

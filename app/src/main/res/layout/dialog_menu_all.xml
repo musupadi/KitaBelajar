@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:textSize="10sp"
+                    android:textSize="@dimen/text_medium"
                     android:text="Profil\nSekolah"/>
             </LinearLayout>
             <LinearLayout
@@ -60,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:textSize="@dimen/text_smoll"
+                    android:textSize="@dimen/text_medium"
                     android:text="Agenda\nSekolah"/>
             </LinearLayout>
             <LinearLayout
@@ -83,7 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:textSize="@dimen/text_smoll"
+                    android:textSize="@dimen/text_medium"
                     android:text="Prestasi"/>
             </LinearLayout>
             <LinearLayout
@@ -107,7 +107,7 @@
                     android:gravity="center|top"
                     android:text="PPDB"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/text_smoll"
+                    android:textSize="@dimen/text_medium"
                     android:textStyle="bold" />
             </LinearLayout>
             <LinearLayout
@@ -129,7 +129,7 @@
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="@dimen/text_smoll"
+                    android:textSize="@dimen/text_medium"
                     android:layout_weight="2"
                     android:text="Struktur\nSekolah"/>
             </LinearLayout>
@@ -159,7 +159,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:textSize="10sp"
+                    android:textSize="@dimen/text_medium"
                     android:text="Jadwal\nPelajaran"/>
             </LinearLayout>
             <LinearLayout
@@ -175,7 +175,7 @@
                     android:layout_weight="1"
                     android:src="@drawable/evadir"/>
                 <TextView
-                    android:textSize="@dimen/text_smoll"
+                    android:textSize="@dimen/text_medium"
                     android:fontFamily="@font/roboto"
                     android:textStyle="bold"
                     android:textColor="@color/colorBlack"
@@ -205,7 +205,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:textSize="@dimen/text_smoll"
+                    android:textSize="@dimen/text_medium"
                     android:text="Media\nPembelajaran"/>
             </LinearLayout>
             <LinearLayout
@@ -228,7 +228,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:textSize="@dimen/text_smoll"
+                    android:textSize="@dimen/text_medium"
                     android:text="Tugas"/>
             </LinearLayout>
             <LinearLayout
@@ -247,11 +247,11 @@
                     android:fontFamily="@font/roboto"
                     android:textStyle="bold"
                     android:textColor="@color/colorBlack"
-                    android:gravity="center"
+                    android:gravity="center|top"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:textSize="@dimen/text_smoll"
+                    android:textSize="@dimen/text_medium"
                     android:text="E-Raport"/>
             </LinearLayout>
         </LinearLayout>
@@ -280,7 +280,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:textSize="@dimen/text_smoll"
+                    android:textSize="@dimen/text_medium"
                     android:text="Guru"/>
             </LinearLayout>
             <LinearLayout
@@ -296,7 +296,7 @@
                     android:layout_weight="1"
                     android:src="@drawable/biaya_akademik"/>
                 <TextView
-                    android:textSize="@dimen/text_smoll"
+                    android:textSize="@dimen/text_medium"
                     android:fontFamily="@font/roboto"
                     android:textStyle="bold"
                     android:textColor="@color/colorBlack"
@@ -326,32 +326,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:textSize="@dimen/text_smoll"
+                    android:textSize="@dimen/text_medium"
                     android:text="Pembayaran"/>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:id="@+id/linearROB"
-                android:layout_margin="5dp">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:src="@drawable/rob_dana"/>
-                <TextView
-                    android:fontFamily="@font/roboto"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorBlack"
-                    android:gravity="center|top"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:textSize="@dimen/text_smoll"
-                    android:text="ROB Dana\nBOP"/>
-            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/linearGallery"
                 android:layout_width="match_parent"
@@ -380,12 +358,36 @@
                     android:fontFamily="@font/roboto"
                     android:textStyle="bold"
                     android:textColor="@color/colorBlack"
-                    android:gravity="center"
+                    android:gravity="center|top"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:textSize="@dimen/text_medium"
                     android:text="Gallery"/>
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:id="@+id/linearROB"
+                android:layout_margin="5dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/rob_dana"/>
+                <TextView
+                    android:fontFamily="@font/roboto"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:gravity="center|top"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:textSize="@dimen/text_smoll"
+                    android:text="ROB Dana\nBOP"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout

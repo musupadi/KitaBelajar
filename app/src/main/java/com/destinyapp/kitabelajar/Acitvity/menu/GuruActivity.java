@@ -7,15 +7,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.destinyapp.kitabelajar.API.ApiRequest;
 import com.destinyapp.kitabelajar.API.RetroServer;
 import com.destinyapp.kitabelajar.Acitvity.LoginActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.AgendaSekolah.AgendaSekolahActivity;
 import com.destinyapp.kitabelajar.Adapter.AdapterAgenda;
 import com.destinyapp.kitabelajar.Adapter.AdapterGuru;
+import com.destinyapp.kitabelajar.Adapter.AdapterInfoPublik;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
@@ -38,11 +43,18 @@ public class GuruActivity extends AppCompatActivity {
     private List<DataModel> mItems = new ArrayList<>();
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mManager;
+
+    LottieAnimationView Anim;
+    LinearLayout LAnim;
+    TextView TAnim;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guru);
         destiny = new Destiny();
+        Anim = findViewById(R.id.lottieAnim);
+        LAnim = findViewById(R.id.linearAnim);
+        TAnim = findViewById(R.id.tvAnim);
         Back = findViewById(R.id.relativeBack);
         recycler = findViewById(R.id.recycler);
         dbHelper = new DB_Helper(this);
@@ -62,6 +74,10 @@ public class GuruActivity extends AppCompatActivity {
     private void Logic(){
         mManager = new GridLayoutManager(GuruActivity.this,2);
         recycler.setLayoutManager(mManager);
+        LAnim.setVisibility(View.VISIBLE);
+        TAnim.setVisibility(View.GONE);
+        Anim.setAnimation("loading.json");
+        Anim.playAnimation();
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
         Call<ResponseModel> Temans = api.GuruSekolah(destiny.AUTH(Token));
         Temans.enqueue(new Callback<ResponseModel>() {
@@ -69,10 +85,19 @@ public class GuruActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
                     if (response.body().getStatusCode().equals("000")){
-                        mItems=response.body().getData();
-                        mAdapter = new AdapterGuru(GuruActivity.this,mItems);
-                        recycler.setAdapter(mAdapter);
-                        mAdapter.notifyDataSetChanged();
+                        if (mItems.size()<1){
+                            TAnim.setVisibility(View.VISIBLE);
+                            TAnim.setText("Guru Belum Ada");
+                            Anim.setAnimation("notfound.json");
+                            Anim.playAnimation();
+                        }else{
+                            LAnim.setVisibility(View.GONE);
+                            mAdapter = new AdapterGuru(GuruActivity.this,mItems);
+                            recycler.setAdapter(mAdapter);
+                            mAdapter.notifyDataSetChanged();
+                        }
+
+
                     }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
                         destiny.AutoLogin(Username,Password,GuruActivity.this);
                         Intent intent = new Intent(GuruActivity.this,AgendaSekolahActivity.class);

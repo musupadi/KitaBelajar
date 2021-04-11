@@ -17,15 +17,13 @@
             android:layout_height="120dp"
             android:layout_gravity="center"
             android:src="@drawable/logo_bogor"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:orientation="horizontal">
             <ImageView
-                android:layout_marginRight="80dp"
-                android:layout_marginLeft="80dp"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -45,19 +43,17 @@
     <ImageView
         android:scaleType="fitXY"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:src="@drawable/bg_login"/>
 
     <LinearLayout
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="270dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppThemeNoAction"
@@ -67,8 +63,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:layout_marginBottom="10dp">
+            android:paddingBottom="5dp">
             <EditText
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
@@ -76,12 +71,10 @@
                 android:hint="NIK"
                 android:ems="10"
                 android:inputType="textEmailAddress"
-                android:textSize="20sp"/>
+                android:textSize="@dimen/text_xtra_large"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="true"
@@ -91,8 +84,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingTop="5dp"
-            android:theme="@style/AppThemeNoAction"
-            android:paddingBottom="5dp">
+            android:theme="@style/AppThemeNoAction">
             <EditText
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
@@ -100,7 +92,7 @@
                 android:hint="Password"
                 android:ems="10"
                 android:inputType="text|textPassword"
-                android:textSize="20sp"/>
+                android:textSize="@dimen/text_xtra_large"/>
         </com.google.android.material.textfield.TextInputLayout>
         <Button
             android:id="@+id/btnLogin"
@@ -120,7 +112,7 @@
             android:text="Masuk Sebagai Tamu"
             android:gravity="center"
             android:layout_marginTop="20dp"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_titid_imam"
             android:textColor="@color/colorOrange"
             android:textStyle="bold"
             android:id="@+id/tvTamu"/>

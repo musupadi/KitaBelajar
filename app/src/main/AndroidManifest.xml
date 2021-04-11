@@ -19,11 +19,11 @@
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
-        android:icon="@mipmap/logo_temporary"
+        android:icon="@mipmap/logo_kita_belajar_new"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:persistent="true"
-        android:roundIcon="@mipmap/logo_temporary_round"
+        android:roundIcon="@mipmap/logo_kita_belajar_new"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">

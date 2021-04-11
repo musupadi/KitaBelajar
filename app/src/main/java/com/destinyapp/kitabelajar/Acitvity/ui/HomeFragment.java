@@ -535,7 +535,7 @@ public class HomeFragment extends Fragment {
         DROB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"ROB",Level);
+//                destiny.ChangeActivity(getActivity(),"ROB",Level);
             }
         });
         DERaport.setOnClickListener(new View.OnClickListener() {

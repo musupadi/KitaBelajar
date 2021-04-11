@@ -309,7 +309,7 @@
                                             android:gravity="center|top"
                                             android:text="Profil\nSekolah"
                                             android:textColor="@color/colorBlack"
-                                            android:textSize="@dimen/text_smoll"
+                                            android:textSize="@dimen/text_medium"
                                             android:textStyle="bold" />
                                     </LinearLayout>
                                     <LinearLayout
@@ -334,7 +334,7 @@
                                             android:gravity="center|top"
                                             android:text="Agenda\nSekolah"
                                             android:textColor="@color/colorBlack"
-                                            android:textSize="@dimen/text_smoll"
+                                            android:textSize="@dimen/text_medium"
                                             android:textStyle="bold" />
                                     </LinearLayout>
                                     <LinearLayout
@@ -359,7 +359,7 @@
                                             android:gravity="center|top"
                                             android:text="Prestasi"
                                             android:textColor="@color/colorBlack"
-                                            android:textSize="@dimen/text_smoll"
+                                            android:textSize="@dimen/text_medium"
                                             android:textStyle="bold" />
                                     </LinearLayout>
                                     <LinearLayout
@@ -384,7 +384,7 @@
                                             android:gravity="center|top"
                                             android:text="PPDB"
                                             android:textColor="@color/colorBlack"
-                                            android:textSize="10sp"
+                                            android:textSize="@dimen/text_medium"
                                             android:textStyle="bold" />
                                     </LinearLayout>
                                     <LinearLayout
@@ -406,10 +406,10 @@
                                             android:layout_height="match_parent"
                                             android:layout_weight="2"
                                             android:fontFamily="@font/roboto"
-                                            android:gravity="center"
+                                            android:gravity="center|top"
                                             android:text="Struktur\nSekolah"
                                             android:textColor="@color/colorBlack"
-                                            android:textSize="@dimen/text_smoll"
+                                            android:textSize="@dimen/text_medium"
                                             android:textStyle="bold" />
                                     </LinearLayout>
                                 </LinearLayout>
@@ -439,7 +439,7 @@
                                             android:gravity="center|top"
                                             android:text="Jadwal\nPelajaran"
                                             android:textColor="@color/colorBlack"
-                                            android:textSize="@dimen/text_smoll"
+                                            android:textSize="@dimen/text_medium"
                                             android:textStyle="bold" />
                                     </LinearLayout>
 
@@ -465,7 +465,7 @@
                                             android:gravity="center|top"
                                             android:text="Evadir"
                                             android:textColor="@color/colorBlack"
-                                            android:textSize="@dimen/text_smoll"
+                                            android:textSize="@dimen/text_medium"
                                             android:textStyle="bold" />
                                     </LinearLayout>
 
@@ -491,7 +491,7 @@
                                             android:gravity="center|top"
                                             android:text="Media\nPembelajaran"
                                             android:textColor="@color/colorBlack"
-                                            android:textSize="@dimen/text_smoll"
+                                            android:textSize="@dimen/text_medium"
                                             android:textStyle="bold" />
                                     </LinearLayout>
 
@@ -517,7 +517,7 @@
                                             android:gravity="center|top"
                                             android:text="Tugas"
                                             android:textColor="@color/colorBlack"
-                                            android:textSize="@dimen/text_smoll"
+                                            android:textSize="@dimen/text_medium"
                                             android:textStyle="bold" />
                                     </LinearLayout>
 
@@ -540,10 +540,10 @@
                                             android:layout_height="match_parent"
                                             android:layout_weight="2"
                                             android:fontFamily="@font/roboto"
-                                            android:gravity="center"
+                                            android:gravity="center|top"
                                             android:text="Lihat\nSemua"
                                             android:textColor="@color/colorBlack"
-                                            android:textSize="@dimen/text_smoll"
+                                            android:textSize="@dimen/text_medium"
                                             android:textStyle="bold" />
                                     </LinearLayout>
                                 </LinearLayout>
@@ -641,7 +641,7 @@
                                     android:gravity="center"
                                     android:text="Kemis Nyunda"
                                     android:textColor="@color/colorBlack"
-                                    android:textSize="@dimen/text_smoll"
+                                    android:textSize="@dimen/text_medium"
                                     android:textStyle="bold" />
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
@@ -671,7 +671,7 @@
                                     android:gravity="center"
                                     android:text="Jum'at Ngaji"
                                     android:textColor="@color/colorBlack"
-                                    android:textSize="@dimen/text_smoll"
+                                    android:textSize="@dimen/text_medium"
                                     android:textStyle="bold" />
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
@@ -701,7 +701,7 @@
                                     android:gravity="center"
                                     android:text="Media Informasi"
                                     android:textColor="@color/colorBlack"
-                                    android:textSize="@dimen/text_smoll"
+                                    android:textSize="@dimen/text_medium"
                                     android:textStyle="bold" />
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
