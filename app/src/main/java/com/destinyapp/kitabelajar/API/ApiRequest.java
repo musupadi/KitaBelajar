@@ -99,7 +99,8 @@ public interface ApiRequest {
     Call<ResponseModel> Sponsor(@Header("Authorization") String authHeader);
 
     @GET("sekolahguest")
-    Call<ResponseModel> SekolahGuest(@Query("lembaga") String lembaga);
+    Call<ResponseModel> SekolahGuest(@Query("lembaga") String lembaga,
+                                     @Query("searchbyname") String searchbyname);
 
     @GET("banner")
     Call<ResponseModel> Banner();

@@ -52,7 +52,7 @@ public class AdapterKhutbah extends RecyclerView.Adapter<AdapterKhutbah.HolderDa
         holderData.Deskripsi.setText(destiny.SmallDescription(destiny.FilterTextToJava(dm.getDeskripsi_khutbah())));
         holderData.Tanggal.setText(destiny.MagicDateChange(dm.getCreated_at_khutbah()));
         Glide.with(ctx)
-                .load(destiny.BASE_URL()+dm.getCover_khutbah())
+                .load(destiny.CheckerImageYoutube(dm.getLink_youtube_khutbah(),dm.getCover_khutbah()))
                 .into(holderData.Image);
         holderData.card.setOnClickListener(new View.OnClickListener() {
             @Override

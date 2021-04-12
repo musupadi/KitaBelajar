@@ -59,7 +59,7 @@ public class GiveawayActivity extends AppCompatActivity {
         mManager = new GridLayoutManager(GiveawayActivity.this,1);
         recycler.setLayoutManager(mManager);
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
-        Call<ResponseModel> Temans = api.GetMediaInformasi(destiny.AUTH(Token),"education_news");
+        Call<ResponseModel> Temans = api.GetMediaInformasi(destiny.AUTH(Token),"giveaway");
         Temans.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {

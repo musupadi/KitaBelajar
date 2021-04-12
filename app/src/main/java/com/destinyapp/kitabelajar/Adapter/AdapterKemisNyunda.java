@@ -51,7 +51,7 @@ public class AdapterKemisNyunda extends RecyclerView.Adapter<AdapterKemisNyunda.
         holderData.Deskripsi.setText(destiny.SmallDescription(destiny.FilterTextToJava(dm.getDeskripsi_kemis_nyunda())));
         holderData.Tanggal.setText(destiny.MagicDateChange(dm.getCreated_at_kemis_nyunda()));
         Glide.with(ctx)
-                .load(destiny.BASE_URL()+dm.getCover_kemis_nyunda())
+                .load(destiny.CheckerImageYoutube(dm.getLink_youtube_nyunda(), dm.getCover_kemis_nyunda()))
                 .into(holderData.Image);
         holderData.card.setOnClickListener(new View.OnClickListener() {
             @Override

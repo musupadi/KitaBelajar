@@ -56,7 +56,6 @@ public class AdapterSekolah extends RecyclerView.Adapter<AdapterSekolah.HolderDa
     @Override
     public void onBindViewHolder(@NonNull final HolderData holderData, int posistion) {
         destiny = new Destiny();
-
         final DataModel dm = mList.get(posistion);
         holderData.Judul.setText(dm.getNama_sekolah());
         holderData.Alamat.setText(dm.getAlamat_sekolah());

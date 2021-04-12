@@ -53,50 +53,55 @@ public class AdapterMediaInformasi extends RecyclerView.Adapter<AdapterMediaInfo
     public void onBindViewHolder(@NonNull final HolderData holderData, int posistion) {
         destiny = new Destiny();
         final DataModel dm = mList.get(posistion);
-        holderData.Judul.setText(dm.getJudul_media_informasi());
-        holderData.Deskripsi.setText(destiny.SmallDescription(destiny.FilterTextToJava(dm.getDeskripsi_media_informasi())));
-        holderData.Tanggal.setText(destiny.MagicDateChange(dm.getCreated_at_media_informasi()));
-        Glide.with(ctx)
-                .load(destiny.BASE_URL()+dm.getCover_media_informasi())
-                .into(holderData.Image);
-        holderData.card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (dm.getTipe_media_informasi().equals("education_talkshow")){
-                    Intent i = new Intent(ctx, DetailEducationTalkshowActivity.class);
-                    i.putExtra("JUDUL", dm.getJudul_media_informasi());
-                    i.putExtra("ISI",dm.getDeskripsi_media_informasi());
-                    i.putExtra("TANGGAL",dm.getCreated_at_media_informasi());
-                    i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getCover_media_informasi());
-                    i.putExtra("YOUTUBE",dm.getLink_youtube_media_informasi());
-                    ctx.startActivity(i);
-                }else if(dm.getTipe_media_informasi().equals("education_podcast")){
-                    Intent i = new Intent(ctx, DetailEducationPodcastActivity.class);
-                    i.putExtra("JUDUL", dm.getJudul_media_informasi());
-                    i.putExtra("ISI",dm.getDeskripsi_media_informasi());
-                    i.putExtra("TANGGAL",dm.getCreated_at_media_informasi());
-                    i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getCover_media_informasi());
-                    i.putExtra("YOUTUBE",dm.getLink_youtube_media_informasi());
-                    ctx.startActivity(i);
-                }else if(dm.getTipe_media_informasi().equals("education_news")){
-                    Intent i = new Intent(ctx, DetailEducationNewsActivity.class);
-                    i.putExtra("JUDUL", dm.getJudul_media_informasi());
-                    i.putExtra("ISI",dm.getDeskripsi_media_informasi());
-                    i.putExtra("TANGGAL",dm.getCreated_at_media_informasi());
-                    i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getCover_media_informasi());
-                    i.putExtra("YOUTUBE",dm.getLink_youtube_media_informasi());
-                    ctx.startActivity(i);
-                }else if(dm.getTipe_media_informasi().equals("giveaway")){
-                    Intent i = new Intent(ctx, DetailGiveawayActivity.class);
-                    i.putExtra("JUDUL", dm.getJudul_media_informasi());
-                    i.putExtra("ISI",dm.getDeskripsi_media_informasi());
-                    i.putExtra("TANGGAL",dm.getCreated_at_media_informasi());
-                    i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getCover_media_informasi());
-                    i.putExtra("YOUTUBE",dm.getLink_youtube_media_informasi());
-                    ctx.startActivity(i);
+        try{
+            holderData.Judul.setText(dm.getJudul_media_informasi());
+            holderData.Deskripsi.setText(destiny.SmallDescription(destiny.FilterTextToJava(dm.getDeskripsi_media_informasi())));
+            holderData.Tanggal.setText(destiny.MagicDateChange(dm.getCreated_at_media_informasi()));
+            Glide.with(ctx)
+                    .load(destiny.CheckerImageYoutube(dm.getLink_youtube_media_informasi(),dm.getCover_media_informasi()))
+                    .into(holderData.Image);
+            holderData.card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (dm.getTipe_media_informasi().equals("education_talkshow")){
+                        Intent i = new Intent(ctx, DetailEducationTalkshowActivity.class);
+                        i.putExtra("JUDUL", dm.getJudul_media_informasi());
+                        i.putExtra("ISI",dm.getDeskripsi_media_informasi());
+                        i.putExtra("TANGGAL",dm.getCreated_at_media_informasi());
+                        i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getCover_media_informasi());
+                        i.putExtra("YOUTUBE",dm.getLink_youtube_media_informasi());
+                        ctx.startActivity(i);
+                    }else if(dm.getTipe_media_informasi().equals("education_podcast")){
+                        Intent i = new Intent(ctx, DetailEducationPodcastActivity.class);
+                        i.putExtra("JUDUL", dm.getJudul_media_informasi());
+                        i.putExtra("ISI",dm.getDeskripsi_media_informasi());
+                        i.putExtra("TANGGAL",dm.getCreated_at_media_informasi());
+                        i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getCover_media_informasi());
+                        i.putExtra("YOUTUBE",dm.getLink_youtube_media_informasi());
+                        ctx.startActivity(i);
+                    }else if(dm.getTipe_media_informasi().equals("education_news")){
+                        Intent i = new Intent(ctx, DetailEducationNewsActivity.class);
+                        i.putExtra("JUDUL", dm.getJudul_media_informasi());
+                        i.putExtra("ISI",dm.getDeskripsi_media_informasi());
+                        i.putExtra("TANGGAL",dm.getCreated_at_media_informasi());
+                        i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getCover_media_informasi());
+                        i.putExtra("YOUTUBE",dm.getLink_youtube_media_informasi());
+                        ctx.startActivity(i);
+                    }else if(dm.getTipe_media_informasi().equals("giveaway")){
+                        Intent i = new Intent(ctx, DetailGiveawayActivity.class);
+                        i.putExtra("JUDUL", dm.getJudul_media_informasi());
+                        i.putExtra("ISI",dm.getDeskripsi_media_informasi());
+                        i.putExtra("TANGGAL",dm.getCreated_at_media_informasi());
+                        i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getCover_media_informasi());
+                        i.putExtra("YOUTUBE",dm.getLink_youtube_media_informasi());
+                        ctx.startActivity(i);
+                    }
                 }
-            }
-        });
+            });
+        }catch (Exception e){
+
+        }
+
     }
 
     @Override

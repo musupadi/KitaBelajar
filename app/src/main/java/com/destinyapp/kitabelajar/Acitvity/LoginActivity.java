@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     Dialog dialog;
     RecyclerView ImamKontol;
     Spinner TitidUcupKecil;
-    Button FajarNangis,KontolFajar;
+    Button FajarNangis,KontolFajar,Pilih;
     private List<DataModel> mItems = new ArrayList<>();
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mManager;
@@ -68,10 +68,11 @@ public class LoginActivity extends AppCompatActivity {
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.btn_rounded_white);
 
+        dbHelper = new DB_Helper(LoginActivity.this);
         ImamKontol = dialog.findViewById(R.id.recycler);
         TitidUcupKecil = dialog.findViewById(R.id.spLembaga);
         KontolFajar = dialog.findViewById(R.id.btnCancel);
-        FajarNangis = dialog.findViewById(R.id.btnSubmit);
+        Pilih = dialog.findViewById(R.id.btnSubmit);
         Search = dialog.findViewById(R.id.autoComplete);
         destiny = new Destiny();
         login.setOnClickListener(new View.OnClickListener() {
@@ -93,10 +94,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         GetAutoComplete();
-        FajarNangis.setOnClickListener(new View.OnClickListener() {
+        Pilih.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                GetDataByName(Search.getText().toString());
             }
         });
         TitidUcupKecil.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -113,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void GetAutoComplete(){
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
-        Call<ResponseModel> KabarBerita = api.SekolahGuest("");
+        Call<ResponseModel> KabarBerita = api.SekolahGuest("","");
         KabarBerita.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
@@ -140,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
         mManager = new LinearLayoutManager(LoginActivity.this, LinearLayoutManager.VERTICAL,false);
         ImamKontol.setLayoutManager(mManager);
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
-        Call<ResponseModel> KabarBerita = api.SekolahGuest(lembaga);
+        Call<ResponseModel> KabarBerita = api.SekolahGuest(lembaga,"");
         KabarBerita.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
@@ -161,6 +162,66 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void GetDataByName(String nama){
+        mManager = new LinearLayoutManager(LoginActivity.this, LinearLayoutManager.VERTICAL,false);
+        ImamKontol.setLayoutManager(mManager);
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> KabarBerita = api.SekolahGuest("",nama);
+        KabarBerita.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    if (response.body().getStatusCode().equals("000")){
+                        LogicLogin("guest",response.body().getData().get(0).getId_sekolah());
+                    }else{
+                        Toast.makeText(LoginActivity.this, "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(LoginActivity.this, "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void LogicLogin(final String user, final String id){
+        final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
+        pd.setMessage("Sedang Memasuki Halaman Sekolah");
+        pd.show();
+        pd.setCancelable(false);
+        dbHelper = new DB_Helper(LoginActivity.this);
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        final Call<ResponseModel> login =api.login(user,id);
+        login.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    if (response.body().getStatusCode().equals("000")){
+                        dbHelper.SaveUser(user,id,response.body().getData().get(0).getName(),response.body().getData().get(0).getAccessToken(),response.body().getData().get(0).getAs(),response.body().getData().get(0).getPhoto());
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(LoginActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                    pd.hide();
+                }catch (Exception e){
+                    Toast.makeText(LoginActivity.this, "Terjadi Kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
+                    pd.hide();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+//                Toast.makeText(LoginActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                pd.hide();
+                Log.i("Login Logic : ",t.toString());
             }
         });
     }

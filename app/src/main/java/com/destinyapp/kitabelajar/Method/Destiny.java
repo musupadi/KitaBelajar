@@ -59,6 +59,17 @@ public class Destiny {
         String authHeader = "Basic "+ Base64.encodeToString(base.getBytes(),Base64.NO_WRAP);
         return authHeader;
     }
+    public String CheckerImageYoutube(String LinkYoutube,String Kabar){
+        String link= BASE_URL()+Kabar;
+        if (!LinkYoutube.equals("")){
+            link = AutoTumbnailYoutube(GetIDYoutube(LinkYoutube));
+        }
+        return link;
+    }
+    public String AutoTumbnailYoutube(String code){
+        String replace = "https://img.youtube.com/vi/"+code+"/mqdefault.jpg";
+        return replace;
+    }
     public String GetIDYoutube(String link){
         String replace1 = link.replace("https://www.youtube.com/watch?v=","");
         return replace1;

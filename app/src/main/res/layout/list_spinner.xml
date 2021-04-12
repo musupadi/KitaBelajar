@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="0.1sp"
-        android:id="@+id/tvId"/>
-    <TextView
         android:textColor="@color/colorBlack"
         android:id="@+id/tvSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="DKI Jakarta"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="0.1sp"
+        android:id="@+id/tvId"/>
 </LinearLayout>

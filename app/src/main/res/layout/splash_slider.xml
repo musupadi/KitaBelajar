@@ -37,16 +37,17 @@
                 android:gravity="center|top"
                 android:layout_marginTop="10dp"
                 android:textSize="@dimen/text_titid_imam"
-                android:fontFamily="@font/gotham"/>
+                android:fontFamily="@font/courgette"/>
         </LinearLayout>
         <TextView
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1.5"
+            android:fontFamily="@font/gotham"
             android:text="Membantu Mendampingi Guru untuk Maju dan Hebat Dengan Kekuatannya Sendiri"
             android:id="@+id/tvText"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_titid_imam"
             android:textColor="@color/colorPrimary"
             android:gravity="center|top"/>
 

@@ -211,7 +211,7 @@ public class IzinFragment extends Fragment implements DatePickerDialog.OnDateSet
     }
     private void Ajukan(){
         final ProgressDialog pd = new ProgressDialog(getActivity());
-        pd.setMessage("Sedang Menyimpan data ke Server");
+        pd.setMessage("Sedang Menyimpan data Izin");
         pd.setCancelable(false);
         pd.show();
         File file = new File(postBukti);
@@ -230,8 +230,10 @@ public class IzinFragment extends Fragment implements DatePickerDialog.OnDateSet
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
                     if (response.body().getStatusCode().equals("000")){
-                        Toast.makeText(getActivity(), response.body().statusMessage, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Berhasil Mengirim Data Izin", Toast.LENGTH_SHORT).show();
                         pd.hide();
+                        Intent intent = new Intent(getActivity(),MainActivity.class);
+                        startActivity(intent);
                     }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
                         destiny.AutoLogin(Username,Password,getActivity());
                         Toast.makeText(getActivity(), "Silahkan Coba Lagi", Toast.LENGTH_SHORT).show();
