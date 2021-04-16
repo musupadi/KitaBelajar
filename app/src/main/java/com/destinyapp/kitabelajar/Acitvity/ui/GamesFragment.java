@@ -38,13 +38,17 @@ public class GamesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        games1 = view.findViewById(R.id.linearGames1);
-        games1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), GamesActivity.class);
-                startActivity(intent);
-            }
-        });
+        try {
+            games1 = view.findViewById(R.id.linearGames1);
+            games1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), GamesActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }catch (Exception e){
+
+        }
     }
 }

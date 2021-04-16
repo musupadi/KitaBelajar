@@ -15,13 +15,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.destinyapp.kitabelajar.Acitvity.menu.JumatNgaji.KhutbahJumat.DetailKhutbahJumatActivity;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Method.YoutubeConfig;
 import com.destinyapp.kitabelajar.R;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
+import com.destinyapp.kitabelajar.Splash.FullScreenYoutubeActivity;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerFullScreenListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
@@ -88,6 +91,19 @@ public class DetailKabarSekolahActivity extends AppCompatActivity{
                 public void onReady(@NonNull YouTubePlayer youTubePlayer) {
                     String videoId = YOUTUBE;
                     youTubePlayer.loadVideo(videoId, 0);
+                }
+            });
+            FajarKontol.addFullScreenListener(new YouTubePlayerFullScreenListener() {
+                @Override
+                public void onYouTubePlayerEnterFullScreen() {
+                    Intent i = new Intent(DetailKabarSekolahActivity.this, FullScreenYoutubeActivity.class);
+                    i.putExtra("YOUTUBE",YOUTUBE);
+                    startActivity(i);
+                }
+
+                @Override
+                public void onYouTubePlayerExitFullScreen() {
+
                 }
             });
         }

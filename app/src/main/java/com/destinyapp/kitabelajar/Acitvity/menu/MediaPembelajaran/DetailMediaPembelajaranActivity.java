@@ -14,11 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.destinyapp.kitabelajar.Acitvity.menu.JumatNgaji.KhutbahJumat.DetailKhutbahJumatActivity;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.R;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
+import com.destinyapp.kitabelajar.Splash.FullScreenYoutubeActivity;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerFullScreenListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 public class DetailMediaPembelajaranActivity extends AppCompatActivity {
@@ -82,6 +85,19 @@ public class DetailMediaPembelajaranActivity extends AppCompatActivity {
                 public void onReady(@NonNull YouTubePlayer youTubePlayer) {
                     String videoId = destiny.GetIDYoutube(YOUTUBE);
                     youTubePlayer.loadVideo(videoId, 0);
+                }
+            });
+            FajarKontol.addFullScreenListener(new YouTubePlayerFullScreenListener() {
+                @Override
+                public void onYouTubePlayerEnterFullScreen() {
+                    Intent i = new Intent(DetailMediaPembelajaranActivity.this, FullScreenYoutubeActivity.class);
+                    i.putExtra("YOUTUBE",YOUTUBE);
+                    startActivity(i);
+                }
+
+                @Override
+                public void onYouTubePlayerExitFullScreen() {
+
                 }
             });
         }

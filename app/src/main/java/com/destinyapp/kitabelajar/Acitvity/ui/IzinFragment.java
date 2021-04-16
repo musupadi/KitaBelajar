@@ -119,86 +119,90 @@ public class IzinFragment extends Fragment implements DatePickerDialog.OnDateSet
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        destiny = new Destiny();
-        izin = view.findViewById(R.id.spIzin);
-        lGambar = view.findViewById(R.id.linearGambar);
-        ivGambar = view.findViewById(R.id.ivGambar);
-        tvGambar = view.findViewById(R.id.tvGambar);
-        upload = view.findViewById(R.id.btnUpload);
-        lGambar.setVisibility(View.GONE);
-        linearDari = view.findViewById(R.id.linearDariTanggal);
-        linearSampai = view.findViewById(R.id.linearSampaiTanggal);
-        dari = view.findViewById(R.id.tvDariTanggal);
-        sampai = view.findViewById(R.id.tvSampaiTanggal);
-        ajukan = view.findViewById(R.id.btnAjukan);
-        deskripsi = view.findViewById(R.id.etDeskripsi);
-        dbHelper = new DB_Helper(getActivity());
-        Cursor cursor = dbHelper.checkUser();
-        if (cursor.getCount()>0){
-            while (cursor.moveToNext()){
-                Username = cursor.getString(0);
-                Password = cursor.getString(1);
-                Nama = cursor.getString(2);
-                Token = cursor.getString(3);
-                Level = cursor.getString(4);
-                Photo = cursor.getString(5);
+        try {
+            destiny = new Destiny();
+            izin = view.findViewById(R.id.spIzin);
+            lGambar = view.findViewById(R.id.linearGambar);
+            ivGambar = view.findViewById(R.id.ivGambar);
+            tvGambar = view.findViewById(R.id.tvGambar);
+            upload = view.findViewById(R.id.btnUpload);
+            lGambar.setVisibility(View.GONE);
+            linearDari = view.findViewById(R.id.linearDariTanggal);
+            linearSampai = view.findViewById(R.id.linearSampaiTanggal);
+            dari = view.findViewById(R.id.tvDariTanggal);
+            sampai = view.findViewById(R.id.tvSampaiTanggal);
+            ajukan = view.findViewById(R.id.btnAjukan);
+            deskripsi = view.findViewById(R.id.etDeskripsi);
+            dbHelper = new DB_Helper(getActivity());
+            Cursor cursor = dbHelper.checkUser();
+            if (cursor.getCount()>0){
+                while (cursor.moveToNext()){
+                    Username = cursor.getString(0);
+                    Password = cursor.getString(1);
+                    Nama = cursor.getString(2);
+                    Token = cursor.getString(3);
+                    Level = cursor.getString(4);
+                    Photo = cursor.getString(5);
+                }
             }
-        }
 
-        dari.setText(destiny.thisDay());
-        sampai.setText(destiny.thisDay());
-        Dari = destiny.Today();
-        Sampai = destiny.Today();
-        linearDari.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                D=true;
-                showDatePicker();
-            }
-        });
-        linearSampai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                S=true;
-                showDatePicker();
-            }
-        });
-        ajukan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Checker();
-            }
-        });
-        upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new MaterialDialog.Builder(getActivity())
-                        .title("Pilih Gambar")
-                        .items(R.array.uploadImages)
-                        .itemsIds(R.array.itemIds)
-                        .itemsCallback(new MaterialDialog.ListCallback() {
-                            @Override
-                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                switch (which) {
-                                    case 0:
-                                        Gambar = true;
-                                        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                        startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
-                                        lGambar.setVisibility(View.VISIBLE);
-                                        tvGambar.setVisibility(View.VISIBLE);
-                                        break;
-                                    case 1:
-                                        captureImage();
-                                        lGambar.setVisibility(View.VISIBLE);
-                                        tvGambar.setVisibility(View.VISIBLE);
-                                        break;
+            dari.setText(destiny.thisDay());
+            sampai.setText(destiny.thisDay());
+            Dari = destiny.Today();
+            Sampai = destiny.Today();
+            linearDari.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    D=true;
+                    showDatePicker();
+                }
+            });
+            linearSampai.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    S=true;
+                    showDatePicker();
+                }
+            });
+            ajukan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Checker();
+                }
+            });
+            upload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new MaterialDialog.Builder(getActivity())
+                            .title("Pilih Gambar")
+                            .items(R.array.uploadImages)
+                            .itemsIds(R.array.itemIds)
+                            .itemsCallback(new MaterialDialog.ListCallback() {
+                                @Override
+                                public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                    switch (which) {
+                                        case 0:
+                                            Gambar = true;
+                                            Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                            startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO);
+                                            lGambar.setVisibility(View.VISIBLE);
+                                            tvGambar.setVisibility(View.VISIBLE);
+                                            break;
+                                        case 1:
+                                            captureImage();
+                                            lGambar.setVisibility(View.VISIBLE);
+                                            tvGambar.setVisibility(View.VISIBLE);
+                                            break;
+                                    }
                                 }
-                            }
-                        })
-                        .show();
-            }
-        });
+                            })
+                            .show();
+                }
+            });
+        }catch (Exception e){
+
+        }
     }
     private void Checker(){
         if (deskripsi.getText().toString().isEmpty()){

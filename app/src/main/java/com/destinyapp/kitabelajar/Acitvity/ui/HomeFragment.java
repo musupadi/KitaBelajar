@@ -11,7 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
+import android.os.Handler;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +37,7 @@ import com.destinyapp.kitabelajar.Acitvity.SponsorActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.AgendaSekolah.AgendaSekolahActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.GalleryActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.GuruActivity;
+import com.destinyapp.kitabelajar.Adapter.AdapterBanner;
 import com.destinyapp.kitabelajar.Adapter.AdapterGallery;
 import com.destinyapp.kitabelajar.Adapter.AdapterGalleryHome;
 import com.destinyapp.kitabelajar.Adapter.AdapterGuru;
@@ -50,6 +54,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.destinyapp.kitabelajar.Adapter.AdapterKegiatan;
+import com.destinyapp.kitabelajar.Splash.SliderAdapter;
+import com.destinyapp.kitabelajar.Splash.SplashActivity;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,7 +77,7 @@ public class HomeFragment extends Fragment {
     TextView nama,namaSiswa;
     DB_Helper dbHelper;
     String Username,Password,Nama,Token,Level,Photo;
-    RecyclerView recycler,recyclerKabar,recylerSponsor,recyclerGallery;
+    RecyclerView recyclerKabar,recylerSponsor,recyclerGallery;
     LottieAnimationView AHeader,ABerita,ASponsor;
     LinearLayout LAHeader,LABerita,LASponsor;
     TextView TAHeader,TABerita,TASponsor;
@@ -81,6 +88,18 @@ public class HomeFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mManager;
     LinearLayout LihatSemuaKabarBerita,LihatSemuaSponsor,LihatSemuaGallery;
+
+    //Slider
+
+    private ViewPager mSlideViewPager;
+    private LinearLayout mDotLayout;
+    private AdapterBanner adapterBanner;
+    private Button btnBack, btnNext, btnPlay, btnPause, btnStop;
+    private TextView[] mDots;
+    private int CurrentPage;
+
+    int SizeBanner = 0;
+    boolean forward;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -102,7 +121,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         destiny = new Destiny();
-        recycler = view.findViewById(R.id.recyclerHeader);
+//        recycler = view.findViewById(R.id.recyclerHeader);
         recyclerKabar = view.findViewById(R.id.recyclerKabarBerita);
         recylerSponsor = view.findViewById(R.id.recyclerSponsor);
         recyclerGallery = view.findViewById(R.id.recyclerGallery);
@@ -131,6 +150,10 @@ public class HomeFragment extends Fragment {
         KemisNyunda = view.findViewById(R.id.linearKemisNyunda);
         JumatNgaji = view.findViewById(R.id.linearJumatNgaji);
         MediaInformasi = view.findViewById(R.id.linearMediaInformasi);
+
+        //Slider
+        mSlideViewPager = view.findViewById(R.id.SlideViewPager);
+        mDotLayout = view.findViewById(R.id.dotSlayout);
 
         //ANIM
         AHeader = view.findViewById(R.id.lottieHeader);
@@ -196,12 +219,18 @@ public class HomeFragment extends Fragment {
         ONCLICK();
         ONCLICKDIALOG();
         Gallery();
-        Header();
+//        Header(0);
         KabarBerita();
         Sponsor();
         GetPoint();
         GetSekolah();
+
+
+        Header(0);
+        AutoSlide(3000);
     }
+
+
     private void Gallery(){
         mManager = new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
         recyclerGallery.setLayoutManager(mManager);
@@ -218,7 +247,7 @@ public class HomeFragment extends Fragment {
                         mAdapter.notifyDataSetChanged();
                     }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
                         destiny.AutoLogin(Username,Password,getActivity());
-                        Header();
+                        Header(0);
                     }else{
                         Toast.makeText(getActivity(), "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
                     }
@@ -259,11 +288,15 @@ public class HomeFragment extends Fragment {
                         Toast.makeText(getActivity(), "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
-                    Toast.makeText(getActivity(), "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
-                    dbHelper.Logout();
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
+                    try {
+                        Toast.makeText(getActivity(), "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
+                        dbHelper.Logout();
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }catch (Exception ex){
+
+                    }
                 }
             }
 
@@ -333,7 +366,7 @@ public class HomeFragment extends Fragment {
                         }
                     }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
                         destiny.AutoLogin(Username,Password,getActivity());
-                        Header();
+                        Header(0);
                     }else{
                         Toast.makeText(getActivity(), "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
                     }
@@ -352,9 +385,11 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-    private void Header(){
+
+    //Pager Start
+    private void Header(final int position){
         mManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
-        recycler.setLayoutManager(mManager);
+//        recycler.setLayoutManager(mManager);
         LAHeader.setVisibility(View.VISIBLE);
         TAHeader.setVisibility(View.GONE);
         AHeader.setAnimation("loading.json");
@@ -373,12 +408,14 @@ public class HomeFragment extends Fragment {
                         AHeader.playAnimation();
                     }else{
                         LAHeader.setVisibility(View.GONE);
-                        mAdapter = new AdapterInfoPublik(getActivity(),mItems);
-                        recycler.setAdapter(mAdapter);
-                        mAdapter.notifyDataSetChanged();
+                        adapterBanner = new AdapterBanner(getActivity(),mItems);
+                        mSlideViewPager.setAdapter(adapterBanner);
+                        SizeBanner = mItems.size();
+                        addDotsIndicator(position);
+                        mSlideViewPager.addOnPageChangeListener(viewList);
                     }
                 }catch (Exception e){
-                    Toast.makeText(getActivity(), "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Terjadi Kesalah User akan Terlogout", Toast.LENGTH_SHORT).show();
                     dbHelper.Logout();
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
@@ -392,6 +429,99 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+    private void addDotsIndicator(int posistion) {
+       try {
+           mDots = new TextView[SizeBanner];
+           mDotLayout.removeAllViews();
+           for (int i = 0; i < mDots.length; i++) {
+               mDots[i] = new TextView(getActivity());
+               mDots[i].setText(Html.fromHtml("&#8226;"));
+               mDots[i].setTextSize(35);
+               mDots[i].setTextColor(getResources().getColor(R.color.colorPrimary));
+
+               mDotLayout.addView(mDots[i]);
+           }
+           if (mDots.length > 0) {
+               mDots[posistion].setTextColor(getResources().getColor(R.color.colorGreen));
+           }
+       }catch (Exception e){
+
+       }
+    }
+    ViewPager.OnPageChangeListener viewList = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int i, float v, int i1) {
+
+        }
+
+        @Override
+        public void onPageSelected(int i) {
+            addDotsIndicator(i);
+            CurrentPage = i;
+
+            if (CurrentPage == 0) {
+//                btnNext.setEnabled(true);
+//                btnBack.setEnabled(false);
+//                btnBack.setVisibility(View.INVISIBLE);
+//                btnNext.setText("Next");
+//                btnBack.setText("");
+            } else if (i == mDots.length - 1) {
+//                btnNext.setEnabled(true);
+//                btnBack.setEnabled(true);
+//                btnBack.setVisibility(View.VISIBLE);
+//                btnNext.setText("Finish");
+//                btnBack.setText("Back");
+            } else {
+                btnNext.setEnabled(true);
+                btnBack.setEnabled(true);
+                btnBack.setVisibility(View.VISIBLE);
+                btnNext.setText("Next");
+                btnBack.setText("back");
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int i) {
+            AutoSlide(3000);
+        }
+    };
+    private void AutoSlide(int miliseconds){
+        final Handler handler = new Handler();
+        if (CurrentPage == 0) {
+            forward=true;
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    mSlideViewPager.setCurrentItem(CurrentPage + 1);
+                }
+            }, miliseconds);
+        } else if (CurrentPage == mDots.length - 1) {
+            forward=false;
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    mSlideViewPager.setCurrentItem(CurrentPage - 1);
+                }
+            }, miliseconds);
+        } else {
+            forward=true;
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    if (forward){
+                        mSlideViewPager.setCurrentItem(CurrentPage + 1);
+                    }else{
+                        mSlideViewPager.setCurrentItem(CurrentPage - 1);
+                    }
+                }
+            }, miliseconds);
+//            btnNext.setEnabled(true);
+//            btnBack.setEnabled(true);
+//            btnBack.setVisibility(View.VISIBLE);
+//            btnNext.setText("Next");
+//            btnBack.setText("back");
+        }
+    }
+    //PagerEnd
+
     private void KabarBerita(){
         mManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
         recyclerKabar.setLayoutManager(mManager);

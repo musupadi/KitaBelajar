@@ -113,54 +113,58 @@ public class UserFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        destiny = new Destiny();
-        db_helper = new DB_Helper(getActivity());
-        NISN  = view.findViewById(R.id.tvNISN);
-        NISN2 = view.findViewById(R.id.tvNISN2);
-        nama = view.findViewById(R.id.tvNama);
-        profile = view.findViewById(R.id.ivProfile);
-        logout = view.findViewById(R.id.btnLogot);
-        UbahPassword = view.findViewById(R.id.btnUbahPassword);
-        dialog = new Dialog(getActivity());
-        dialog.setContentView(R.layout.dialog_change_foto);
-        PilihGambar = dialog.findViewById(R.id.linearPilihFoto);
-        dialog2 = new Dialog(getActivity());
-        dialog2.setContentView(R.layout.dialog_change_password);
-        Tutup = dialog.findViewById(R.id.linearTutup);
-        Upload = dialog.findViewById(R.id.linearUpload);
-        ivGambar = dialog.findViewById(R.id.ivGambar);
-        tvGambar = dialog.findViewById(R.id.tvGambar);
-        OldPassword = dialog2.findViewById(R.id.etOldPassword);
-        NewPassword = dialog2.findViewById(R.id.etPasswordBaru);
-        NewPassword2 = dialog2.findViewById(R.id.etPasswordBaru2);
-        Close = dialog2.findViewById(R.id.btnClose);
-        Submit = dialog2.findViewById(R.id.btnSubmit);
-        ivGambar.setVisibility(View.GONE);
-        tvGambar.setVisibility(View.GONE);
-        Upload.setVisibility(View.GONE);
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                db_helper.Logout();
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
+        try {
+            destiny = new Destiny();
+            db_helper = new DB_Helper(getActivity());
+            NISN  = view.findViewById(R.id.tvNISN);
+            NISN2 = view.findViewById(R.id.tvNISN2);
+            nama = view.findViewById(R.id.tvNama);
+            profile = view.findViewById(R.id.ivProfile);
+            logout = view.findViewById(R.id.btnLogot);
+            UbahPassword = view.findViewById(R.id.btnUbahPassword);
+            dialog = new Dialog(getActivity());
+            dialog.setContentView(R.layout.dialog_change_foto);
+            PilihGambar = dialog.findViewById(R.id.linearPilihFoto);
+            dialog2 = new Dialog(getActivity());
+            dialog2.setContentView(R.layout.dialog_change_password);
+            Tutup = dialog.findViewById(R.id.linearTutup);
+            Upload = dialog.findViewById(R.id.linearUpload);
+            ivGambar = dialog.findViewById(R.id.ivGambar);
+            tvGambar = dialog.findViewById(R.id.tvGambar);
+            OldPassword = dialog2.findViewById(R.id.etOldPassword);
+            NewPassword = dialog2.findViewById(R.id.etPasswordBaru);
+            NewPassword2 = dialog2.findViewById(R.id.etPasswordBaru2);
+            Close = dialog2.findViewById(R.id.btnClose);
+            Submit = dialog2.findViewById(R.id.btnSubmit);
+            ivGambar.setVisibility(View.GONE);
+            tvGambar.setVisibility(View.GONE);
+            Upload.setVisibility(View.GONE);
+            logout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    db_helper.Logout();
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                }
+            });
+            dbHelper = new DB_Helper(getActivity());
+            Cursor cursor = dbHelper.checkUser();
+            if (cursor.getCount()>0){
+                while (cursor.moveToNext()){
+                    Username = cursor.getString(0);
+                    Password = cursor.getString(1);
+                    Nama = cursor.getString(2);
+                    Token = cursor.getString(3);
+                    Level = cursor.getString(4);
+                    Photo = cursor.getString(5);
+                }
             }
-        });
-        dbHelper = new DB_Helper(getActivity());
-        Cursor cursor = dbHelper.checkUser();
-        if (cursor.getCount()>0){
-            while (cursor.moveToNext()){
-                Username = cursor.getString(0);
-                Password = cursor.getString(1);
-                Nama = cursor.getString(2);
-                Token = cursor.getString(3);
-                Level = cursor.getString(4);
-                Photo = cursor.getString(5);
-            }
+            Logic();
+            OnClick();
+            DialogOnClick();
+        }catch (Exception e){
+
         }
-        Logic();
-        OnClick();
-        DialogOnClick();
     }
     private void OnClick(){
         profile.setOnClickListener(new View.OnClickListener() {
@@ -333,7 +337,7 @@ public class UserFragment extends Fragment {
                         Toast.makeText(getActivity(), response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
-                    Toast.makeText(getActivity(), "Terjadi Kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
+
                 }
             }
 

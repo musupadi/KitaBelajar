@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.destinyapp.kitabelajar.Acitvity.menu.DetailKabarSekolahActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.KemisNyunda.CeritaSunda.CeritaSundaActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.KemisNyunda.CeritaSunda.DetailCeritaSundaActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.KemisNyunda.SejarahSunda.DetailSejarahSundaActivity;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
 import com.destinyapp.kitabelajar.R;
@@ -57,7 +59,7 @@ public class AdapterKemisNyunda extends RecyclerView.Adapter<AdapterKemisNyunda.
             @Override
             public void onClick(View view) {
                 if (dm.getTipe_kemis_nyunda().equals("cerita")){
-                    Intent i = new Intent(ctx, CeritaSundaActivity.class);
+                    Intent i = new Intent(ctx, DetailCeritaSundaActivity.class);
                     i.putExtra("JUDUL", dm.getJudul_kemis_nyunda());
                     i.putExtra("ISI",dm.getDeskripsi_kemis_nyunda());
                     i.putExtra("TANGGAL",dm.getCreated_at_kemis_nyunda());
@@ -65,7 +67,7 @@ public class AdapterKemisNyunda extends RecyclerView.Adapter<AdapterKemisNyunda.
                     i.putExtra("YOUTUBE",dm.getLink_youtube_nyunda());
                     ctx.startActivity(i);
                 }else{
-                    Intent i = new Intent(ctx, DetailKabarSekolahActivity.class);
+                    Intent i = new Intent(ctx, DetailSejarahSundaActivity.class);
                     i.putExtra("JUDUL", dm.getJudul_kemis_nyunda());
                     i.putExtra("ISI",dm.getDeskripsi_kemis_nyunda());
                     i.putExtra("TANGGAL",dm.getCreated_at_kemis_nyunda());

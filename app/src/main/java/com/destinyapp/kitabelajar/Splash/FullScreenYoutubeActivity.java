@@ -1,4 +1,4 @@
-package com.destinyapp.kitabelajar.Acitvity.menu.MediaInformasi.Giveaway;
+package com.destinyapp.kitabelajar.Splash;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,20 +11,17 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.destinyapp.kitabelajar.Acitvity.menu.JumatNgaji.KhutbahJumat.DetailKhutbahJumatActivity;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.R;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
-import com.destinyapp.kitabelajar.Splash.FullScreenYoutubeActivity;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerFullScreenListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
-public class DetailGiveawayActivity extends AppCompatActivity {
+public class FullScreenYoutubeActivity extends AppCompatActivity {
     Destiny destiny;
     RelativeLayout Back;
     DB_Helper dbHelper;
@@ -39,8 +36,9 @@ public class DetailGiveawayActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_giveaway);
+        setContentView(R.layout.activity_full_screen_youtube);
         destiny = new Destiny();
+//        Back = findViewById(R.id.relativeBack);
         dbHelper = new DB_Helper(this);
         Cursor cursor = dbHelper.checkUser();
         if (cursor.getCount()>0){
@@ -57,53 +55,32 @@ public class DetailGiveawayActivity extends AppCompatActivity {
         GETDATA();
     }
     private void Declaration(){
-        Web = findViewById(R.id.web);
-        tanggal = findViewById(R.id.tvTanggal);
-        gambar = findViewById(R.id.ivGambar);
+
     }
     private void GETDATA(){
         Intent intent = getIntent();
-        JUDUL = intent.getExtras().getString("JUDUL");
-        ISI = intent.getExtras().getString("ISI");
-        TANGGAL = intent.getExtras().getString("TANGGAL");
-        GANBAR = intent.getExtras().getString("GAMBAR");
         YOUTUBE = intent.getExtras().getString("YOUTUBE");
-        getSupportActionBar().setTitle(JUDUL);
         FajarKontol = findViewById(R.id.youtube);
         getLifecycle().addObserver(FajarKontol);
-        if (YOUTUBE.isEmpty()){
-            gambar.setVisibility(View.VISIBLE);
-            FajarKontol.setVisibility(View.GONE);
-        }else{
-            FajarKontol.setVisibility(View.VISIBLE);
-            gambar.setVisibility(View.GONE);
-            FajarKontol.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-                @Override
-                public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                    String videoId = YOUTUBE;
-                    youTubePlayer.loadVideo(videoId, 0);
-                }
-            });
-            FajarKontol.addFullScreenListener(new YouTubePlayerFullScreenListener() {
-                @Override
-                public void onYouTubePlayerEnterFullScreen() {
-                    Intent i = new Intent(DetailGiveawayActivity.this, FullScreenYoutubeActivity.class);
-                    i.putExtra("YOUTUBE",YOUTUBE);
-                    startActivity(i);
-                }
+        FajarKontol.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                String videoId = YOUTUBE;
+                youTubePlayer.loadVideo(videoId, 0);
+            }
+        });
+        FajarKontol.enterFullScreen();
+        FajarKontol.addFullScreenListener(new YouTubePlayerFullScreenListener() {
+            @Override
+            public void onYouTubePlayerEnterFullScreen() {
+                onBackPressed();
+            }
 
-                @Override
-                public void onYouTubePlayerExitFullScreen() {
-
-                }
-            });
-        }
-        Web.loadData(ISI,"text/html","UTF-8");
-//        isi.setText(ISI);
-        tanggal.setText(destiny.MagicDateChange(TANGGAL));
-        Glide.with(this)
-                .load(GANBAR)
-                .into(gambar);
+            @Override
+            public void onYouTubePlayerExitFullScreen() {
+                onBackPressed();
+            }
+        });
     }
     @Override
     public void onBackPressed() {

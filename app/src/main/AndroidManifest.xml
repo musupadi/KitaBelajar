@@ -27,15 +27,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Acitvity.menu.MediaInformasi.Giveaway.DetailGiveawayActivity"
+        <activity
+            android:name=".Splash.FullScreenYoutubeActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppThemeNoAction"></activity>
+        <activity
+            android:name=".Acitvity.menu.MediaInformasi.Giveaway.DetailGiveawayActivity"
             android:label="Detail Giveaway"
-            android:parentActivityName=".Acitvity.menu.MediaInformasi.Giveaway.GiveawayActivity"/>
-        <activity android:name=".Acitvity.menu.MediaInformasi.EducationTalkshow.DetailEducationTalkshowActivity"
+            android:parentActivityName=".Acitvity.menu.MediaInformasi.Giveaway.GiveawayActivity" />
+        <activity
+            android:name=".Acitvity.menu.MediaInformasi.EducationTalkshow.DetailEducationTalkshowActivity"
             android:label="Detail Education Talkshow"
-            android:parentActivityName=".Acitvity.menu.MediaInformasi.EducationTalkshow.EducationTalkshowActivity"/>
-        <activity android:name=".Acitvity.menu.MediaInformasi.EducationPodcast.DetailEducationPodcastActivity"
+            android:parentActivityName=".Acitvity.menu.MediaInformasi.EducationTalkshow.EducationTalkshowActivity" />
+        <activity
+            android:name=".Acitvity.menu.MediaInformasi.EducationPodcast.DetailEducationPodcastActivity"
             android:label="Detail Education Podcast"
-            android:parentActivityName=".Acitvity.menu.MediaInformasi.EducationPodcast.EducationPodcastActivity"/>
+            android:parentActivityName=".Acitvity.menu.MediaInformasi.EducationPodcast.EducationPodcastActivity" />
         <activity
             android:name=".Acitvity.menu.MediaInformasi.Giveaway.GiveawayActivity"
             android:label="Giveaway"

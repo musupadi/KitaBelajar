@@ -50,8 +50,6 @@ public class AdapterKabarBerita extends RecyclerView.Adapter<AdapterKabarBerita.
         holderData.Judul.setText(dm.getJudul_kabar());
         holderData.Deskripsi.setText(destiny.SmallDescription(destiny.FilterTextToJava(dm.getIsi_kabar())));
         holderData.Tanggal.setText(destiny.MagicDateChange(dm.getCreated_at_kabar()));
-//        Toast.makeText(ctx,dm.getLink_youtube_kabar(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(ctx, destiny.CheckerImageYoutube(dm.getLink_youtube_kabar(),dm.getCover_kabar()), Toast.LENGTH_SHORT).show();
         Glide.with(ctx)
                 .load(destiny.CheckerImageYoutube(dm.getLink_youtube_kabar(),dm.getCover_kabar()))
                 .into(holderData.Image);
@@ -62,7 +60,7 @@ public class AdapterKabarBerita extends RecyclerView.Adapter<AdapterKabarBerita.
 //                    .load(destiny.BASE_URL()+dm.getCover_kabar())
 //                    .into(holderData.Image);
 //        }
-
+//        Toast.makeText(ctx, destiny.CheckerImageYoutube(dm.getLink_youtube_kabar(),dm.getCover_kabar()), Toast.LENGTH_SHORT).show();
         holderData.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

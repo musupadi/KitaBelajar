@@ -166,7 +166,7 @@
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:text="Mesjid Terdekat"
+                                        android:text="Guru Ngaji"
                                         android:textColor="@color/colorWhite"
                                         android:textStyle="bold"
                                         android:textSize="@dimen/text_xtra_large"

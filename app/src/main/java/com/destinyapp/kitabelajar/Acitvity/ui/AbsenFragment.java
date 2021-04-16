@@ -60,49 +60,53 @@ public class AbsenFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        destiny = new Destiny();
-        SwitchMasuk = view.findViewById(R.id.switchMasuk);
-        CheckMasuk = view.findViewById(R.id.tvCheckMasuk);
-        namaSiswa = view.findViewById(R.id.tvNamaSiswa);
-        Profile = view.findViewById(R.id.ivProfile);
-        ProfileBig = view.findViewById(R.id.ivProfileBig);
-        if (SwitchMasuk.isChecked()){
-            CheckMasuk.setText("Masuk");
-        }else{
-            CheckMasuk.setText("Tidak\nMasuk");
-        }
-        SwitchMasuk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (SwitchMasuk.isChecked()){
-                    CheckMasuk.setText("Masuk");
-                }else{
-                    CheckMasuk.setText("Tidak\nMasuk");
+        try {
+            destiny = new Destiny();
+            SwitchMasuk = view.findViewById(R.id.switchMasuk);
+            CheckMasuk = view.findViewById(R.id.tvCheckMasuk);
+            namaSiswa = view.findViewById(R.id.tvNamaSiswa);
+            Profile = view.findViewById(R.id.ivProfile);
+            ProfileBig = view.findViewById(R.id.ivProfileBig);
+            if (SwitchMasuk.isChecked()){
+                CheckMasuk.setText("Masuk");
+            }else{
+                CheckMasuk.setText("Tidak\nMasuk");
+            }
+            SwitchMasuk.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (SwitchMasuk.isChecked()){
+                        CheckMasuk.setText("Masuk");
+                    }else{
+                        CheckMasuk.setText("Tidak\nMasuk");
+                    }
+                }
+            });
+            dbHelper = new DB_Helper(getActivity());
+            Cursor cursor = dbHelper.checkUser();
+            if (cursor.getCount()>0){
+                while (cursor.moveToNext()){
+                    Username = cursor.getString(0);
+                    Password = cursor.getString(1);
+                    Nama = cursor.getString(2);
+                    Token = cursor.getString(3);
+                    Level = cursor.getString(4);
+                    Photo = cursor.getString(5);
                 }
             }
-        });
-        dbHelper = new DB_Helper(getActivity());
-        Cursor cursor = dbHelper.checkUser();
-        if (cursor.getCount()>0){
-            while (cursor.moveToNext()){
-                Username = cursor.getString(0);
-                Password = cursor.getString(1);
-                Nama = cursor.getString(2);
-                Token = cursor.getString(3);
-                Level = cursor.getString(4);
-                Photo = cursor.getString(5);
+            namaSiswa.setText(Nama);
+            if (!Photo.equals("") ||!Photo.isEmpty()){
+                Glide.with(this)
+                        .load(destiny.BASE_URL()+Photo)
+                        .into(Profile);
             }
-        }
-        namaSiswa.setText(Nama);
-        if (!Photo.equals("") ||!Photo.isEmpty()){
-            Glide.with(this)
-                    .load(destiny.BASE_URL()+Photo)
-                    .into(Profile);
-        }
-        GetSekolah();
+            GetSekolah();
 //        Glide.with(this)
 //                .load(destiny.BASE_URL()+Photo)
 //                .into(ProfileBig);
+        }catch (Exception e){
+
+        }
     }
     private void GetSekolah(){
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
@@ -124,11 +128,15 @@ public class AbsenFragment extends Fragment {
                         Toast.makeText(getActivity(), "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
-                    Toast.makeText(getActivity(), "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
-                    dbHelper.Logout();
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
+                    try {
+                        Toast.makeText(getActivity(), "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
+                        dbHelper.Logout();
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }catch (Exception ex){
+
+                    }
                 }
             }
 
