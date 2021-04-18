@@ -57,7 +57,7 @@ import retrofit2.Response;
 public class FormulirPPDBActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
     LinearLayout LTanggalLahir;
     TextView TanggalLahir;
-    String tanggal;
+    String tanggal = "1994-01-15";
     Destiny destiny;
     Button uploadAkta,uploadKK,uploadDataPribadi,uploadFoto;
     TextView form;
@@ -126,10 +126,14 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
     Boolean Gambar3 = false;
     Boolean Gambar4 = false;
     RelativeLayout Back;
+
+    String ID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulir_p_p_d_b);
+        Intent intent = getIntent();
+        ID = intent.getExtras().getString("ID");
         destiny = new Destiny();
         dbHelper = new DB_Helper(this);
         Cursor cursor = dbHelper.checkUser();
@@ -208,6 +212,9 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
         LogicKK();
         LogicDataPribadi();
         LogicFoto();
+        if (ID!=null){
+            Password = ID;
+        }
         uploadAkta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

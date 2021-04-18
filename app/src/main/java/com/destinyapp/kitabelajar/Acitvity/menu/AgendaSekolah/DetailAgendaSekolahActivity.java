@@ -1,5 +1,6 @@
 package com.destinyapp.kitabelajar.Acitvity.menu.AgendaSekolah;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,9 +13,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.destinyapp.kitabelajar.Acitvity.menu.KemisNyunda.CeritaSunda.DetailCeritaSundaActivity;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.R;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
+import com.destinyapp.kitabelajar.Splash.FullScreenYoutubeActivity;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerFullScreenListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 public class DetailAgendaSekolahActivity extends AppCompatActivity {
     Destiny destiny;
@@ -23,16 +30,17 @@ public class DetailAgendaSekolahActivity extends AppCompatActivity {
     String Username,Password,Nama,Token,Level,Photo;
 
     //DETAIL KABAR
-    String JUDUL,ISI,TANGGAL,GAMBAR;
-    TextView judul,tanggal;
+    String JUDUL,ISI,TANGGAL,GANBAR,YOUTUBE;
+    TextView tanggal;
     ImageView gambar;
-    WebView isiAgenda;
+    YouTubePlayerView FajarKontol;
+    WebView Web;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_agenda_sekolah);
         destiny = new Destiny();
-        Back = findViewById(R.id.relativeBack);
+//        Back = findViewById(R.id.relativeBack);
         dbHelper = new DB_Helper(this);
         Cursor cursor = dbHelper.checkUser();
         if (cursor.getCount()>0){
@@ -47,30 +55,60 @@ public class DetailAgendaSekolahActivity extends AppCompatActivity {
         }
         Declaration();
         GETDATA();
-        Back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
     }
     private void Declaration(){
-        judul = findViewById(R.id.tvJudulAgenda);
-        isiAgenda = findViewById(R.id.webIsi);
+//        judul = findViewById(R.id.tvJudulKabar);
+        Web = findViewById(R.id.web);
         tanggal = findViewById(R.id.tvTanggal);
         gambar = findViewById(R.id.ivGambar);
+
     }
     private void GETDATA(){
         Intent intent = getIntent();
         JUDUL = intent.getExtras().getString("JUDUL");
         ISI = intent.getExtras().getString("ISI");
         TANGGAL = intent.getExtras().getString("TANGGAL");
-        GAMBAR = intent.getExtras().getString("GAMBAR");
-        judul.setText(JUDUL);
-        isiAgenda.loadData(ISI,"text/html","UTF-8");
-        tanggal.setText(TANGGAL);
+        GANBAR = intent.getExtras().getString("GAMBAR");
+        YOUTUBE = intent.getExtras().getString("YOUTUBE");
+        getSupportActionBar().setTitle(JUDUL);
+        FajarKontol = findViewById(R.id.youtube);
+        getLifecycle().addObserver(FajarKontol);
+        if (YOUTUBE.isEmpty()){
+            gambar.setVisibility(View.VISIBLE);
+            FajarKontol.setVisibility(View.GONE);
+        }else{
+            FajarKontol.setVisibility(View.VISIBLE);
+            gambar.setVisibility(View.GONE);
+            FajarKontol.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                @Override
+                public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                    String videoId = YOUTUBE;
+                    youTubePlayer.loadVideo(videoId, 0);
+                }
+            });
+            FajarKontol.addFullScreenListener(new YouTubePlayerFullScreenListener() {
+                @Override
+                public void onYouTubePlayerEnterFullScreen() {
+                    Intent i = new Intent(DetailAgendaSekolahActivity.this, FullScreenYoutubeActivity.class);
+                    i.putExtra("YOUTUBE",YOUTUBE);
+                    startActivity(i);
+                }
+
+                @Override
+                public void onYouTubePlayerExitFullScreen() {
+
+                }
+            });
+        }
+        Web.loadData(ISI,"text/html","UTF-8");
+//        isi.setText(ISI);
+        tanggal.setText(destiny.MagicDateChange(TANGGAL));
         Glide.with(this)
-                .load(GAMBAR)
+                .load(GANBAR)
                 .into(gambar);
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

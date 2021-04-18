@@ -1,6 +1,7 @@
 package com.destinyapp.kitabelajar.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
+import com.destinyapp.kitabelajar.Acitvity.DetailInfoPublik;
+import com.destinyapp.kitabelajar.Acitvity.menu.DetailKabarSekolahActivity;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
 import com.destinyapp.kitabelajar.R;
@@ -49,13 +52,21 @@ public class AdapterBanner extends PagerAdapter {
         final DataModel dm = mList.get(position);
         destiny = new Destiny();
         ImageView Image = view.findViewById(R.id.ivGambar);
-        if (dm.getFile_foto_banner().equals("") || dm.getFile_foto_banner().isEmpty() || dm.getFile_foto_banner().equals("/files/")){
-            Image.setImageResource(R.drawable.kita_belajar);
-        }else{
-            Glide.with(context)
-                    .load(destiny.BASE_URL()+dm.getFile_foto_banner())
-                    .into(Image);
-        }
+        Glide.with(context)
+                .load(destiny.CheckerImageYoutube(dm.getLink_youtube_info_publik(),dm.getCover_info_publik()))
+                .into(Image);
+        Image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, DetailInfoPublik.class);
+                i.putExtra("JUDUL", dm.getJudul_info_publik());
+                i.putExtra("ISI",dm.getIsi_info_publik());
+                i.putExtra("TANGGAL",dm.getCreated_at_info_publik());
+                i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getCover_info_publik());
+                i.putExtra("YOUTUBE",dm.getLink_youtube_info_publik() );
+                context.startActivity(i);
+            }
+        });
 //        TextView textGambar = view.findViewById(R.id.tvTextImage);
 //        TextView text = view.findViewById(R.id.tvText);
 //        ivGambar.setImageResource(slide_image[position]);

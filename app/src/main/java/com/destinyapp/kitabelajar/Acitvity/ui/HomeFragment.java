@@ -35,6 +35,8 @@ import com.destinyapp.kitabelajar.Acitvity.LoginActivity;
 import com.destinyapp.kitabelajar.Acitvity.MainActivity;
 import com.destinyapp.kitabelajar.Acitvity.SponsorActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.AgendaSekolah.AgendaSekolahActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.AgendaSekolah.DetailAgendaSekolahActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.FormulirPPDBActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.GalleryActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.GuruActivity;
 import com.destinyapp.kitabelajar.Adapter.AdapterBanner;
@@ -88,6 +90,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mManager;
     LinearLayout LihatSemuaKabarBerita,LihatSemuaSponsor,LihatSemuaGallery;
+    String ID;
 
     //Slider
 
@@ -212,14 +215,10 @@ public class HomeFragment extends Fragment {
             DTugas.setAlpha(0.2f);
             DERaport.setAlpha(0.2f);
             DPembayaran.setAlpha(0.2f);
-        }else{
-            PPDB.setAlpha(0.2f);
-            DPPDB.setAlpha(0.2f);
         }
         ONCLICK();
         ONCLICKDIALOG();
         Gallery();
-//        Header(0);
         KabarBerita();
         Sponsor();
         GetPoint();
@@ -227,7 +226,7 @@ public class HomeFragment extends Fragment {
 
 
         Header(0);
-        AutoSlide(3000);
+        AutoSlide();
     }
 
 
@@ -274,6 +273,7 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
                     if (response.body().getStatusCode().equals("000")){
+                        ID=response.body().getData().get(0).getId_sekolah();
                         Sekolah.setText(response.body().getData().get(0).getNama_sekolah());
                         SekolahBesar.setText(response.body().getData().get(0).getNama_sekolah());
                         Glide.with(getActivity())
@@ -394,8 +394,8 @@ public class HomeFragment extends Fragment {
         TAHeader.setVisibility(View.GONE);
         AHeader.setAnimation("loading.json");
         AHeader.playAnimation();
-        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
-        Call<ResponseModel> KabarBerita = api.Banner();
+        ApiRequest api = FajarKontol.getClient().create(ApiRequest.class);
+        Call<ResponseModel> KabarBerita = api.InfoPublik();
         KabarBerita.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
@@ -461,64 +461,50 @@ public class HomeFragment extends Fragment {
             CurrentPage = i;
 
             if (CurrentPage == 0) {
-//                btnNext.setEnabled(true);
-//                btnBack.setEnabled(false);
-//                btnBack.setVisibility(View.INVISIBLE);
-//                btnNext.setText("Next");
-//                btnBack.setText("");
+
             } else if (i == mDots.length - 1) {
-//                btnNext.setEnabled(true);
-//                btnBack.setEnabled(true);
-//                btnBack.setVisibility(View.VISIBLE);
-//                btnNext.setText("Finish");
-//                btnBack.setText("Back");
+
             } else {
-                btnNext.setEnabled(true);
-                btnBack.setEnabled(true);
-                btnBack.setVisibility(View.VISIBLE);
-                btnNext.setText("Next");
-                btnBack.setText("back");
+
             }
         }
 
         @Override
         public void onPageScrollStateChanged(int i) {
-            AutoSlide(3000);
+//            final Handler handler = new Handler();
+//            handler.postDelayed(new Runnable() {
+//                public void run() {
+//                    if (CurrentPage == 0) {
+//                        forward=true;
+//                        mSlideViewPager.setCurrentItem(CurrentPage + 1);
+//                    } else if (CurrentPage == mDots.length - 1) {
+//                        forward=false;
+//                        mSlideViewPager.setCurrentItem(CurrentPage - 1);
+//                    } else {
+//                        if (forward){
+//                            mSlideViewPager.setCurrentItem(CurrentPage + 1);
+//                        }else{
+//                            mSlideViewPager.setCurrentItem(CurrentPage - 1);
+//                        }
+//                    }
+//                }
+//            }, 5000);
         }
     };
-    private void AutoSlide(int miliseconds){
-        final Handler handler = new Handler();
-        if (CurrentPage == 0) {
-            forward=true;
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    mSlideViewPager.setCurrentItem(CurrentPage + 1);
-                }
-            }, miliseconds);
-        } else if (CurrentPage == mDots.length - 1) {
-            forward=false;
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    mSlideViewPager.setCurrentItem(CurrentPage - 1);
-                }
-            }, miliseconds);
-        } else {
-            forward=true;
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    if (forward){
-                        mSlideViewPager.setCurrentItem(CurrentPage + 1);
-                    }else{
-                        mSlideViewPager.setCurrentItem(CurrentPage - 1);
-                    }
-                }
-            }, miliseconds);
-//            btnNext.setEnabled(true);
-//            btnBack.setEnabled(true);
-//            btnBack.setVisibility(View.VISIBLE);
-//            btnNext.setText("Next");
-//            btnBack.setText("back");
-        }
+    private void AutoSlide(){
+//        if(CurrentPage == 0) {
+//            forward=true;
+//            mSlideViewPager.setCurrentItem(CurrentPage + 1);
+//        }else if(CurrentPage == mDots.length - 1) {
+//            forward=false;
+//            mSlideViewPager.setCurrentItem(CurrentPage - 1);
+//        }else{
+//            if (forward){
+//                mSlideViewPager.setCurrentItem(CurrentPage + 1);
+//            }else{
+//                mSlideViewPager.setCurrentItem(CurrentPage - 1);
+//            }
+//        }
     }
     //PagerEnd
 
@@ -608,7 +594,9 @@ public class HomeFragment extends Fragment {
         DPPDB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"PPDB",Level);
+                Intent i = new Intent(getActivity(), FormulirPPDBActivity.class);
+                i.putExtra("ID", ID);
+                startActivity(i);
             }
         });
         DStrukturSekolah.setOnClickListener(new View.OnClickListener() {
@@ -706,7 +694,9 @@ public class HomeFragment extends Fragment {
         PPDB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                destiny.ChangeActivity(getActivity(),"PPDB",Level);
+                Intent i = new Intent(getActivity(), FormulirPPDBActivity.class);
+                i.putExtra("ID", ID);
+                startActivity(i);
             }
         });
         StrukturSekolah.setOnClickListener(new View.OnClickListener() {

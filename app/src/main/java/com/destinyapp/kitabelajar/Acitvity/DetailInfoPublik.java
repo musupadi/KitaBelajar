@@ -13,11 +13,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.destinyapp.kitabelajar.Acitvity.menu.KemisNyunda.CeritaSunda.DetailCeritaSundaActivity;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.R;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
+import com.destinyapp.kitabelajar.Splash.FullScreenYoutubeActivity;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerFullScreenListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 public class DetailInfoPublik extends AppCompatActivity {
@@ -83,8 +86,22 @@ public class DetailInfoPublik extends AppCompatActivity {
                     youTubePlayer.loadVideo(videoId, 0);
                 }
             });
+            FajarKontol.addFullScreenListener(new YouTubePlayerFullScreenListener() {
+                @Override
+                public void onYouTubePlayerEnterFullScreen() {
+                    Intent i = new Intent(DetailInfoPublik.this, FullScreenYoutubeActivity.class);
+                    i.putExtra("YOUTUBE",YOUTUBE);
+                    startActivity(i);
+                }
+
+                @Override
+                public void onYouTubePlayerExitFullScreen() {
+
+                }
+            });
         }
         Web.loadData(ISI,"text/html","UTF-8");
+//        isi.setText(ISI);
         tanggal.setText(destiny.MagicDateChange(TANGGAL));
         Glide.with(this)
                 .load(GANBAR)

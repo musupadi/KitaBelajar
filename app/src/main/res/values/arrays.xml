@@ -18,6 +18,7 @@
 
     <string-array name="lembaga">
         <item>TK</item>
+        <item>PAUD</item>
         <item>RA</item>
         <item>SD</item>
         <item>SMP</item>
