@@ -23,6 +23,11 @@ public interface ApiRequest {
     Call<ResponseModel> login(@Field("username") String username,
                               @Field("password") String password);
 
+    @FormUrlEncoded
+    @POST("kelas")
+    Call<ResponseModel> GetKelas(@Field("id_sekolah") String id_sekolah);
+
+
     @Multipart
     @POST("ubahphotoprofil")
     Call<ResponseModel> ChangeFoto(@Header("Authorization") String authHeader,

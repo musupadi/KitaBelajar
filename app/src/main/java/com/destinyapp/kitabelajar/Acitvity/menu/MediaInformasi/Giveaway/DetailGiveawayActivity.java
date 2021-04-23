@@ -84,19 +84,6 @@ public class DetailGiveawayActivity extends AppCompatActivity {
                     youTubePlayer.loadVideo(videoId, 0);
                 }
             });
-            FajarKontol.addFullScreenListener(new YouTubePlayerFullScreenListener() {
-                @Override
-                public void onYouTubePlayerEnterFullScreen() {
-                    Intent i = new Intent(DetailGiveawayActivity.this, FullScreenYoutubeActivity.class);
-                    i.putExtra("YOUTUBE",YOUTUBE);
-                    startActivity(i);
-                }
-
-                @Override
-                public void onYouTubePlayerExitFullScreen() {
-
-                }
-            });
         }
         Web.loadData(ISI,"text/html","UTF-8");
 //        isi.setText(ISI);

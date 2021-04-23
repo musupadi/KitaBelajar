@@ -62,6 +62,7 @@ public class AdapterAgenda extends RecyclerView.Adapter<AdapterAgenda.HolderData
                 i.putExtra("ISI",dm.getIsi_agenda());
                 i.putExtra("TANGGAL",dm.getCreated_at_agenda());
                 i.putExtra("GAMBAR", destiny.BASE_URL()+dm.getCover_agenda());
+                i.putExtra("YOUTUBE", "");
                 ctx.startActivity(i);
             }
         });

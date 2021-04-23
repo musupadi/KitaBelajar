@@ -7,12 +7,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.destinyapp.kitabelajar.Method.Destiny;
+import com.destinyapp.kitabelajar.Model.DataModel;
 import com.destinyapp.kitabelajar.Model.Media;
 import com.destinyapp.kitabelajar.Model.SubTema;
 import com.destinyapp.kitabelajar.R;
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterTema extends RecyclerView.Adapter<AdapterTema.HolderData> {
-    private List<SubTema> mList;
+    private List<DataModel> mList;
     private Context ctx;
 
     DB_Helper dbHelper;
@@ -30,10 +32,10 @@ public class AdapterTema extends RecyclerView.Adapter<AdapterTema.HolderData> {
     RecyclerView recyclerView;
     Destiny destiny;
 
-    private List<Media> mItems = new ArrayList<>();
+    private List<SubTema> mItems = new ArrayList<>();
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mManager;
-    public AdapterTema(Context ctx, List<SubTema> mList){
+    public AdapterTema(Context ctx, List<DataModel> mList){
         this.ctx = ctx;
         this.mList = mList;
     }
@@ -49,28 +51,31 @@ public class AdapterTema extends RecyclerView.Adapter<AdapterTema.HolderData> {
     @Override
     public void onBindViewHolder(@NonNull final HolderData holderData, int posistion) {
         destiny = new Destiny();
-        final SubTema dm = mList.get(posistion);
+        final DataModel dm = mList.get(posistion);
         mManager = new GridLayoutManager(ctx,1);
         holderData.rv.setLayoutManager(mManager);
-        holderData.Nama.setText(dm.getNama_subtema());
+        holderData.Nama.setText(dm.getNama_tema());
         holderData.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (onClick){
-                    onClick=false;
-                    holderData.rv.setVisibility(View.VISIBLE);
-                    holderData.img.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
+                if (dm.getSubTema().size()>0){
+                    if (onClick){
+                        onClick=false;
+                        holderData.rv.setVisibility(View.VISIBLE);
+                        holderData.img.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
+                    }else{
+                        onClick=true;
+                        holderData.rv.setVisibility(View.GONE);
+                        holderData.img.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                    }
                 }else{
-                    onClick=true;
-                    holderData.rv.setVisibility(View.GONE);
-                    holderData.img.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                    Toast.makeText(ctx, "Tema ini Tidak Memiliki Sub Tema", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        if (dm.getMedia().size()>0){
-            mItems = dm.getMedia();
-//            Toast.makeText(ctx, dm.getMedia().get(0).getJudul_media(), Toast.LENGTH_SHORT).show();
-            mAdapter = new AdapterSubTema(ctx,mItems);
+        if (dm.getSubTema().size()>0){
+            mItems = dm.getSubTema();
+            mAdapter = new AdapterSubTema(ctx,mItems,posistion);
             holderData.rv.setAdapter(mAdapter);
             mAdapter.notifyDataSetChanged();
         }

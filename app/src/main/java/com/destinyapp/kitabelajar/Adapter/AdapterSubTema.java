@@ -14,19 +14,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.destinyapp.kitabelajar.Acitvity.menu.DetailKabarSekolahActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.MediaPembelajaran.DetailMediaPembelajaranActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.MediaPembelajaran.ListMediaPembelajaranActivity;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.Media;
 import com.destinyapp.kitabelajar.Model.SubTema;
 import com.destinyapp.kitabelajar.R;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterSubTema extends RecyclerView.Adapter<AdapterSubTema.HolderData> {
-    private List<Media> mList;
+    private List<SubTema> mList;
     private Context ctx;
-
+    int Tema;
     DB_Helper dbHelper;
     Boolean onClick=false;
     RecyclerView recyclerView;
@@ -35,9 +37,10 @@ public class AdapterSubTema extends RecyclerView.Adapter<AdapterSubTema.HolderDa
 //    private List<Media> mItems = new ArrayList<>();
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mManager;
-    public AdapterSubTema(Context ctx, List<Media> mList){
+    public AdapterSubTema(Context ctx, List<SubTema> mList,int Tema){
         this.ctx = ctx;
         this.mList = mList;
+        this.Tema = Tema;
     }
 
     @NonNull
@@ -49,21 +52,22 @@ public class AdapterSubTema extends RecyclerView.Adapter<AdapterSubTema.HolderDa
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final HolderData holderData, int posistion) {
+    public void onBindViewHolder(@NonNull final HolderData holderData, final int posistion) {
         destiny = new Destiny();
-        final Media dm = mList.get(posistion);
-        holderData.Nama.setText(dm.getJudul_media());
+        final SubTema dm = mList.get(posistion);
+        holderData.Nama.setText(dm.getNama_subtema());
         holderData.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Toast.makeText(ctx, dm.getCreated_at_media(), Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(ctx, DetailMediaPembelajaranActivity.class);
-                i.putExtra("JUDUL", dm.getJudul_media());
-                i.putExtra("ISI",dm.getIsi_media());
-                i.putExtra("TANGGAL",dm.getCreated_at_media());
-                i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getCover_media());
-                i.putExtra("YOUTUBE",dm.getLink_youtube_media());
-                ctx.startActivity(i);
+                if(dm.getMedia().size()>0){
+                    Intent i = new Intent(ctx, ListMediaPembelajaranActivity.class);
+                    i.putExtra("NAMA", dm.getNama_subtema());
+                    i.putExtra("TEMA", String.valueOf(Tema));
+                    i.putExtra("SUBTEMA", String.valueOf(posistion));
+                    ctx.startActivity(i);
+                }else{
+                    Toast.makeText(ctx, "Sub Tema ini Tidak Memiliki Media", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 //        holderData.Jabatan.setText(dm.getJabatan());

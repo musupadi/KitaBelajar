@@ -7,23 +7,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.destinyapp.kitabelajar.API.ApiRequest;
 import com.destinyapp.kitabelajar.API.RetroServer;
 import com.destinyapp.kitabelajar.Acitvity.LoginActivity;
+import com.destinyapp.kitabelajar.Adapter.AdapterListMediaPembelajaran;
 import com.destinyapp.kitabelajar.Adapter.AdapterTema;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
+import com.destinyapp.kitabelajar.Model.Media;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
 import com.destinyapp.kitabelajar.Model.SubTema;
 import com.destinyapp.kitabelajar.R;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
-import com.destinyapp.kitabelajar.Spinner.SpinnerMediaPembelajaran;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,21 +29,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MediaPembelajaranActivity extends AppCompatActivity {
-    Spinner spinner;
-    RecyclerView rv;
+public class ListMediaPembelajaranActivity extends AppCompatActivity {
+    RecyclerView recyclerView;
+    String tema,subtema,nama;
+    private List<Media> mItems = new ArrayList<>();
     Destiny destiny;
     DB_Helper dbHelper;
     String Username,Password,Nama,Token,Level,Photo;
-    private List<DataModel> mItems = new ArrayList<>();
-    private List<SubTema> SubTema = new ArrayList<>();
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_media_pembelajaran);
-        Declaration();
+        setContentView(R.layout.activity_list_media_pembelajaran);
         destiny = new Destiny();
         dbHelper = new DB_Helper(this);
         Cursor cursor = dbHelper.checkUser();
@@ -60,32 +55,18 @@ public class MediaPembelajaranActivity extends AppCompatActivity {
                 Photo = cursor.getString(5);
             }
         }
+        recyclerView = findViewById(R.id.recycler);
+        GetData();
         GetMediaPembelajaran();
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                try {
-//                    SubTema(i);
-//                }catch (Exception e){
-//                    Log.i("Message = ",e.toString());
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
     }
-    private void Declaration(){
-        spinner = findViewById(R.id.spinner);
-        rv = findViewById(R.id.recycler);
-        mManager = new GridLayoutManager(MediaPembelajaranActivity.this,1);
-        rv.setLayoutManager(mManager);
+    private void GetData(){
+        Intent intent = getIntent();
+        nama = intent.getExtras().getString("NAMA");
+        tema = intent.getExtras().getString("TEMA");
+        subtema = intent.getExtras().getString("SUBTEMA");
+        getSupportActionBar().setTitle(nama);
     }
-    private void SubTema(int index){
 
-    }
     private void GetMediaPembelajaran(){
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
         Call<ResponseModel> Data=api.MediaPembelajaran(destiny.AUTH(Token));
@@ -94,29 +75,31 @@ public class MediaPembelajaranActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
                     if (response.body().getStatusCode().equals("000")){
-                        mItems=response.body().getData();
-                        mAdapter = new AdapterTema(MediaPembelajaranActivity.this,mItems);
-                        rv.setAdapter(mAdapter);
+                        mManager = new GridLayoutManager(ListMediaPembelajaranActivity.this,1);
+                        recyclerView.setLayoutManager(mManager);
+                        mItems = response.body().getData().get(Integer.parseInt(tema)).getSubTema().get(Integer.parseInt(subtema)).getMedia();
+                        mAdapter = new AdapterListMediaPembelajaran(ListMediaPembelajaranActivity.this,mItems);
+                        recyclerView.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();
                     }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
-                        destiny.AutoLogin(Username,Password,MediaPembelajaranActivity.this);
-                        Intent intent = new Intent(MediaPembelajaranActivity.this,MediaPembelajaranActivity.class);
+                        destiny.AutoLogin(Username,Password,ListMediaPembelajaranActivity.this);
+                        Intent intent = new Intent(ListMediaPembelajaranActivity.this,MediaPembelajaranActivity.class);
                         startActivity(intent);
                     }else{
-                        Toast.makeText(MediaPembelajaranActivity.this, "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ListMediaPembelajaranActivity.this, "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
-                    Toast.makeText(MediaPembelajaranActivity.this, "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
-                    dbHelper.Logout();
-                    Intent intent = new Intent(MediaPembelajaranActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
+//                    Toast.makeText(ListMediaPembelajaranActivity.this, "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
+//                    dbHelper.Logout();
+//                    Intent intent = new Intent(ListMediaPembelajaranActivity.this, LoginActivity.class);
+//                    startActivity(intent);
+//                    finish();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
-                Toast.makeText(MediaPembelajaranActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListMediaPembelajaranActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
             }
         });
     }

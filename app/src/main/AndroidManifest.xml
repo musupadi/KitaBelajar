@@ -28,9 +28,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Acitvity.menu.MediaPembelajaran.ListMediaPembelajaranActivity"
+            android:label="List Media Pembelajaran"
+            android:parentActivityName=".Acitvity.menu.MediaPembelajaran.MediaPembelajaranActivity"></activity>
+        <activity
             android:name=".Splash.FullScreenYoutubeActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AppThemeNoAction"></activity>
+            android:theme="@style/AppThemeNoAction" />
         <activity
             android:name=".Acitvity.menu.MediaInformasi.Giveaway.DetailGiveawayActivity"
             android:label="Detail Giveaway"

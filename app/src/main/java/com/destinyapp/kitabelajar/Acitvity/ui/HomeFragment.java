@@ -339,7 +339,7 @@ public class HomeFragment extends Fragment {
         });
     }
     private void Sponsor(){
-        mManager = new GridLayoutManager(getActivity(),3);
+        mManager = new GridLayoutManager(getActivity(),4);
         recylerSponsor.setLayoutManager(mManager);
         LASponsor.setVisibility(View.VISIBLE);
         TASponsor.setVisibility(View.GONE);
