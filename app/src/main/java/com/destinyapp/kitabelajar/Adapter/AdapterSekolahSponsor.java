@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -21,7 +22,7 @@ import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 
 import java.util.List;
 
-public class AdapterSponsor extends RecyclerView.Adapter<AdapterSponsor.HolderData> {
+public class AdapterSekolahSponsor extends RecyclerView.Adapter<AdapterSekolahSponsor.HolderData> {
     private List<DataModel> mList;
     private Context ctx;
 
@@ -29,7 +30,7 @@ public class AdapterSponsor extends RecyclerView.Adapter<AdapterSponsor.HolderDa
     Boolean onClick=false;
     RecyclerView recyclerView;
     Destiny destiny;
-    public AdapterSponsor(Context ctx, List<DataModel> mList){
+    public AdapterSekolahSponsor(Context ctx, List<DataModel> mList){
         this.ctx = ctx;
         this.mList = mList;
     }
@@ -37,7 +38,7 @@ public class AdapterSponsor extends RecyclerView.Adapter<AdapterSponsor.HolderDa
     @NonNull
     @Override
     public HolderData onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View layout = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_sponsor,viewGroup,false);
+        View layout = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_sekolah,viewGroup,false);
         HolderData holder = new HolderData(layout);
         return holder;
     }
@@ -46,17 +47,15 @@ public class AdapterSponsor extends RecyclerView.Adapter<AdapterSponsor.HolderDa
     public void onBindViewHolder(@NonNull final HolderData holderData, int posistion) {
         destiny = new Destiny();
         final DataModel dm = mList.get(posistion);
-        holderData.Judul.setText(dm.getJudul_sponsor());
+        holderData.Judul.setText(dm.getNama_sekolah());
+        holderData.Alamat.setText(dm.getAlamat_sekolah());
         Glide.with(ctx)
-                .load(destiny.BASE_URL()+dm.getFile_image_sponsor())
+                .load(destiny.BASE_URL()+dm.getLogo_sekolah())
                 .into(holderData.Image);
         holderData.card.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent i = new Intent(ctx, DetailSponsorActivity.class);
-                i.putExtra("ID", dm.getId_sponsor());
-                i.putExtra("NAMA", dm.getJudul_sponsor());
-                ctx.startActivity(i);
+            public void onClick(View view) {
+
             }
         });
 
@@ -69,13 +68,14 @@ public class AdapterSponsor extends RecyclerView.Adapter<AdapterSponsor.HolderDa
 
     class HolderData extends RecyclerView.ViewHolder{
         ImageView Image;
-        TextView Judul;
-        LinearLayout card;
+        TextView Judul,Alamat;
+        CardView card;
         public HolderData(View v){
             super(v);
-            Image = v.findViewById(R.id.ivGambar);
-            Judul = v.findViewById(R.id.tvNama);
-            card = v.findViewById(R.id.card_view);
+            Image = v.findViewById(R.id.ivLogo);
+            Judul = v.findViewById(R.id.tvNamaSekolah);
+            Alamat = v.findViewById(R.id.tvAlamat);
+            card = v.findViewById(R.id.card);
         }
     }
 }

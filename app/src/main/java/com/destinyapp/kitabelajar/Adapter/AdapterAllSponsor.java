@@ -2,18 +2,23 @@ package com.destinyapp.kitabelajar.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.destinyapp.kitabelajar.Acitvity.DetailSponsorActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.MediaPembelajaran.DetailMediaPembelajaranActivity;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
 import com.destinyapp.kitabelajar.R;
@@ -21,7 +26,7 @@ import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 
 import java.util.List;
 
-public class AdapterSponsor extends RecyclerView.Adapter<AdapterSponsor.HolderData> {
+public class AdapterAllSponsor extends RecyclerView.Adapter<AdapterAllSponsor.HolderData> {
     private List<DataModel> mList;
     private Context ctx;
 
@@ -29,7 +34,7 @@ public class AdapterSponsor extends RecyclerView.Adapter<AdapterSponsor.HolderDa
     Boolean onClick=false;
     RecyclerView recyclerView;
     Destiny destiny;
-    public AdapterSponsor(Context ctx, List<DataModel> mList){
+    public AdapterAllSponsor(Context ctx, List<DataModel> mList){
         this.ctx = ctx;
         this.mList = mList;
     }
@@ -37,7 +42,7 @@ public class AdapterSponsor extends RecyclerView.Adapter<AdapterSponsor.HolderDa
     @NonNull
     @Override
     public HolderData onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View layout = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_sponsor,viewGroup,false);
+        View layout = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_sponsor_semua,viewGroup,false);
         HolderData holder = new HolderData(layout);
         return holder;
     }
@@ -50,6 +55,18 @@ public class AdapterSponsor extends RecyclerView.Adapter<AdapterSponsor.HolderDa
         Glide.with(ctx)
                 .load(destiny.BASE_URL()+dm.getFile_image_sponsor())
                 .into(holderData.Image);
+        holderData.Website.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dm.getAlamat_web_sponsor().isEmpty() || dm.getAlamat_web_sponsor().equals("")){
+                    Toast.makeText(ctx, "Website Belum Terisi", Toast.LENGTH_SHORT).show();
+                }else{
+                    Uri uri = Uri.parse(dm.getAlamat_web_sponsor()); // missing 'http://' will cause crashed
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    ctx.startActivity(intent);
+                }
+            }
+        });
         holderData.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +76,6 @@ public class AdapterSponsor extends RecyclerView.Adapter<AdapterSponsor.HolderDa
                 ctx.startActivity(i);
             }
         });
-
     }
 
     @Override
@@ -70,12 +86,14 @@ public class AdapterSponsor extends RecyclerView.Adapter<AdapterSponsor.HolderDa
     class HolderData extends RecyclerView.ViewHolder{
         ImageView Image;
         TextView Judul;
+        Button Website;
         LinearLayout card;
         public HolderData(View v){
             super(v);
             Image = v.findViewById(R.id.ivGambar);
-            Judul = v.findViewById(R.id.tvNama);
-            card = v.findViewById(R.id.card_view);
+            Judul = v.findViewById(R.id.tvSponsor);
+            Website = v.findViewById(R.id.btnWebsite);
+            card = v.findViewById(R.id.LayoutCardView);
         }
     }
 }

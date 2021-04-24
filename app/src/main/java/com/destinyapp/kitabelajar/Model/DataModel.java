@@ -370,6 +370,14 @@ public class DataModel {
     @Expose
     public String status_sponsor;
 
+    @SerializedName("alamat_web_sponsor")
+    @Expose
+    public String alamat_web_sponsor;
+
+    @SerializedName("level_sponsor")
+    @Expose
+    public String level_sponsor;
+
     //INFO Publik
     @SerializedName("id_info_publik")
     @Expose
@@ -528,7 +536,38 @@ public class DataModel {
     @Expose
     public String status_kelas;
 
+    //Sponsor Sekolah
+    @SerializedName("id_sekolah_sponsor")
+    @Expose
+    public String id_sekolah_sponsor;
+
     //GETTER SETTER
+
+
+    public String getId_sekolah_sponsor() {
+        return id_sekolah_sponsor;
+    }
+
+    public void setId_sekolah_sponsor(String id_sekolah_sponsor) {
+        this.id_sekolah_sponsor = id_sekolah_sponsor;
+    }
+
+    public String getAlamat_web_sponsor() {
+        return alamat_web_sponsor;
+    }
+
+    public void setAlamat_web_sponsor(String alamat_web_sponsor) {
+        this.alamat_web_sponsor = alamat_web_sponsor;
+    }
+
+    public String getLevel_sponsor() {
+        return level_sponsor;
+    }
+
+    public void setLevel_sponsor(String level_sponsor) {
+        this.level_sponsor = level_sponsor;
+    }
+
     public String getId_penjurusan() {
         return id_penjurusan;
     }

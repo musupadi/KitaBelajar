@@ -27,10 +27,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Acitvity.DetailSponsorActivity"
+            android:label="Sponsor Sekolah"
+            android:parentActivityName=".Acitvity.HomeActivity"></activity>
         <activity
             android:name=".Acitvity.menu.MediaPembelajaran.ListMediaPembelajaranActivity"
             android:label="List Media Pembelajaran"
-            android:parentActivityName=".Acitvity.menu.MediaPembelajaran.MediaPembelajaranActivity"></activity>
+            android:parentActivityName=".Acitvity.menu.MediaPembelajaran.MediaPembelajaranActivity" />
         <activity
             android:name=".Splash.FullScreenYoutubeActivity"
             android:screenOrientation="landscape"
