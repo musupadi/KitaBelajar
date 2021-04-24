@@ -49,7 +49,7 @@ public class KiblatActivity extends AppCompatActivity implements SensorEventList
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        final float alpha = 0.97f;
+        final float alpha = 0.97f; //0.97f
         synchronized (this){
             if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
                 mGravity[0] = alpha*mGravity[0]+(1-alpha)*event.values[0];

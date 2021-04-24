@@ -511,7 +511,56 @@ public class DataModel {
     @Expose
     public String created_at_banner;
 
+    //Get Kelas
+    @SerializedName("id_penjurusan")
+    @Expose
+    public String id_penjurusan;
+
+    @SerializedName("id_tahun_ajaran")
+    @Expose
+    public String id_tahun_ajaran;
+
+    @SerializedName("kelas_ke")
+    @Expose
+    public String kelas_ke;
+
+    @SerializedName("status_kelas")
+    @Expose
+    public String status_kelas;
+
     //GETTER SETTER
+    public String getId_penjurusan() {
+        return id_penjurusan;
+    }
+
+    public void setId_penjurusan(String id_penjurusan) {
+        this.id_penjurusan = id_penjurusan;
+    }
+
+    public String getId_tahun_ajaran() {
+        return id_tahun_ajaran;
+    }
+
+    public void setId_tahun_ajaran(String id_tahun_ajaran) {
+        this.id_tahun_ajaran = id_tahun_ajaran;
+    }
+
+    public String getKelas_ke() {
+        return kelas_ke;
+    }
+
+    public void setKelas_ke(String kelas_ke) {
+        this.kelas_ke = kelas_ke;
+    }
+
+    public String getStatus_kelas() {
+        return status_kelas;
+    }
+
+    public void setStatus_kelas(String status_kelas) {
+        this.status_kelas = status_kelas;
+    }
+
     public String getAccessToken() {
         return accessToken;
     }
