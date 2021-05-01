@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.destinyapp.kitabelajar.Acitvity.menu.KemisNyunda.CeritaSunda.CeritaSundaActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.KemisNyunda.KamusSunda.KamusSundaActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.KemisNyunda.SejarahSunda.SejarahSundaActivity;
 import com.destinyapp.kitabelajar.R;
 
@@ -31,6 +32,13 @@ public class KemisNyundaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(KemisNyundaActivity.this, SejarahSundaActivity.class);
+                startActivity(intent);
+            }
+        });
+        Kamus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(KemisNyundaActivity.this, KamusSundaActivity.class);
                 startActivity(intent);
             }
         });

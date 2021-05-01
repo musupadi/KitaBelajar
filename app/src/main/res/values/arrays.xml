@@ -24,6 +24,11 @@
         <item>SMP</item>
     </string-array>
 
+    <string-array name="piket">
+        <item>Piket</item>
+        <item>Tidak Piket</item>
+    </string-array>
+
 
 
 </resources>

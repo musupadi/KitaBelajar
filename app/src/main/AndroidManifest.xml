@@ -27,9 +27,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Acitvity.DetailSponsorActivity"
-            android:label="Sponsor Sekolah"
+        <activity
+            android:name=".Acitvity.menu.InnerKelasAbsensiActivity"
+            android:label="Kelas"
             android:parentActivityName=".Acitvity.HomeActivity"></activity>
+        <activity android:name=".Acitvity.menu.KemisNyunda.KamusSunda.KamusSundaActivity" />
+        <activity
+            android:name=".Acitvity.DetailSponsorActivity"
+            android:label="Sponsor Sekolah"
+            android:parentActivityName=".Acitvity.HomeActivity" />
         <activity
             android:name=".Acitvity.menu.MediaPembelajaran.ListMediaPembelajaranActivity"
             android:label="List Media Pembelajaran"

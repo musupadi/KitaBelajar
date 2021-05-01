@@ -2,7 +2,6 @@ package com.destinyapp.kitabelajar.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,20 +11,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.destinyapp.kitabelajar.Acitvity.menu.AgendaSekolah.DetailAgendaSekolahActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.InnerKelasAbsensiActivity;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
 import com.destinyapp.kitabelajar.R;
-import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 
 import java.util.List;
 
-public class AdapterAbsensiKelas extends RecyclerView.Adapter<AdapterAbsensiKelas.HolderData>  {
+public class AdapterGuruMapel extends RecyclerView.Adapter<AdapterGuruMapel.HolderData>  {
     private List<DataModel> mList;
     private Context ctx;
     Destiny destiny;
-    public AdapterAbsensiKelas(Context ctx, List<DataModel> mList){
+    public AdapterGuruMapel(Context ctx, List<DataModel> mList){
         this.ctx = ctx;
         this.mList = mList;
     }
@@ -42,14 +39,14 @@ public class AdapterAbsensiKelas extends RecyclerView.Adapter<AdapterAbsensiKela
     public void onBindViewHolder(@NonNull final HolderData holderData, int posistion) {
         destiny = new Destiny();
         final DataModel dm = mList.get(posistion);
-        holderData.Nama.setText(dm.getNama_kelas());
+        holderData.Nama.setText(dm.getNama_mapel());
         holderData.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(ctx, InnerKelasAbsensiActivity.class);
-                i.putExtra("ID", dm.getId_kelas());
-                i.putExtra("NAMA",dm.getNama_kelas());
-                ctx.startActivity(i);
+//                Intent i = new Intent(ctx, InnerKelasAbsensiActivity.class);
+//                i.putExtra("ID", dm.getId_kelas());
+//                i.putExtra("NAMA",dm.getNama_kelas());
+//                ctx.startActivity(i);
             }
         });
     }

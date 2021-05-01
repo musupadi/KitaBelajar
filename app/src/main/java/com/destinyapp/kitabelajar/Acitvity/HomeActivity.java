@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.destinyapp.kitabelajar.API.ApiRequest;
 import com.destinyapp.kitabelajar.API.DestinyServer;
 import com.destinyapp.kitabelajar.Acitvity.ui.AbsenFragment;
+import com.destinyapp.kitabelajar.Acitvity.ui.AbsenFragmentGuru;
 import com.destinyapp.kitabelajar.Acitvity.ui.GamesFragment;
 import com.destinyapp.kitabelajar.Acitvity.ui.HomeFragment;
 import com.destinyapp.kitabelajar.Acitvity.ui.IzinFragment;
@@ -175,8 +176,14 @@ public class HomeActivity extends AppCompatActivity {
         Default();
         IAbsen.setImageResource(R.drawable.absen_active);
         TAbsen.setTextColor(Color.rgb(37,166,161));
-        fragment = new AbsenFragment();
-        ChangeFragment(fragment);
+        if (Level.equals("guru")){
+            fragment = new AbsenFragmentGuru();
+            ChangeFragment(fragment);
+        }else{
+            fragment = new AbsenFragment();
+            ChangeFragment(fragment);
+        }
+
     }
     private void Games(){
         Default();

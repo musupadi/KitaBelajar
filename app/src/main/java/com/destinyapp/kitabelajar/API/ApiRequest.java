@@ -1,9 +1,12 @@
 package com.destinyapp.kitabelajar.API;
 
+import com.destinyapp.kitabelajar.Model.DataAbsen;
+import com.destinyapp.kitabelajar.Model.DataModel;
 import com.destinyapp.kitabelajar.Model.ResponseDestiny;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -32,18 +35,35 @@ public interface ApiRequest {
     @POST("ubahphotoprofil")
     Call<ResponseModel> ChangeFoto(@Header("Authorization") String authHeader,
                                    @Part MultipartBody.Part photo);
+
+
     @FormUrlEncoded
     @POST("ubahpassword")
     Call<ResponseModel> UbahPassword(@Header("Authorization") String authHeader,
                                      @Field("passwordNew") String passwordNew,
                                      @Field("passwordConfirm") String passwordConfirm,
                                      @Field("passwordOld") String passwordOld);
+
+    @FormUrlEncoded
+    @POST("kelasmuridabsen")
+    Call<ResponseModel> KelasMuridAbsen(@Header("Authorization") String authHeader,
+                                        @Field("idkelas") String idkelas,
+                                        @Field("tanggalabsen") String tanggalabsen,
+                                        @Field("idmapel") String idmapel,
+                                        @Field("piket") String piket,
+                                        @Field("dataabsen") List<DataAbsen> dataabsen);
     @FormUrlEncoded
     @POST("supray/kitabelajar")
     Call<ResponseDestiny> Checkers(@Header("Authorization") String authHeader,
                                    @Field("supri_key") String supri_key);
 
     //GET
+    @GET("kelasabsen")
+    Call<ResponseModel> KelasAbsen(@Header("Authorization") String authHeader);
+
+    @GET("gurumapel")
+    Call<ResponseModel> GuruMapelAbsen(@Header("Authorization") String authHeader);
+
     @GET("kabarsekolah")
     Call<ResponseModel> KabarSekolah(@Header("Authorization") String authHeader);
 
