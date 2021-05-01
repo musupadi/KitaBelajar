@@ -1,4 +1,4 @@
-package com.destinyapp.kitabelajar.Acitvity.menu;
+package com.destinyapp.kitabelajar.Acitvity.menu.AbsensiGuru;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -7,14 +7,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.destinyapp.kitabelajar.API.ApiRequest;
 import com.destinyapp.kitabelajar.API.RetroServer;
 import com.destinyapp.kitabelajar.Acitvity.LoginActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.MediaPembelajaran.MediaPembelajaranActivity;
-import com.destinyapp.kitabelajar.Adapter.AdapterAbsensiKelas;
 import com.destinyapp.kitabelajar.Adapter.AdapterGuruMapel;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
@@ -36,6 +38,7 @@ public class InnerKelasAbsensiActivity extends AppCompatActivity {
     String Username,Password,Nama,Token,Level,Photo;
     String ID,NAMA;
     RecyclerView rv;
+    Spinner piket;
     private List<DataModel> mItems = new ArrayList<>();
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mManager;
@@ -45,6 +48,7 @@ public class InnerKelasAbsensiActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inner_kelas_absensi);
         destiny = new Destiny();
         rv = findViewById(R.id.recycler);
+        piket = findViewById(R.id.spPiket);
         mManager = new GridLayoutManager(InnerKelasAbsensiActivity.this,2);
         rv.setLayoutManager(mManager);
 //        Back = findViewById(R.id.relativeBack);
@@ -64,9 +68,29 @@ public class InnerKelasAbsensiActivity extends AppCompatActivity {
         ID = intent.getExtras().getString("ID");
         NAMA = intent.getExtras().getString("NAMA");
         getSupportActionBar().setTitle("Kelas : "+NAMA);
-        Data();
+        piket.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Data(PiketLogic());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
-    private void Data(){
+    private String PiketLogic(){
+        String Piket;
+        if (piket.getOnItemSelectedListener().toString().equals("Piket")){
+            Piket = "1";
+        }else{
+            Piket = "0";
+        }
+        return Piket;
+    }
+    private void Data(String id){
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
         Call<ResponseModel> Data=api.GuruMapelAbsen(destiny.AUTH(Token));
         Data.enqueue(new Callback<ResponseModel>() {

@@ -27,10 +27,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Acitvity.menu.AbsensiGuru.SiswaAbsensiGuruActivity"></activity>
         <activity
-            android:name=".Acitvity.menu.InnerKelasAbsensiActivity"
+            android:name=".Acitvity.menu.AbsensiGuru.InnerKelasAbsensiActivity"
             android:label="Kelas"
-            android:parentActivityName=".Acitvity.HomeActivity"></activity>
+            android:parentActivityName=".Acitvity.HomeActivity" />
         <activity android:name=".Acitvity.menu.KemisNyunda.KamusSunda.KamusSundaActivity" />
         <activity
             android:name=".Acitvity.DetailSponsorActivity"
