@@ -215,6 +215,8 @@ public class HomeFragment extends Fragment {
             DTugas.setAlpha(0.2f);
             DERaport.setAlpha(0.2f);
             DPembayaran.setAlpha(0.2f);
+        }else if(Level.equals("guru")){
+            Evadir.setAlpha(0.2f);
         }
         ONCLICK();
         ONCLICKDIALOG();

@@ -171,6 +171,8 @@ public class Destiny {
         }else if(Class.equals("Evadir")){
             if (id.equals("guest")){
                 Toast.makeText(ctx, "Mohon Login Untuk Mengakses Menu", Toast.LENGTH_SHORT).show();
+            }else if (id.equals("guru")){
+                Toast.makeText(ctx, "Hanya Murid Yang dapat membuka Evadir", Toast.LENGTH_SHORT).show();
             }else{
                 Intent intent = new Intent(ctx, EvadirActivity.class);
                 ctx.startActivity(intent);

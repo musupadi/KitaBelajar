@@ -15,6 +15,14 @@ public class DataModel {
     @SerializedName("name")
     @Expose
     public String name;
+
+    @SerializedName("lembaga")
+    @Expose
+    public String lembaga;
+
+    @SerializedName("telepon")
+    @Expose
+    public String telepon;
     
     @SerializedName("usernameUser")
     @Expose
@@ -541,8 +549,67 @@ public class DataModel {
     @Expose
     public String id_sekolah_sponsor;
 
-    //GETTER SETTER
+    //Evadir
+    @SerializedName("id_evadir")
+    @Expose
+    public String id_evadir;
 
+    @SerializedName("nama_evadir")
+    @Expose
+    public String nama_evadir;
+
+    @SerializedName("kategori_evadir")
+    @Expose
+    public String kategori_evadir;
+
+    @SerializedName("id_kategori")
+    @Expose
+    public String id_kategori;
+
+    @SerializedName("answer")
+    @Expose
+    public List<Evadir> answer;
+
+    //GETTER SETTER
+    public String getId_evadir() {
+        return id_evadir;
+    }
+
+    public void setId_evadir(String id_evadir) {
+        this.id_evadir = id_evadir;
+    }
+
+    public String getNama_evadir() {
+        return nama_evadir;
+    }
+
+    public void setNama_evadir(String nama_evadir) {
+        this.nama_evadir = nama_evadir;
+    }
+
+    public String getKategori_evadir() {
+        return kategori_evadir;
+    }
+
+    public void setKategori_evadir(String kategori_evadir) {
+        this.kategori_evadir = kategori_evadir;
+    }
+
+    public String getId_kategori() {
+        return id_kategori;
+    }
+
+    public void setId_kategori(String id_kategori) {
+        this.id_kategori = id_kategori;
+    }
+
+    public List<Evadir> getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(List<Evadir> answer) {
+        this.answer = answer;
+    }
 
     public String getId_sekolah_sponsor() {
         return id_sekolah_sponsor;
@@ -1564,5 +1631,21 @@ public class DataModel {
 
     public void setCreated_at_banner(String created_at_banner) {
         this.created_at_banner = created_at_banner;
+    }
+
+    public String getLembaga() {
+        return lembaga;
+    }
+
+    public void setLembaga(String lembaga) {
+        this.lembaga = lembaga;
+    }
+
+    public String getTelepon() {
+        return telepon;
+    }
+
+    public void setTelepon(String telepon) {
+        this.telepon = telepon;
     }
 }

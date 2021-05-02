@@ -5,11 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/tvCompass"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/qiblat"/>
-
+<!--    <ImageView-->
+<!--        android:id="@+id/tvCompass"-->
+<!--        android:layout_width="300dp"-->
+<!--        android:layout_height="300dp"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:src="@drawable/qiblat"/>-->
+    <activity
+        android:name="com.hassanjamil.hqibla.CompassActivity"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait"/>
 </RelativeLayout>

@@ -1,9 +1,13 @@
 package com.destinyapp.kitabelajar.API;
 
 import com.destinyapp.kitabelajar.Model.DataAbsen;
-import com.destinyapp.kitabelajar.Model.DataModel;
+import com.destinyapp.kitabelajar.Model.Data;
+import com.destinyapp.kitabelajar.Model.DataEvadir;
+import com.destinyapp.kitabelajar.Model.Evadir;
 import com.destinyapp.kitabelajar.Model.ResponseDestiny;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +15,12 @@ import java.util.List;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -57,9 +63,21 @@ public interface ApiRequest {
     Call<ResponseDestiny> Checkers(@Header("Authorization") String authHeader,
                                    @Field("supri_key") String supri_key);
 
+    @Headers({"Content-type: application/json",
+            "Accept: */*"})
+//    @FormUrlEncoded
+    @POST("evadir")
+    Call<ResponseModel> Evadir(@Header("Authorization") String authHeader,
+                               @Query("id_evadir[]") ArrayList<String> id_evadir,
+                               @Query("skor[]") ArrayList<String> skor,
+                               @Query("id_kategori[]") ArrayList<String> id_kategori);
+
     //GET
     @GET("kelasabsen")
     Call<ResponseModel> KelasAbsen(@Header("Authorization") String authHeader);
+
+    @GET("evadir")
+    Call<ResponseModel> Evadir(@Header("Authorization") String authHeader);
 
     @GET("gurumapel")
     Call<ResponseModel> GuruMapelAbsen(@Header("Authorization") String authHeader);

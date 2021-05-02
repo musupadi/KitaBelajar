@@ -37,6 +37,7 @@ import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
 import com.destinyapp.kitabelajar.R;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
+import com.google.android.youtube.player.internal.v;
 
 import java.io.File;
 import java.io.IOException;
@@ -93,6 +94,7 @@ public class UserFragment extends Fragment {
     ProgressDialog pDialog;
     String postFoto= "";
     LinearLayout CariFoto;
+    TextView tingkatan,telepon;
     public UserFragment() {
         // Required empty public constructor
     }
@@ -119,9 +121,11 @@ public class UserFragment extends Fragment {
             NISN  = view.findViewById(R.id.tvNISN);
             NISN2 = view.findViewById(R.id.tvNISN2);
             nama = view.findViewById(R.id.tvNama);
+            tingkatan = view.findViewById(R.id.tvTingkatan);
             profile = view.findViewById(R.id.ivProfile);
             logout = view.findViewById(R.id.btnLogot);
             UbahPassword = view.findViewById(R.id.btnUbahPassword);
+            telepon = view.findViewById(R.id.tvTelepon);
             dialog = new Dialog(getActivity());
             dialog.setContentView(R.layout.dialog_change_foto);
             PilihGambar = dialog.findViewById(R.id.linearPilihFoto);
@@ -325,14 +329,18 @@ public class UserFragment extends Fragment {
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
                     if (response.body().getStatusCode().equals("000")){
-                        nama.setText(response.body().getData().get(0).getName());
-                        NISN.setText(Username);
-                        NISN2.setText(Username);
-                        Glide.with(getActivity())
-                                .load(destiny.BASE_URL()+response.body().getData().get(0).getPhoto())
-                                .into(profile);
-                        dbHelper.Logout();
-                        dbHelper.SaveUser(Username,Password,response.body().getData().get(0).getName(),response.body().getData().get(0).getAccessToken(),response.body().getData().get(0).getAs(),response.body().getData().get(0).getPhoto());
+                        try {
+                            nama.setText(response.body().getData().get(0).getName());
+                            tingkatan.setText(response.body().getData().get(0).getLembaga());
+                            telepon.setText(response.body().getData().get(0).getTelepon());
+                            NISN.setText(Username);
+                            NISN2.setText(Username);
+                            Glide.with(getActivity())
+                                    .load(destiny.BASE_URL()+response.body().getData().get(0).getPhoto())
+                                    .into(profile);
+                        }catch (Exception e){
+
+                        }
                     }else{
                         Toast.makeText(getActivity(), response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
                     }
