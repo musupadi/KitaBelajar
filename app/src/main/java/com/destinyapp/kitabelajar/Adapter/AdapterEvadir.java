@@ -65,7 +65,7 @@ public class AdapterEvadir extends RecyclerView.Adapter<AdapterEvadir.HolderData
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final HolderData holderData, int posistion) {
+    public void onBindViewHolder(@NonNull final HolderData holderData, final int posistion) {
         destiny = new Destiny();
         final DataModel dm = mList.get(posistion);
         holderData.Nama.setText(dm.getNama_evadir());
@@ -110,6 +110,7 @@ public class AdapterEvadir extends RecyclerView.Adapter<AdapterEvadir.HolderData
             public void onClick(View view) {
 //                Evadir.add(new Data(ids,Skor,id_kategori));
                 ID_EVADIR.add(dm.getId_evadir());
+
                 SKOR.add(skor);
                 ID_KATEGORI.add(dm.getId_kategori());
                 holderData.card.setAlpha(0.5f);

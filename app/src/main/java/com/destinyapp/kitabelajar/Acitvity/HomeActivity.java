@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -42,6 +44,7 @@ public class HomeActivity extends AppCompatActivity {
     private String[] galleryPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
     DB_Helper dbHelper;
     String Username,Password,Nama,Token,Level,Photo;
+    Destiny destiny;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -212,5 +215,43 @@ public class HomeActivity extends AppCompatActivity {
             ft.replace(R.id.Container,fragment);
             ft.commit();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+
+        // Set a title for alert dialog
+        builder.setTitle("Pemberitahuan");
+
+        // Ask the final question
+        builder.setMessage("Apakah Anda Yakin Ingin Logout ? ");
+
+        // Set the alert dialog yes button click listener
+        builder.setPositiveButton("Iya", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do something when user clicked the Yes button
+                // Set the TextView visibility GONE
+                DB_Helper db_helper = new DB_Helper(HomeActivity.this);
+                db_helper.Logout();
+                Toast.makeText(HomeActivity.this, "Anda Berhasil Logout", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finishAffinity();
+            }
+        });
+
+        // Set the alert dialog no button click listener
+        builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do something when No button clicked
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        // Display the alert dialog on interface
+        dialog.show();
     }
 }

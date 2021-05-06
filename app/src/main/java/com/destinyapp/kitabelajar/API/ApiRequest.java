@@ -3,7 +3,9 @@ package com.destinyapp.kitabelajar.API;
 import com.destinyapp.kitabelajar.Model.DataAbsen;
 import com.destinyapp.kitabelajar.Model.Data;
 import com.destinyapp.kitabelajar.Model.DataEvadir;
+import com.destinyapp.kitabelajar.Model.Essay;
 import com.destinyapp.kitabelajar.Model.Evadir;
+import com.destinyapp.kitabelajar.Model.NewResponse;
 import com.destinyapp.kitabelajar.Model.ResponseDestiny;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
 
@@ -71,6 +73,11 @@ public interface ApiRequest {
                                @Query("id_evadir[]") ArrayList<String> id_evadir,
                                @Query("skor[]") ArrayList<String> skor,
                                @Query("id_kategori[]") ArrayList<String> id_kategori);
+    @FormUrlEncoded
+    @POST("tugas")
+    Call<ResponseModel> TugasPG(@Header("Authorization") String authHeader,
+                              @Field("id_tugas") String id_tugas,
+                              @Query("jawaban[]") ArrayList<String> jawab);
 
     //GET
     @GET("kelasabsen")
@@ -129,6 +136,15 @@ public interface ApiRequest {
 
     @GET("tugas")
     Call<ResponseModel> Tugas(@Header("Authorization") String authHeader);
+
+
+    @GET("tugassoal")
+    Call<NewResponse> Tugas(@Header("Authorization") String authHeader,
+                            @Query("id_tugas") String id_tugas);
+
+    @GET("tugassoal")
+    Call<Essay> TugasEssay(@Header("Authorization") String authHeader,
+                           @Query("id_tugas") String id_tugas);
 
     @GET("gallery")
     Call<ResponseModel> Gallery(@Header("Authorization") String authHeader);

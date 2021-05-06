@@ -7,12 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class ResponseDestiny {
-    @SerializedName("status")
-    @Expose
-    @Nullable
-    public String status;
-
+public class Essay {
     @SerializedName("statusCode")
     @Expose
     @Nullable
@@ -25,25 +20,7 @@ public class ResponseDestiny {
 
     @SerializedName("data")
     @Nullable
-    public String data;
-
-    @Nullable
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(@Nullable String status) {
-        this.status = status;
-    }
-
-    @Nullable
-    public String getData() {
-        return data;
-    }
-
-    public void setData(@Nullable String data) {
-        this.data = data;
-    }
+    public Soal data;
 
     @Nullable
     public String getStatusCode() {
@@ -61,5 +38,14 @@ public class ResponseDestiny {
 
     public void setStatusMessage(@Nullable String statusMessage) {
         this.statusMessage = statusMessage;
+    }
+
+    @Nullable
+    public Soal getData() {
+        return data;
+    }
+
+    public void setData(@Nullable Soal data) {
+        this.data = data;
     }
 }

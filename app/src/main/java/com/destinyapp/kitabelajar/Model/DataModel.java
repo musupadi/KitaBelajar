@@ -41,6 +41,7 @@ public class DataModel {
     public String id_environment;
 
 
+
     //Kabar Sekolah
     @SerializedName("id_kabar_sekolah")
     @Expose
@@ -247,9 +248,18 @@ public class DataModel {
     @Expose
     public String id_tugas;
 
+    @SerializedName("jenis_tugas")
+    @Expose
+    public String jenis_tugas;
+
     @SerializedName("isi_tugas")
     @Expose
     public String isi_tugas;
+
+    @SerializedName("file_tugas_pg")
+    @Expose
+    public String file_tugas_pg;
+
 
     @SerializedName("tgl_mulai")
     @Expose
@@ -259,9 +269,38 @@ public class DataModel {
     @Expose
     public String tgl_selesai;
 
+    @SerializedName("status_tugas")
+    @Expose
+    public String status_tugas;
+
+    @SerializedName("score_tugas")
+    @Expose
+    public String score_tugas;
+
     @SerializedName("tugas_created_at")
     @Expose
     public String tugas_created_at;
+
+    @SerializedName("soal")
+    @Expose
+    public String soal;
+
+    @SerializedName("jumlahsoal")
+    @Expose
+    public String jumlahsoal;
+
+    @SerializedName("id_tugas_essay_soal")
+    @Expose
+    public String id_tugas_essay_soal;
+
+
+    @SerializedName("no_soal")
+    @Expose
+    public String no_soal;
+
+    @SerializedName("isi_soal")
+    @Expose
+    public String isi_soal;
 
     //Gallery
     @SerializedName("id_gallery")
@@ -569,6 +608,14 @@ public class DataModel {
     @SerializedName("answer")
     @Expose
     public List<Evadir> answer;
+
+
+    //Tugas
+
+
+
+
+
 
     //GETTER SETTER
     public String getId_evadir() {
@@ -1647,5 +1694,77 @@ public class DataModel {
 
     public void setTelepon(String telepon) {
         this.telepon = telepon;
+    }
+
+    public String getJenis_tugas() {
+        return jenis_tugas;
+    }
+
+    public void setJenis_tugas(String jenis_tugas) {
+        this.jenis_tugas = jenis_tugas;
+    }
+
+    public String getFile_tugas_pg() {
+        return file_tugas_pg;
+    }
+
+    public void setFile_tugas_pg(String file_tugas_pg) {
+        this.file_tugas_pg = file_tugas_pg;
+    }
+
+    public String getStatus_tugas() {
+        return status_tugas;
+    }
+
+    public void setStatus_tugas(String status_tugas) {
+        this.status_tugas = status_tugas;
+    }
+
+    public String getScore_tugas() {
+        return score_tugas;
+    }
+
+    public void setScore_tugas(String score_tugas) {
+        this.score_tugas = score_tugas;
+    }
+
+    public String getSoal() {
+        return soal;
+    }
+
+    public void setSoal(String soal) {
+        this.soal = soal;
+    }
+
+    public String getJumlahsoal() {
+        return jumlahsoal;
+    }
+
+    public void setJumlahsoal(String jumlahsoal) {
+        this.jumlahsoal = jumlahsoal;
+    }
+
+    public String getId_tugas_essay_soal() {
+        return id_tugas_essay_soal;
+    }
+
+    public void setId_tugas_essay_soal(String id_tugas_essay_soal) {
+        this.id_tugas_essay_soal = id_tugas_essay_soal;
+    }
+
+    public String getNo_soal() {
+        return no_soal;
+    }
+
+    public void setNo_soal(String no_soal) {
+        this.no_soal = no_soal;
+    }
+
+    public String getIsi_soal() {
+        return isi_soal;
+    }
+
+    public void setIsi_soal(String isi_soal) {
+        this.isi_soal = isi_soal;
     }
 }

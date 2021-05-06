@@ -5,9 +5,7 @@ import androidx.annotation.Nullable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-public class ResponseDestiny {
+public class NewResponse {
     @SerializedName("status")
     @Expose
     @Nullable
@@ -25,7 +23,8 @@ public class ResponseDestiny {
 
     @SerializedName("data")
     @Nullable
-    public String data;
+    public DataModel data;
+
 
     @Nullable
     public String getStatus() {
@@ -34,15 +33,6 @@ public class ResponseDestiny {
 
     public void setStatus(@Nullable String status) {
         this.status = status;
-    }
-
-    @Nullable
-    public String getData() {
-        return data;
-    }
-
-    public void setData(@Nullable String data) {
-        this.data = data;
     }
 
     @Nullable
@@ -61,5 +51,14 @@ public class ResponseDestiny {
 
     public void setStatusMessage(@Nullable String statusMessage) {
         this.statusMessage = statusMessage;
+    }
+
+    @Nullable
+    public DataModel getData() {
+        return data;
+    }
+
+    public void setData(@Nullable DataModel data) {
+        this.data = data;
     }
 }

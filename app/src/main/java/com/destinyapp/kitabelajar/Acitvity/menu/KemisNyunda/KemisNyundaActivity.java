@@ -38,8 +38,8 @@ public class KemisNyundaActivity extends AppCompatActivity {
         Kamus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(KemisNyundaActivity.this, KamusSundaActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(KemisNyundaActivity.this, KamusSundaActivity.class);
+//                startActivity(intent);
             }
         });
     }

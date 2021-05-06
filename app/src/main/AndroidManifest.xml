@@ -27,7 +27,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Acitvity.menu.AbsensiGuru.SiswaAbsensiGuruActivity"></activity>
+        <activity android:name=".Acitvity.menu.Tugas.SoalEssayActivity"></activity>
+        <activity
+            android:name=".Acitvity.menu.Tugas.SoalPGActivity"
+            android:label="Soal pilihan Ganda"
+            android:parentActivityName=".Acitvity.menu.Tugas.TugasActivity" />
+        <activity
+            android:name=".Acitvity.menu.AbsensiGuru.SiswaAbsensiGuruActivity"
+            android:label="Siswa Absensi"
+            android:parentActivityName=".Acitvity.HomeActivity" />
         <activity
             android:name=".Acitvity.menu.AbsensiGuru.InnerKelasAbsensiActivity"
             android:label="Kelas"
@@ -173,7 +181,7 @@
             android:label="E-Raport"
             android:parentActivityName=".Acitvity.HomeActivity" />
         <activity
-            android:name=".Acitvity.menu.TugasActivity"
+            android:name=".Acitvity.menu.Tugas.TugasActivity"
             android:label="Tugas"
             android:parentActivityName=".Acitvity.HomeActivity" />
         <activity

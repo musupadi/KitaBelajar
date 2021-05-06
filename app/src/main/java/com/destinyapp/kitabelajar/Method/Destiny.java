@@ -1,7 +1,9 @@
 package com.destinyapp.kitabelajar.Method;
 
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Base64;
 import android.util.Log;
@@ -11,6 +13,7 @@ import com.destinyapp.kitabelajar.API.ApiRequest;
 import com.destinyapp.kitabelajar.API.RetroServer;
 import com.destinyapp.kitabelajar.Acitvity.HomeActivity;
 import com.destinyapp.kitabelajar.Acitvity.InfoDinasActivity;
+import com.destinyapp.kitabelajar.Acitvity.LoginActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.AgendaSekolah.AgendaSekolahActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.BiayaAkademik;
 import com.destinyapp.kitabelajar.Acitvity.menu.ERaportActivity;
@@ -28,11 +31,12 @@ import com.destinyapp.kitabelajar.Acitvity.menu.PrestasiActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.ProfileSekolahActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.ROBDanaActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.StrukturOrganisasiActivity;
-import com.destinyapp.kitabelajar.Acitvity.menu.TugasActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.Tugas.TugasActivity;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,6 +53,52 @@ public class Destiny {
             Des = description.substring(0,100)+"...";
         }
         return Des;
+    }
+    public String Nilai(String nilai){
+        int index = nilai.indexOf('/');
+        String nilai_min = nilai.substring(0,index);
+        String nilai_max = nilai.substring(index+1);
+        double NILAI_MIN = Double.valueOf(nilai_min);
+        double NILAI_MAX = Double.valueOf(nilai_max);
+        double NILAI = NILAI_MIN/NILAI_MAX*100;
+        DecimalFormat df = new DecimalFormat("#");
+        String nilais = df.format(NILAI);
+        return nilais;
+    }
+    public void Baim_KONTOL(final Context ctx){
+        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+
+        // Set a title for alert dialog
+        builder.setTitle("Pemberitahuan");
+
+        // Ask the final question
+        builder.setMessage("Apakah Anda Yakin Ingin Logout ? ");
+
+        // Set the alert dialog yes button click listener
+        builder.setPositiveButton("Iya", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do something when user clicked the Yes button
+                // Set the TextView visibility GONE
+                DB_Helper db_helper = new DB_Helper(ctx);
+                db_helper.Logout();
+                Toast.makeText(ctx, "Anda Berhasil Logout", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ctx, LoginActivity.class);
+                ctx.startActivity(intent);
+            }
+        });
+
+        // Set the alert dialog no button click listener
+        builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do something when No button clicked
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        // Display the alert dialog on interface
+        dialog.show();
     }
     public String AUTH_BASE_64(){
         String username = "destiny_pss_tk";

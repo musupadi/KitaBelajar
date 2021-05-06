@@ -89,11 +89,11 @@ public class ListMediaPembelajaranActivity extends AppCompatActivity {
                         Toast.makeText(ListMediaPembelajaranActivity.this, "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
-//                    Toast.makeText(ListMediaPembelajaranActivity.this, "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
-//                    dbHelper.Logout();
-//                    Intent intent = new Intent(ListMediaPembelajaranActivity.this, LoginActivity.class);
-//                    startActivity(intent);
-//                    finish();
+                    Toast.makeText(ListMediaPembelajaranActivity.this, "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
+                    dbHelper.Logout();
+                    Intent intent = new Intent(ListMediaPembelajaranActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
 

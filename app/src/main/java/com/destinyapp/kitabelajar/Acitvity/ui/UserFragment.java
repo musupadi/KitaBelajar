@@ -335,9 +335,13 @@ public class UserFragment extends Fragment {
                             telepon.setText(response.body().getData().get(0).getTelepon());
                             NISN.setText(Username);
                             NISN2.setText(Username);
-                            Glide.with(getActivity())
-                                    .load(destiny.BASE_URL()+response.body().getData().get(0).getPhoto())
-                                    .into(profile);
+                            if (response.body().getData().get(0).getPhoto().equals("") || response.body().getData().get(0).getPhoto().isEmpty()){
+                                profile.setImageResource(R.drawable.childern);
+                            }else{
+                                Glide.with(getActivity())
+                                        .load(destiny.BASE_URL()+response.body().getData().get(0).getPhoto())
+                                        .into(profile);
+                            }
                         }catch (Exception e){
 
                         }

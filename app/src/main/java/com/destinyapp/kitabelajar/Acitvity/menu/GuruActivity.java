@@ -85,6 +85,7 @@ public class GuruActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
                     if (response.body().getStatusCode().equals("000")){
+                        mItems = response.body().getData();
                         if (mItems.size()<1){
                             TAnim.setVisibility(View.VISIBLE);
                             TAnim.setText("Guru Belum Ada");
@@ -96,8 +97,6 @@ public class GuruActivity extends AppCompatActivity {
                             recycler.setAdapter(mAdapter);
                             mAdapter.notifyDataSetChanged();
                         }
-
-
                     }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
                         destiny.AutoLogin(Username,Password,GuruActivity.this);
                         Intent intent = new Intent(GuruActivity.this,AgendaSekolahActivity.class);
