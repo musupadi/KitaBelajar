@@ -41,10 +41,10 @@
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:entries="@array/itemIds"
-                android:id="@+id/spinner"
-                android:visibility="gone"/>
+                android:entries="@array/media_pembelajaran"
+                android:id="@+id/spinner"/>
             <TextView
+                android:visibility="gone"
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

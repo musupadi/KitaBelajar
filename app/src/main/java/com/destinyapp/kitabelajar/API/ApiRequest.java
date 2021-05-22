@@ -6,8 +6,10 @@ import com.destinyapp.kitabelajar.Model.DataEvadir;
 import com.destinyapp.kitabelajar.Model.Essay;
 import com.destinyapp.kitabelajar.Model.Evadir;
 import com.destinyapp.kitabelajar.Model.NewResponse;
+import com.destinyapp.kitabelajar.Model.Produk;
 import com.destinyapp.kitabelajar.Model.ResponseDestiny;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
+import com.destinyapp.kitabelajar.Model.ResponseProduk;
 
 import org.json.JSONObject;
 
@@ -80,6 +82,12 @@ public interface ApiRequest {
                               @Query("jawaban[]") ArrayList<String> jawab);
 
     //GET
+    @GET("produk")
+    Call<ResponseProduk> Produk(@Header("Authorization") String authHeader);
+
+    @GET("tahunajaranppdb")
+    Call<ResponseModel> TahunAjaran(@Header("Authorization") String authHeader);
+
     @GET("kelasabsen")
     Call<ResponseModel> KelasAbsen(@Header("Authorization") String authHeader);
 
@@ -125,7 +133,8 @@ public interface ApiRequest {
     Call<ResponseModel> Raport(@Header("Authorization") String authHeader);
 
     @GET("mediapembelajaran")
-    Call<ResponseModel> MediaPembelajaran(@Header("Authorization") String authHeader);
+    Call<ResponseModel> MediaPembelajaran(@Header("Authorization") String authHeader,
+                                          @Query("tema_kategori") String tema_kategori);
 
 
     @GET("poinsiswa")
@@ -180,6 +189,9 @@ public interface ApiRequest {
     @Multipart
     @POST("ppdb")
     Call<ResponseModel> PPDB(@Header("Authorization") String authHeader,
+                             @Part("tahunajaranid") RequestBody tahunajaranid,
+                             @Part("alamat") RequestBody alamat,
+                             @Part("email") RequestBody email,
                              @Part("nomorujian") RequestBody nomorujian,
                              @Part("nisn") RequestBody nisn,
                              @Part("nik") RequestBody nik,
@@ -196,6 +208,9 @@ public interface ApiRequest {
     @Multipart
     @POST("ppdb")
     Call<ResponseModel> PPDB(@Header("Authorization") String authHeader,
+                             @Part("tahunajaranid") RequestBody tahunajaranid,
+                             @Part("alamat") RequestBody alamat,
+                             @Part("email") RequestBody email,
                               @Part("nomorujian") RequestBody nama_izin,
                               @Part("nisn") RequestBody deskripsi_izin,
                               @Part("nik") RequestBody tanggalMulai,
@@ -213,6 +228,9 @@ public interface ApiRequest {
     @Multipart
     @POST("ppdb")
     Call<ResponseModel> PPDB(@Header("Authorization") String authHeader,
+                             @Part("tahunajaranid") RequestBody tahunajaranid,
+                             @Part("alamat") RequestBody alamat,
+                             @Part("email") RequestBody email,
                              @Part("nomorujian") RequestBody nama_izin,
                              @Part("nisn") RequestBody deskripsi_izin,
                              @Part("nik") RequestBody tanggalMulai,
@@ -231,6 +249,9 @@ public interface ApiRequest {
     @Multipart
     @POST("ppdb")
     Call<ResponseModel> PPDB(@Header("Authorization") String authHeader,
+                             @Part("tahunajaranid") RequestBody tahunajaranid,
+                             @Part("alamat") RequestBody alamat,
+                             @Part("email") RequestBody email,
                              @Part("nomorujian") RequestBody nama_izin,
                              @Part("nisn") RequestBody deskripsi_izin,
                              @Part("nik") RequestBody tanggalMulai,
@@ -250,6 +271,9 @@ public interface ApiRequest {
     @Multipart
     @POST("ppdb")
     Call<ResponseModel> PPDB(@Header("Authorization") String authHeader,
+                             @Part("tahunajaranid") RequestBody tahunajaranid,
+                             @Part("alamat") RequestBody alamat,
+                             @Part("email") RequestBody email,
                              @Part("nomorujian") RequestBody nama_izin,
                              @Part("nisn") RequestBody deskripsi_izin,
                              @Part("nik") RequestBody tanggalMulai,

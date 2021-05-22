@@ -35,8 +35,11 @@ import com.destinyapp.kitabelajar.Acitvity.menu.Tugas.TugasActivity;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -403,6 +406,13 @@ public class Destiny {
         }
         String Dates = day+"-"+MONTH+"-"+year;
         return Dates;
+    }
+    public String MagicRP(double nilai){
+        Locale localeID = new Locale("in", "ID");
+        NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+        BigDecimal bd1 = new BigDecimal(nilai).setScale(0, RoundingMode.HALF_UP);
+        String replace = formatRupiah.format(bd1).replace("Rp","Rp ");
+        return replace;
     }
     public String MagicDateChange(String dates){
         String result = "";

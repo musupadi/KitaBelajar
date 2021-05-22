@@ -15,6 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,10 +46,14 @@ import com.destinyapp.kitabelajar.Adapter.AdapterGalleryHome;
 import com.destinyapp.kitabelajar.Adapter.AdapterGuru;
 import com.destinyapp.kitabelajar.Adapter.AdapterInfoPublik;
 import com.destinyapp.kitabelajar.Adapter.AdapterKabarBerita;
+import com.destinyapp.kitabelajar.Adapter.AdapterProduk;
 import com.destinyapp.kitabelajar.Adapter.AdapterSponsor;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
+import com.destinyapp.kitabelajar.Model.Produk;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
+import com.destinyapp.kitabelajar.Model.ResponseModel;
+import com.destinyapp.kitabelajar.Model.ResponseProduk;
 import com.destinyapp.kitabelajar.R;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 
@@ -79,12 +84,13 @@ public class HomeFragment extends Fragment {
     TextView nama,namaSiswa;
     DB_Helper dbHelper;
     String Username,Password,Nama,Token,Level,Photo;
-    RecyclerView recyclerKabar,recylerSponsor,recyclerGallery;
-    LottieAnimationView AHeader,ABerita,ASponsor;
-    LinearLayout LAHeader,LABerita,LASponsor;
-    TextView TAHeader,TABerita,TASponsor;
+    RecyclerView recyclerKabar,recylerSponsor,recyclerGallery,recyclerProduk;
+    LottieAnimationView AHeader,ABerita,ASponsor,AProduk;
+    LinearLayout LAHeader,LABerita,LASponsor,LAProduk;
+    TextView TAHeader,TABerita,TASponsor,TAProduk;
     LinearLayout infoDinas;
     private List<DataModel> mItems = new ArrayList<>();
+    private List<Produk> Marketplace = new ArrayList<>();
     private List<DataModel> mItems2 = new ArrayList<>();
     private List<DataModel> mItems3 = new ArrayList<>();
     private RecyclerView.Adapter mAdapter;
@@ -128,6 +134,7 @@ public class HomeFragment extends Fragment {
         recyclerKabar = view.findViewById(R.id.recyclerKabarBerita);
         recylerSponsor = view.findViewById(R.id.recyclerSponsor);
         recyclerGallery = view.findViewById(R.id.recyclerGallery);
+        recyclerProduk = view.findViewById(R.id.recyclerKabarProduk);
         nama = view.findViewById(R.id.tvNama);
         namaSiswa = view.findViewById(R.id.tvNamaSiswa);
         SwitchMasuk = view.findViewById(R.id.switchMasuk);
@@ -168,6 +175,9 @@ public class HomeFragment extends Fragment {
         ASponsor = view.findViewById(R.id.lottieSponsor);
         LASponsor = view.findViewById(R.id.linearASponsor);
         TASponsor = view.findViewById(R.id.tvASponsor);
+        AProduk = view.findViewById(R.id.lottieProduk);
+        LAProduk = view.findViewById(R.id.linearAProduk);
+        TAProduk = view.findViewById(R.id.tvAProduk);
 
 
         dialog = new Dialog(getActivity());
@@ -222,6 +232,7 @@ public class HomeFragment extends Fragment {
         ONCLICKDIALOG();
         Gallery();
         KabarBerita();
+        Produk();
         Sponsor();
         GetPoint();
         GetSekolah();
@@ -509,7 +520,54 @@ public class HomeFragment extends Fragment {
 //        }
     }
     //PagerEnd
+    private void Produk(){
+        mManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
+        recyclerProduk.setLayoutManager(mManager);
+        LAProduk.setVisibility(View.VISIBLE);
+        TAProduk.setVisibility(View.GONE);
+        AProduk.setAnimation("loading.json");
+        AProduk.playAnimation();
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseProduk> KabarBerita = api.Produk(destiny.AUTH(Token));
+        KabarBerita.enqueue(new Callback<ResponseProduk>() {
+            @Override
+            public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
+                try {
+                    if (response.body().getStatusCode().equals("000")){
+                        Marketplace=response.body().getData();
+                        if (Marketplace.size()<1){
+                            TAProduk.setVisibility(View.VISIBLE);
+                            TAProduk.setText("Berita Belum Ada");
+                            AProduk.setAnimation("notfound.json");
+                            AProduk.playAnimation();
+                        }else{
+                            LAProduk.setVisibility(View.GONE);
+                            mAdapter = new AdapterProduk(getActivity(),Marketplace);
+                            recyclerProduk.setAdapter(mAdapter);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
+                        destiny.AutoLogin(Username,Password,getActivity());
+                        KabarBerita();
+                    }else{
+                        Toast.makeText(getActivity(), "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
 
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseProduk> call, Throwable t) {
+                Toast.makeText(getActivity(), "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+                TAProduk.setVisibility(View.VISIBLE);
+                TAProduk.setText("Kesalahan pada Jaringan");
+                AProduk.setAnimation("notfound.json");
+                AProduk.playAnimation();
+            }
+        });
+    }
     private void KabarBerita(){
         mManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
         recyclerKabar.setLayoutManager(mManager);

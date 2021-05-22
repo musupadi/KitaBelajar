@@ -41,6 +41,22 @@ public class DataModel {
     public String id_environment;
 
 
+    //Tahun Ajaran
+    @SerializedName("id_tahun_ajaran")
+    @Expose
+    public String id_tahun_ajaran;
+
+    @SerializedName("urutan_tahun")
+    @Expose
+    public String urutan_tahun;
+
+    @SerializedName("tahun_ajaran")
+    @Expose
+    public String tahun_ajaran;
+
+    @SerializedName("status_tahun_ajaran")
+    @Expose
+    public String status_tahun_ajaran;
 
     //Kabar Sekolah
     @SerializedName("id_kabar_sekolah")
@@ -570,10 +586,6 @@ public class DataModel {
     @SerializedName("id_penjurusan")
     @Expose
     public String id_penjurusan;
-
-    @SerializedName("id_tahun_ajaran")
-    @Expose
-    public String id_tahun_ajaran;
 
     @SerializedName("kelas_ke")
     @Expose
@@ -1766,5 +1778,29 @@ public class DataModel {
 
     public void setIsi_soal(String isi_soal) {
         this.isi_soal = isi_soal;
+    }
+
+    public String getUrutan_tahun() {
+        return urutan_tahun;
+    }
+
+    public void setUrutan_tahun(String urutan_tahun) {
+        this.urutan_tahun = urutan_tahun;
+    }
+
+    public String getTahun_ajaran() {
+        return tahun_ajaran;
+    }
+
+    public void setTahun_ajaran(String tahun_ajaran) {
+        this.tahun_ajaran = tahun_ajaran;
+    }
+
+    public String getStatus_tahun_ajaran() {
+        return status_tahun_ajaran;
+    }
+
+    public void setStatus_tahun_ajaran(String status_tahun_ajaran) {
+        this.status_tahun_ajaran = status_tahun_ajaran;
     }
 }

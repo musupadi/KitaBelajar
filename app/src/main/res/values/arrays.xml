@@ -29,6 +29,12 @@
         <item>Mengajar</item>
     </string-array>
 
+    <string-array name="media_pembelajaran">
+        <item>Tematik Pembelajaran</item>
+        <item>Cerita dan Dongeng</item>
+        <item>Gerak dan Lagu</item>
+    </string-array>
+
 
 
 </resources>

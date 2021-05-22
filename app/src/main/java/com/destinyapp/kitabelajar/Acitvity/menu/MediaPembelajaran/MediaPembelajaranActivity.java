@@ -61,21 +61,21 @@ public class MediaPembelajaranActivity extends AppCompatActivity {
             }
         }
         GetMediaPembelajaran();
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                try {
-//                    SubTema(i);
-//                }catch (Exception e){
-//                    Log.i("Message = ",e.toString());
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                try {
+                    GetMediaPembelajaran();
+                }catch (Exception e){
+                    Log.i("Message = ",e.toString());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
     private void Declaration(){
         spinner = findViewById(R.id.spinner);
@@ -83,12 +83,20 @@ public class MediaPembelajaranActivity extends AppCompatActivity {
         mManager = new GridLayoutManager(MediaPembelajaranActivity.this,1);
         rv.setLayoutManager(mManager);
     }
-    private void SubTema(int index){
-
+    private String Checker(){
+        String check="TEMATIK_PEMBELAJARAN";
+        if (spinner.getSelectedItemPosition()==0){
+            check="TEMATIK_PEMBELAJARAN";
+        }else if(spinner.getSelectedItemPosition()==1){
+            check="CERITA_DAN_DONGENG";
+        }else{
+            check="GERAK_DAN_LAGU";
+        }
+        return check;
     }
     private void GetMediaPembelajaran(){
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
-        Call<ResponseModel> Data=api.MediaPembelajaran(destiny.AUTH(Token));
+        Call<ResponseModel> Data=api.MediaPembelajaran(destiny.AUTH(Token),Checker());
         Data.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {

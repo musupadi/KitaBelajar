@@ -69,7 +69,7 @@ public class ListMediaPembelajaranActivity extends AppCompatActivity {
 
     private void GetMediaPembelajaran(){
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
-        Call<ResponseModel> Data=api.MediaPembelajaran(destiny.AUTH(Token));
+        Call<ResponseModel> Data=api.MediaPembelajaran(destiny.AUTH(Token),"");
         Data.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {

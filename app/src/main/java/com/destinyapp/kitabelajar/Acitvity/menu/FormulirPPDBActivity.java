@@ -16,6 +16,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,15 +37,19 @@ import com.destinyapp.kitabelajar.Acitvity.LoginActivity;
 import com.destinyapp.kitabelajar.Acitvity.MainActivity;
 import com.destinyapp.kitabelajar.BuildConfig;
 import com.destinyapp.kitabelajar.Method.Destiny;
+import com.destinyapp.kitabelajar.Model.DataModel;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
 import com.destinyapp.kitabelajar.R;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
+import com.destinyapp.kitabelajar.Spinner.SpinnerTahunAjaran;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -60,8 +66,10 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
     String tanggal = "1994-01-15";
     Destiny destiny;
     Button uploadAkta,uploadKK,uploadDataPribadi,uploadFoto;
-    TextView form;
+    TextView form,tvid;
     ImageView LogoSekolah;
+    Spinner spAjaran;
+    private List<DataModel> mItems = new ArrayList<>();
     //Jenis Kelamin
     RadioButton Laki,Perempuan;
     Boolean Kelamin = false;
@@ -94,7 +102,7 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
     DB_Helper dbHelper;
     String Username,Password,Nama,Token,Level,Photo;
 
-    EditText NomorUjian,NISN,NIK,NamaLengkap,NomorTelpon,TempatLahir,NamaAyah,NamaIbu,Telpon;
+    EditText Email,Alamat,NomorUjian,NISN,NIK,NamaLengkap,NomorTelpon,TempatLahir,NamaAyah,NamaIbu,Telpon;
 
     //Dellaroy Logic
     private static final int REQUEST_TAKE_PHOTO = 0;
@@ -150,6 +158,8 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
         //
         form = findViewById(R.id.tvForm);
         LogoSekolah = findViewById(R.id.ivLogoSekolah);
+        spAjaran = findViewById(R.id.spAjaran);
+        tvid = findViewById(R.id.tvIdTahunAjaran);
         //Data Edit Text
         NomorUjian = findViewById(R.id.etNomorUjian);
         NISN = findViewById(R.id.etNISN);
@@ -160,6 +170,8 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
         NamaAyah = findViewById(R.id.etNamaAyahKandung);
         NamaIbu = findViewById(R.id.etNamaIbuKandung);
         Telpon = findViewById(R.id.etNoTelponOrtu);
+        Email = findViewById(R.id.etEmail);
+        Alamat = findViewById(R.id.etAlamat);
 
         simpan = findViewById(R.id.btnSimpan);
         LTanggalLahir = findViewById(R.id.linearTanggalLahir);
@@ -212,9 +224,27 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
         LogicKK();
         LogicDataPribadi();
         LogicFoto();
+        DataTahunAjaran();
         if (ID!=null){
             Password = ID;
         }
+        spAjaran.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    DataModel clickedItem = (DataModel) parent.getItemAtPosition(position);
+                    int clickedItems = Integer.parseInt(clickedItem.getId_tahun_ajaran());
+                    tvid.setText(String.valueOf(clickedItems));
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         uploadAkta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -348,6 +378,9 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
                         Call<ResponseModel> FormPPDB = api.PPDB(
                                 destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),tvid.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Alamat.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Email.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
@@ -381,6 +414,7 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                             @Override
                             public void onFailure(Call<ResponseModel> call, Throwable t) {
                                 pd.hide();
+                                Log.d("Error : ",t.toString());
                                 Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -403,6 +437,9 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
                         Call<ResponseModel> FormPPDB = api.PPDB(
                                 destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),tvid.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Alamat.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Email.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
@@ -458,6 +495,9 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
                         Call<ResponseModel> FormPPDB = api.PPDB(
                                 destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),tvid.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Alamat.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Email.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
@@ -513,6 +553,9 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
                         Call<ResponseModel> FormPPDB = api.PPDB(
                                 destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),tvid.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Alamat.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Email.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
@@ -575,6 +618,9 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
                         Call<ResponseModel> FormPPDB = api.PPDB(
                                 destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),tvid.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Alamat.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Email.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
@@ -636,6 +682,9 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
                         Call<ResponseModel> FormPPDB = api.PPDB(
                                 destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),tvid.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Alamat.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Email.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
@@ -698,6 +747,9 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
                         Call<ResponseModel> FormPPDB = api.PPDB(
                                 destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),tvid.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Alamat.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Email.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
@@ -760,6 +812,9 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
                         Call<ResponseModel> FormPPDB = api.PPDB(
                                 destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),tvid.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Alamat.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Email.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
@@ -827,6 +882,9 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
                         Call<ResponseModel> FormPPDB = api.PPDB(
                                 destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),tvid.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Alamat.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Email.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
@@ -892,6 +950,9 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
                         Call<ResponseModel> FormPPDB = api.PPDB(
                                 destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),tvid.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Alamat.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Email.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
@@ -958,6 +1019,9 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
                         Call<ResponseModel> FormPPDB = api.PPDB(
                                 destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),tvid.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Alamat.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Email.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
@@ -1024,6 +1088,9 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
                         Call<ResponseModel> FormPPDB = api.PPDB(
                                 destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),tvid.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Alamat.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Email.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
@@ -1091,6 +1158,9 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
                         Call<ResponseModel> FormPPDB = api.PPDB(
                                 destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),tvid.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Alamat.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Email.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
@@ -1157,6 +1227,9 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
                         Call<ResponseModel> FormPPDB = api.PPDB(
                                 destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),tvid.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Alamat.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Email.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
@@ -1224,6 +1297,9 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
                         Call<ResponseModel> FormPPDB = api.PPDB(
                                 destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),tvid.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Alamat.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Email.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
@@ -1291,6 +1367,9 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
                         Call<ResponseModel> FormPPDB = api.PPDB(
                                 destiny.AUTH(Token),
+                                RequestBody.create(MediaType.parse("text/plain"),tvid.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Alamat.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Email.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NomorUjian.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NISN.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),NIK.getText().toString()),
@@ -1347,7 +1426,29 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
 //            }
 //        });
     }
+    private void DataTahunAjaran(){
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        final Call<ResponseModel> Data =api.TahunAjaran(destiny.AUTH(Token));
+        Data.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                if (response.body().getStatusCode().equals("000")){
+                    try {
+                        mItems=response.body().getData();
+                        SpinnerTahunAjaran adapter = new SpinnerTahunAjaran(FormulirPPDBActivity.this,mItems);
+                        spAjaran.setAdapter(adapter);
+                    }catch (Exception e){
 
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                Toast.makeText(FormulirPPDBActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     private String Checker(){
         String OK = "OK";
         if (NomorUjian.getText().toString().isEmpty()){
@@ -1490,8 +1591,15 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        String date = year+"-"+month+"-"+dayOfMonth;
-        TanggalLahir.setText(destiny.DateChanges(String.valueOf(year),String.valueOf(month),String.valueOf(dayOfMonth)));
+        String FajarKontol = "01";
+        int m = month+1;
+        if (month<10){
+            FajarKontol="0"+String.valueOf(month+1);
+        }else{
+            FajarKontol=String.valueOf(month+1);
+        }
+        String date = year+"-"+FajarKontol+"-"+dayOfMonth;
+        TanggalLahir.setText(destiny.DateChanges(String.valueOf(year),FajarKontol,String.valueOf(dayOfMonth)));
         tanggal = date;
     }
     //Dellaroy Logic
