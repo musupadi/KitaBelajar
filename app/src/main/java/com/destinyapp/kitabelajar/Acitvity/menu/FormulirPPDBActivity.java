@@ -60,15 +60,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
 public class FormulirPPDBActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
-    LinearLayout LTanggalLahir;
-    TextView TanggalLahir;
+    String Tanggals = "Anak";
+    LinearLayout LTanggalLahir,LTanggalLahirAyah,LTanggalLahirIbu;
+    TextView TanggalLahir,TanggalLahirAyah,TanggalLahirIbu;
     String tanggal = "1994-01-15";
+    String tanggalIbu = "1994-01-15";
+    String tanggalAyah = "1994-01-15";
+
     Destiny destiny;
     Button uploadAkta,uploadKK,uploadDataPribadi,uploadFoto;
     TextView form,tvid;
     ImageView LogoSekolah;
-    Spinner spAjaran;
+    Spinner spAjaran,spKebutuhanKhusus;
     private List<DataModel> mItems = new ArrayList<>();
     //Jenis Kelamin
     RadioButton Laki,Perempuan;
@@ -102,7 +107,9 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
     DB_Helper dbHelper;
     String Username,Password,Nama,Token,Level,Photo;
 
-    EditText Email,Alamat,NomorUjian,NISN,NIK,NamaLengkap,NomorTelpon,TempatLahir,NamaAyah,NamaIbu,Telpon;
+    EditText Email,Alamat,NomorUjian,NISN,NIK,NamaLengkap,NomorTelpon,TempatLahir,NamaAyah,NamaIbu,Telpon,
+            Agama,RT,RW,Kecamatan,PendidikanAyah,PekerjaanAyah,PenghasilanAyah,NIKAyah,PendidikanIbu,PekerjaanIbu,PenghasilanIbu,
+            SekolahAsal,AnakKeberapa,BeratBadan,TinggiBadan,LingkarKepala,JumlahSaudara,JarakRumahKeSekolah;
 
     //Dellaroy Logic
     private static final int REQUEST_TAKE_PHOTO = 0;
@@ -160,6 +167,7 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
         LogoSekolah = findViewById(R.id.ivLogoSekolah);
         spAjaran = findViewById(R.id.spAjaran);
         tvid = findViewById(R.id.tvIdTahunAjaran);
+        spKebutuhanKhusus = findViewById(R.id.spKebutuhanKhusus);
         //Data Edit Text
         NomorUjian = findViewById(R.id.etNomorUjian);
         NISN = findViewById(R.id.etNISN);
@@ -172,10 +180,32 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
         Telpon = findViewById(R.id.etNoTelponOrtu);
         Email = findViewById(R.id.etEmail);
         Alamat = findViewById(R.id.etAlamat);
+        Agama = findViewById(R.id.etAgama);
+        RT = findViewById(R.id.etRt);
+        RW = findViewById(R.id.etRw);
+        Kecamatan = findViewById(R.id.etKecematan);
+        PendidikanAyah = findViewById(R.id.etPendidikanAyah);
+        PendidikanIbu = findViewById(R.id.etPendidikanIbu);
+        PekerjaanAyah = findViewById(R.id.etPekerjaanAyah);
+        PekerjaanIbu = findViewById(R.id.etPekerjaanIbu);
+        PenghasilanAyah = findViewById(R.id.etPenghasilanAyah);
+        PenghasilanIbu = findViewById(R.id.etPenghasilanIbu);
+        SekolahAsal = findViewById(R.id.etSekolahAsal);
+        AnakKeberapa = findViewById(R.id.etAnakKeberapa);
+        BeratBadan = findViewById(R.id.etBeratBadan);
+        TinggiBadan = findViewById(R.id.etTinggiBadan);
+        LingkarKepala = findViewById(R.id.etLingkarKepala);
+        JumlahSaudara = findViewById(R.id.etJumlahSaudaraKandung);
+        JarakRumahKeSekolah = findViewById(R.id.etJarakRumahKeSekolah);
 
         simpan = findViewById(R.id.btnSimpan);
         LTanggalLahir = findViewById(R.id.linearTanggalLahir);
         TanggalLahir = findViewById(R.id.tvTanggalLahir);
+        LTanggalLahirAyah = findViewById(R.id.linearTanggalLahirAyah);
+        TanggalLahirAyah = findViewById(R.id.tvTanggalLahirAyah);
+        LTanggalLahirIbu = findViewById(R.id.linearTanggalLahirIbu);
+        TanggalLahirIbu = findViewById(R.id.tvTanggalLahirIbu);
+        //
         uploadAkta = findViewById(R.id.btnUploadAkta);
         uploadKK = findViewById(R.id.btnUploadKK);
         uploadDataPribadi = findViewById(R.id.btnUploadDataPribadi);
@@ -214,11 +244,28 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
         LTanggalLahir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Tanggals = "Anak";
+                showDatePicker();
+            }
+        });
+        LTanggalLahirIbu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tanggals = "Ibu";
+                showDatePicker();
+            }
+        });
+        LTanggalLahirAyah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tanggals = "Ayah";
                 showDatePicker();
             }
         });
         GetSekolah();
         TanggalLahir.setText(destiny.thisDay());
+        TanggalLahirIbu.setText(destiny.thisDay());
+        TanggalLahirAyah.setText(destiny.thisDay());
         LogicKelamin();
         LogicAkta();
         LogicKK();
@@ -378,6 +425,29 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
                         Call<ResponseModel> FormPPDB = api.PPDB(
                                 destiny.AUTH(Token),
+                                //New
+                                RequestBody.create(MediaType.parse("text/plain"),Agama.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),RT.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),RW.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),Kecamatan.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),tanggal),
+                                RequestBody.create(MediaType.parse("text/plain"),PendidikanAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),PekerjaanAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),PenghasilanAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NIKAyah.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),tanggal),
+                                RequestBody.create(MediaType.parse("text/plain"),PendidikanIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),PekerjaanIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),PenghasilanIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),spKebutuhanKhusus.getSelectedItem().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),SekolahAsal.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),AnakKeberapa.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),BeratBadan.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),TinggiBadan.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),LingkarKepala.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),JumlahSaudara.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),JarakRumahKeSekolah.getText().toString()),
+                                //New
                                 RequestBody.create(MediaType.parse("text/plain"),tvid.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),Alamat.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),Email.getText().toString()),
@@ -1599,8 +1669,17 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
             FajarKontol=String.valueOf(month+1);
         }
         String date = year+"-"+FajarKontol+"-"+dayOfMonth;
-        TanggalLahir.setText(destiny.DateChanges(String.valueOf(year),FajarKontol,String.valueOf(dayOfMonth)));
-        tanggal = date;
+        if (Tanggals.equals("Anak")){
+            TanggalLahir.setText(destiny.DateChanges(String.valueOf(year),FajarKontol,String.valueOf(dayOfMonth)));
+            tanggal = date;
+        }else if (Tanggals.equals("Ibu")){
+            TanggalLahirIbu.setText(destiny.DateChanges(String.valueOf(year),FajarKontol,String.valueOf(dayOfMonth)));
+            tanggalIbu = date;
+        }else if(Tanggals.equals("Ayah")){
+            TanggalLahirAyah.setText(destiny.DateChanges(String.valueOf(year),FajarKontol,String.valueOf(dayOfMonth)));
+            tanggalAyah = date;
+        }
+
     }
     //Dellaroy Logic
     private void captureImage() {

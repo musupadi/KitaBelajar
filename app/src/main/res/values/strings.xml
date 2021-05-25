@@ -26,4 +26,8 @@
         <item>PDF</item>
         <item>ARtikel</item>
     </string-array>
+    <string-array name="KebutuhanKhusus">
+        <item>Tidak</item>
+        <item>Ya</item>
+    </string-array>
 </resources>
