@@ -184,6 +184,7 @@ public interface ApiRequest {
                              @Part("tanggalAkhir") RequestBody tanggalAkhir,
                              @Part MultipartBody.Part fileIzin);
 
+
     @Multipart
     @POST("ppdb")
     Call<ResponseModel> PPDB(@Header("Authorization") String authHeader,
@@ -201,6 +202,7 @@ public interface ApiRequest {
                              @Part("pendidikan_ibu") RequestBody pendidikan_ibu,
                              @Part("pekerjaan_ibu") RequestBody pekerjaan_ibu,
                              @Part("penghasilan_ibu") RequestBody penghasilan_ibu,
+                             @Part("nik_ibu") RequestBody nik_ibu,
                              @Part("kebutuhan_khusus") RequestBody kebutuhan_khusus,
                              @Part("sekolah_asal") RequestBody sekolah_asal,
                              @Part("anak_keberapa") RequestBody anak_keberapa,

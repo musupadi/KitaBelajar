@@ -812,7 +812,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:text="Tahun Lahir Ayah*"
+                                android:text="Tahun Lahir Ibu*"
                                 android:textColor="@color/colorBlack" />
 
                             <LinearLayout
@@ -854,7 +854,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:text="Pendidikan Ayah"
+                                android:text="Pendidikan Ibu"
                                 android:textColor="@color/colorBlack" />
 
                             <LinearLayout
@@ -876,7 +876,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:text="Pekerjaan Ayah"
+                                android:text="Pekerjaan Ibu"
                                 android:textColor="@color/colorBlack" />
 
                             <LinearLayout
@@ -898,7 +898,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:text="Penghasilan Ayah"
+                                android:text="Penghasilan Ibu"
                                 android:textColor="@color/colorBlack" />
 
                             <LinearLayout
@@ -920,7 +920,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:text="NIK Ayah"
+                                android:text="NIK Ibu"
                                 android:textColor="@color/colorBlack" />
 
                             <LinearLayout

@@ -108,7 +108,7 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
     String Username,Password,Nama,Token,Level,Photo;
 
     EditText Email,Alamat,NomorUjian,NISN,NIK,NamaLengkap,NomorTelpon,TempatLahir,NamaAyah,NamaIbu,Telpon,
-            Agama,RT,RW,Kecamatan,PendidikanAyah,PekerjaanAyah,PenghasilanAyah,NIKAyah,PendidikanIbu,PekerjaanIbu,PenghasilanIbu,
+            Agama,RT,RW,Kecamatan,PendidikanAyah,PekerjaanAyah,PenghasilanAyah,NIKAyah,PendidikanIbu,PekerjaanIbu,PenghasilanIbu,NIKIbu,
             SekolahAsal,AnakKeberapa,BeratBadan,TinggiBadan,LingkarKepala,JumlahSaudara,JarakRumahKeSekolah;
 
     //Dellaroy Logic
@@ -188,6 +188,8 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
         PendidikanIbu = findViewById(R.id.etPendidikanIbu);
         PekerjaanAyah = findViewById(R.id.etPekerjaanAyah);
         PekerjaanIbu = findViewById(R.id.etPekerjaanIbu);
+        NIKAyah = findViewById(R.id.etNikAyah);
+        NIKIbu = findViewById(R.id.etNikIbu);
         PenghasilanAyah = findViewById(R.id.etPenghasilanAyah);
         PenghasilanIbu = findViewById(R.id.etPenghasilanIbu);
         SekolahAsal = findViewById(R.id.etSekolahAsal);
@@ -439,6 +441,7 @@ public class FormulirPPDBActivity extends AppCompatActivity implements DatePicke
                                 RequestBody.create(MediaType.parse("text/plain"),PendidikanIbu.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),PekerjaanIbu.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),PenghasilanIbu.getText().toString()),
+                                RequestBody.create(MediaType.parse("text/plain"),NIKIbu.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),spKebutuhanKhusus.getSelectedItem().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),SekolahAsal.getText().toString()),
                                 RequestBody.create(MediaType.parse("text/plain"),AnakKeberapa.getText().toString()),
