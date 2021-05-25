@@ -62,8 +62,8 @@ public interface ApiRequest {
     Call<ResponseDestiny> Checkers(@Header("Authorization") String authHeader,
                                    @Field("supri_key") String supri_key);
 
-    @Headers({"Content-type: application/json",
-            "Accept: */*"})
+//    @Headers({"Content-type: application/json",
+//            "Accept: */*"})
 //    @FormUrlEncoded
     @POST("evadir")
     Call<ResponseModel> Evadir(@Header("Authorization") String authHeader,
@@ -187,6 +187,29 @@ public interface ApiRequest {
     @Multipart
     @POST("ppdb")
     Call<ResponseModel> PPDB(@Header("Authorization") String authHeader,
+                             //New
+                             @Part("agama") RequestBody agama,
+                             @Part("rt") RequestBody rt,
+                             @Part("rw") RequestBody rw,
+                             @Part("kecamatan") RequestBody kecamatan,
+                             @Part("tahunlahir_ayah") RequestBody tahunlahir_ayah,
+                             @Part("pendidikan_ayah") RequestBody pendidikan_ayah,
+                             @Part("pekerjaan_ayah") RequestBody pekerjaan_ayah,
+                             @Part("penghasilan_ayah") RequestBody penghasilan_ayah,
+                             @Part("nik_ayah") RequestBody nik_ayah,
+                             @Part("tahunlahir_ibu") RequestBody tahunlahir_ibu,
+                             @Part("pendidikan_ibu") RequestBody pendidikan_ibu,
+                             @Part("pekerjaan_ibu") RequestBody pekerjaan_ibu,
+                             @Part("penghasilan_ibu") RequestBody penghasilan_ibu,
+                             @Part("kebutuhan_khusus") RequestBody kebutuhan_khusus,
+                             @Part("sekolah_asal") RequestBody sekolah_asal,
+                             @Part("anak_keberapa") RequestBody anak_keberapa,
+                             @Part("berat_badan") RequestBody berat_badan,
+                             @Part("tinggi_badan") RequestBody tinggi_badan,
+                             @Part("lingkar_kepala") RequestBody lingkar_kepala,
+                             @Part("jumlah_saudara_kandung") RequestBody jumlah_saudara_kandung,
+                             @Part("jarak_rumah_sekolah") RequestBody jarak_rumah_sekolah,
+                             //New
                              @Part("tahunajaranid") RequestBody tahunajaranid,
                              @Part("alamat") RequestBody alamat,
                              @Part("email") RequestBody email,
