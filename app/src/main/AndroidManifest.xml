@@ -27,7 +27,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Acitvity.menu.Tugas.SoalEssayActivity"></activity>
+        <activity android:name=".Acitvity.menu.JumatNgaji.Doa.AyatActivity"
+            android:label="Ayat"
+            android:parentActivityName=".Acitvity.menu.JumatNgaji.Doa.DoaActivity"></activity>
+        <activity android:name=".Acitvity.menu.JumatNgaji.Doa.DetailQuranActivity"
+            android:label="Ayat"
+            android:parentActivityName=".Acitvity.menu.JumatNgaji.Doa.DoaActivity"/>
+        <activity android:name=".Acitvity.menu.JumatNgaji.Doa.DoaActivity"
+            android:label="Al'quran dan Doa"
+            android:parentActivityName=".Acitvity.HomeActivity"/>
+        <activity android:name=".Acitvity.menu.JumatNgaji.GuruNgaji.GuruNgajiActivity" />
+        <activity
+            android:name=".Acitvity.DetailProdukActivity"
+            android:label="Detail Product"
+            android:parentActivityName=".Acitvity.HomeActivity" />
+        <activity android:name=".Acitvity.menu.Tugas.SoalEssayActivity" />
         <activity
             android:name=".Acitvity.menu.Tugas.SoalPGActivity"
             android:label="Soal pilihan Ganda"
@@ -238,7 +252,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity> <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3874394648867984~3296169370" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

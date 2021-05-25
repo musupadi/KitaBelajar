@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.destinyapp.kitabelajar.Acitvity.DetailProdukActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.DetailKabarSekolahActivity;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
@@ -50,7 +51,7 @@ public class AdapterProduk extends RecyclerView.Adapter<AdapterProduk.HolderData
         final Produk dm = mList.get(posistion);
         holderData.Sekolah.setText(dm.getNama_produk());
         holderData.Penjual.setText(dm.getNama_sekolah());
-        holderData.Harga.setText(destiny.MagicRP(Double.parseDouble(dm.getHarga_produk())));
+        holderData.Harga.setText("Rp "+dm.getHarga_produk());
         if (dm.getCover_produk().equals("")){
             holderData.Image.setImageResource(R.drawable.childern);
         }else{
@@ -66,18 +67,18 @@ public class AdapterProduk extends RecyclerView.Adapter<AdapterProduk.HolderData
 //                    .into(holderData.Image);
 //        }
 //        Toast.makeText(ctx, destiny.CheckerImageYoutube(dm.getLink_youtube_kabar(),dm.getCover_kabar()), Toast.LENGTH_SHORT).show();
-//        holderData.card.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = new Intent(ctx, DetailKabarSekolahActivity.class);
-//                i.putExtra("JUDUL", dm.getJudul_kabar());
-//                i.putExtra("ISI",dm.getIsi_kabar());
-//                i.putExtra("TANGGAL",dm.getCreated_at_kabar());
-//                i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getCover_kabar());
-//                i.putExtra("YOUTUBE",dm.getLink_youtube_kabar());
-//                ctx.startActivity(i);
-//            }
-//        });
+        holderData.Detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ctx, DetailProdukActivity.class);
+                i.putExtra("NAMA", dm.getNama_produk());
+                i.putExtra("SEKOLAH",dm.getNama_sekolah());
+                i.putExtra("HARGA","Rp "+dm.getHarga_produk());
+                i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getCover_produk());
+                i.putExtra("DESKRIPSI",dm.getDeskripsi_produk());
+                ctx.startActivity(i);
+            }
+        });
     }
 
     @Override

@@ -1,17 +1,13 @@
 package com.destinyapp.kitabelajar.API;
 
+import com.destinyapp.kitabelajar.Model.Alquran.Surah.Alfatihah;
 import com.destinyapp.kitabelajar.Model.DataAbsen;
-import com.destinyapp.kitabelajar.Model.Data;
-import com.destinyapp.kitabelajar.Model.DataEvadir;
 import com.destinyapp.kitabelajar.Model.Essay;
-import com.destinyapp.kitabelajar.Model.Evadir;
 import com.destinyapp.kitabelajar.Model.NewResponse;
-import com.destinyapp.kitabelajar.Model.Produk;
 import com.destinyapp.kitabelajar.Model.ResponseDestiny;
+import com.destinyapp.kitabelajar.Model.ResponseDoa;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
 import com.destinyapp.kitabelajar.Model.ResponseProduk;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +15,6 @@ import java.util.List;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -82,6 +77,9 @@ public interface ApiRequest {
                               @Query("jawaban[]") ArrayList<String> jawab);
 
     //GET
+    @GET("quran")
+    Call<ResponseDoa> Quran();
+
     @GET("produk")
     Call<ResponseProduk> Produk(@Header("Authorization") String authHeader);
 
@@ -317,4 +315,11 @@ public interface ApiRequest {
 
     @GET("info_publik")
     Call<ResponseModel> InfoPublik();
+
+    @GET("daerah")
+    Call<ResponseModel> Daerah(@Header("Authorization") String authHeader);
+
+    //Quran API
+    @GET("1.json")
+    Call<Alfatihah> Alfatihah();
 }

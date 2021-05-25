@@ -396,6 +396,10 @@ public class DataModel {
     @Expose
     public String id_daerah;
 
+    @SerializedName("nama_daerah")
+    @Expose
+    public String nama_daerah;
+
     @SerializedName("tipe_info")
     @Expose
     public String tipe_info;
@@ -1802,5 +1806,13 @@ public class DataModel {
 
     public void setStatus_tahun_ajaran(String status_tahun_ajaran) {
         this.status_tahun_ajaran = status_tahun_ajaran;
+    }
+
+    public String getNama_daerah() {
+        return nama_daerah;
+    }
+
+    public void setNama_daerah(String nama_daerah) {
+        this.nama_daerah = nama_daerah;
     }
 }

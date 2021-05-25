@@ -57,6 +57,7 @@ public class Destiny {
         }
         return Des;
     }
+
     public String Nilai(String nilai){
         int index = nilai.indexOf('/');
         String nilai_min = nilai.substring(0,index);

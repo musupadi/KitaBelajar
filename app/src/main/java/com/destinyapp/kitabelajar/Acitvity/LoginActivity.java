@@ -1,5 +1,6 @@
 package com.destinyapp.kitabelajar.Acitvity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +31,15 @@ import com.destinyapp.kitabelajar.Model.DataModel;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
 import com.destinyapp.kitabelajar.R;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +63,8 @@ public class LoginActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mManager;
     Destiny destiny;
     AutoCompleteTextView Search;
+    private InterstitialAd mInterstitialAd;
+    Button ads;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +110,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 GetDataByName(Search.getText().toString());
+            }
+        });
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+                AD();
             }
         });
         TitidUcupKecil.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -190,6 +208,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
     private void LogicLogin(final String user, final String id){
         final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
         pd.setMessage("Sedang Memasuki Halaman Sekolah");
@@ -203,9 +222,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
                     if (response.body().getStatusCode().equals("000")){
+                        pd.hide();
                         dbHelper.SaveUser(user,id,response.body().getData().get(0).getName(),response.body().getData().get(0).getAccessToken(),response.body().getData().get(0).getAs(),response.body().getData().get(0).getPhoto());
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(intent);
+                        if (mInterstitialAd !=null){
+                            mInterstitialAd.show(LoginActivity.this);
+                        }else{
+                            Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                            startActivity(intent);
+                            finishAffinity();
+                        }
                     }else{
                         Toast.makeText(LoginActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -225,6 +250,49 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    private void AD(){
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(this,"ca-app-pub-3874394648867984/8038194311", adRequest, new InterstitialAdLoadCallback() {
+            @Override
+            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                // The mInterstitialAd reference will be null until
+                // an ad is loaded.
+                mInterstitialAd = interstitialAd;
+//                Log.i(TAG, "onAdLoaded");
+                mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback(){
+                    @Override
+                    public void onAdDismissedFullScreenContent() {
+                        // Called when fullscreen content is dismissed.
+                        Log.d("TAG", "The ad was dismissed.");
+                    }
+
+                    @Override
+                    public void onAdFailedToShowFullScreenContent(AdError adError) {
+                        // Called when fullscreen content failed to show.
+                        Log.d("AD Error : ", adError.toString());
+                        Toast.makeText(LoginActivity.this, adError.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onAdShowedFullScreenContent() {
+                        // Called when fullscreen content is shown.
+                        // Make sure to set your reference to null so you don't
+                        // show it a second time.
+                        mInterstitialAd = null;
+                        Log.d("TAG", "The ad was shown.");
+                    }
+                });
+            }
+
+            @Override
+            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                // Handle the error
+//                Log.i(TAG, loadAdError.getMessage());
+                mInterstitialAd = null;
+            }
+        });
+    }
     private void Logic(){
         final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
         pd.setMessage("Sedang Mencoba Login");
@@ -236,15 +304,20 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
+                    pd.hide();
                     if (response.body().getStatusCode().equals("000")){
+
                         dbHelper.SaveUser(user.getText().toString(),password.getText().toString(),response.body().getData().get(0).getName(),response.body().getData().get(0).getAccessToken(),response.body().getData().get(0).getAs(),response.body().getData().get(0).getPhoto());
-                        Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
-                        startActivity(intent);
-                        finish();
+                        if (mInterstitialAd !=null){
+                            mInterstitialAd.show(LoginActivity.this);
+                        }else{
+                            Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                            startActivity(intent);
+                            finishAffinity();
+                        }
                     }else{
                         Toast.makeText(LoginActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
                     }
-                    pd.hide();
                 }catch (Exception e){
                     Toast.makeText(LoginActivity.this, "Terjadi Kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
                     pd.hide();

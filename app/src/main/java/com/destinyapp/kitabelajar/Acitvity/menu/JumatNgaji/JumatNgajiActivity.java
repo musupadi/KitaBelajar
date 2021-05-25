@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.destinyapp.kitabelajar.Acitvity.menu.JumatNgaji.Doa.DoaActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.JumatNgaji.KhutbahJumat.KhutbahJumatActivity;
 import com.destinyapp.kitabelajar.R;
 
@@ -20,6 +21,13 @@ public class JumatNgajiActivity extends AppCompatActivity {
         Alquran = findViewById(R.id.cardAlquranDanDoa);
         Kiblat = findViewById(R.id.cardArahKiblat);
         Mesjid = findViewById(R.id.cardMesjidTerdekat);
+        Alquran.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(JumatNgajiActivity.this,DoaActivity.class);
+                startActivity(intent);
+            }
+        });
         Kiblat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

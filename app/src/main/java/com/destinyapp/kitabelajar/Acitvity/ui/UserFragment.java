@@ -148,6 +148,7 @@ public class UserFragment extends Fragment {
                 public void onClick(View v) {
                     db_helper.Logout();
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    getActivity().finishAffinity();
                     startActivity(intent);
                 }
             });
