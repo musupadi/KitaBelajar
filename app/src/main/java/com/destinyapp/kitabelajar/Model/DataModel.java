@@ -40,7 +40,42 @@ public class DataModel {
     @Expose
     public String id_environment;
 
+    //Guru Ngaji
+    @SerializedName("id_guru_ngaji")
+    @Expose
+    public String id_guru_ngaji;
 
+    @SerializedName("id_daerah")
+    @Expose
+    public String id_daerah;
+
+    @SerializedName("nama_guru_ngaji")
+    @Expose
+    public String nama_guru_ngaji;
+
+    @SerializedName("alamat_guru_ngaji")
+    @Expose
+    public String alamat_guru_ngaji;
+
+    @SerializedName("latitude_guru_ngaji")
+    @Expose
+    public String latitude_guru_ngaji;
+
+    @SerializedName("longitude_guru_ngaji")
+    @Expose
+    public String longitude_guru_ngaji;
+
+    @SerializedName("foto_guru_ngaji")
+    @Expose
+    public String foto_guru_ngaji;
+
+    @SerializedName("created_at_guru_ngaji")
+    @Expose
+    public String created_at_guru_ngaji;
+
+    @SerializedName("nama_daerah")
+    @Expose
+    public String nama_daerah;
     //Tahun Ajaran
     @SerializedName("id_tahun_ajaran")
     @Expose
@@ -391,14 +426,6 @@ public class DataModel {
     @SerializedName("id_info_dinas")
     @Expose
     public String id_info_dinas;
-
-    @SerializedName("id_daerah")
-    @Expose
-    public String id_daerah;
-
-    @SerializedName("nama_daerah")
-    @Expose
-    public String nama_daerah;
 
     @SerializedName("tipe_info")
     @Expose
@@ -1814,5 +1841,61 @@ public class DataModel {
 
     public void setNama_daerah(String nama_daerah) {
         this.nama_daerah = nama_daerah;
+    }
+
+    public String getId_guru_ngaji() {
+        return id_guru_ngaji;
+    }
+
+    public void setId_guru_ngaji(String id_guru_ngaji) {
+        this.id_guru_ngaji = id_guru_ngaji;
+    }
+
+    public String getNama_guru_ngaji() {
+        return nama_guru_ngaji;
+    }
+
+    public void setNama_guru_ngaji(String nama_guru_ngaji) {
+        this.nama_guru_ngaji = nama_guru_ngaji;
+    }
+
+    public String getAlamat_guru_ngaji() {
+        return alamat_guru_ngaji;
+    }
+
+    public void setAlamat_guru_ngaji(String alamat_guru_ngaji) {
+        this.alamat_guru_ngaji = alamat_guru_ngaji;
+    }
+
+    public String getLatitude_guru_ngaji() {
+        return latitude_guru_ngaji;
+    }
+
+    public void setLatitude_guru_ngaji(String latitude_guru_ngaji) {
+        this.latitude_guru_ngaji = latitude_guru_ngaji;
+    }
+
+    public String getLongitude_guru_ngaji() {
+        return longitude_guru_ngaji;
+    }
+
+    public void setLongitude_guru_ngaji(String longitude_guru_ngaji) {
+        this.longitude_guru_ngaji = longitude_guru_ngaji;
+    }
+
+    public String getFoto_guru_ngaji() {
+        return foto_guru_ngaji;
+    }
+
+    public void setFoto_guru_ngaji(String foto_guru_ngaji) {
+        this.foto_guru_ngaji = foto_guru_ngaji;
+    }
+
+    public String getCreated_at_guru_ngaji() {
+        return created_at_guru_ngaji;
+    }
+
+    public void setCreated_at_guru_ngaji(String created_at_guru_ngaji) {
+        this.created_at_guru_ngaji = created_at_guru_ngaji;
     }
 }

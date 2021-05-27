@@ -1,8 +1,10 @@
 package com.destinyapp.kitabelajar.Acitvity.menu.JumatNgaji.GuruNgaji;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +15,10 @@ import android.widget.Toast;
 
 import com.destinyapp.kitabelajar.API.ApiRequest;
 import com.destinyapp.kitabelajar.API.RetroServer;
+import com.destinyapp.kitabelajar.Acitvity.LoginActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.JumatNgaji.KhutbahJumat.KhutbahJumatActivity;
+import com.destinyapp.kitabelajar.Adapter.AdapterGuruNgaji;
+import com.destinyapp.kitabelajar.Adapter.AdapterKhutbah;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
@@ -86,6 +92,41 @@ public class GuruNgajiActivity extends AppCompatActivity {
                     mItems=response.body().getData();
                     SpinnerDaerah adapter = new SpinnerDaerah(GuruNgajiActivity.this,mItems);
                     Daerah.setAdapter(adapter);
+                    GuruNgaji();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                Toast.makeText(GuruNgajiActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void GuruNgaji(){
+        mManager = new GridLayoutManager(GuruNgajiActivity.this,1);
+        recycler.setLayoutManager(mManager);
+        ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
+        Call<ResponseModel> Temans = api.GuruNgaji(destiny.AUTH(Token),"");
+        Temans.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                try {
+                    if (response.body().getStatusCode().equals("000")){
+                        mItems=response.body().getData();
+                        mAdapter = new AdapterGuruNgaji(GuruNgajiActivity.this,mItems);
+                        recycler.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
+                    }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
+                        GuruNgaji();
+                    }else{
+                        Toast.makeText(GuruNgajiActivity.this, "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(GuruNgajiActivity.this, "Terjadi Kesalahan User akan Terlogout", Toast.LENGTH_SHORT).show();
+                    dbHelper.Logout();
+                    Intent intent = new Intent(GuruNgajiActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
 

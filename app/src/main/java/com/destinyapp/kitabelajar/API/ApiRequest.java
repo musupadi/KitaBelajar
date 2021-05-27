@@ -95,6 +95,10 @@ public interface ApiRequest {
     @GET("gurumapel")
     Call<ResponseModel> GuruMapelAbsen(@Header("Authorization") String authHeader);
 
+    @GET("gurungaji")
+    Call<ResponseModel> GuruNgaji(@Header("Authorization") String authHeader,
+                                  @Query("byiddaerah") String byiddaerah);
+
     @GET("kabarsekolah")
     Call<ResponseModel> KabarSekolah(@Header("Authorization") String authHeader);
 

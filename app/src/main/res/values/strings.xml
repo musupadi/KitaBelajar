@@ -30,4 +30,5 @@
         <item>Tidak</item>
         <item>Ya</item>
     </string-array>
+    <string name="title_activity_maps">Map</string>
 </resources>
