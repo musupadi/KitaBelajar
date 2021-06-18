@@ -1,18 +1,31 @@
 package com.destinyapp.kitabelajar.Splash;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.destinyapp.kitabelajar.Acitvity.HomeActivity;
 import com.destinyapp.kitabelajar.Acitvity.LoginActivity;
 import com.destinyapp.kitabelajar.R;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 public class SplashActivity extends AppCompatActivity {
     private ViewPager mSlideViewPager;
@@ -21,6 +34,8 @@ public class SplashActivity extends AppCompatActivity {
     private Button btnBack, btnNext, btnPlay, btnPause, btnStop;
     private TextView[] mDots;
     private int CurrentPage;
+
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +69,10 @@ public class SplashActivity extends AppCompatActivity {
                 mSlideViewPager.setCurrentItem(CurrentPage - 1);
             }
         });
+
     }
+
+
 
     public void addDotsIndicator(int posistion) {
         mDots = new TextView[4];
