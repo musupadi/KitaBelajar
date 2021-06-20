@@ -221,8 +221,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 try {
+                    pd.hide();
                     if (response.body().getStatusCode().equals("000")){
-                        pd.hide();
                         dbHelper.SaveUser(user,id,response.body().getData().get(0).getName(),response.body().getData().get(0).getAccessToken(),response.body().getData().get(0).getAs(),response.body().getData().get(0).getPhoto());
                         if (mInterstitialAd !=null){
                             mInterstitialAd.show(LoginActivity.this);
@@ -234,7 +234,6 @@ public class LoginActivity extends AppCompatActivity {
                     }else{
                         Toast.makeText(LoginActivity.this, response.body().getStatusMessage(), Toast.LENGTH_SHORT).show();
                     }
-                    pd.hide();
                 }catch (Exception e){
                     Toast.makeText(LoginActivity.this, "Terjadi Kesalahan "+e.toString(), Toast.LENGTH_SHORT).show();
                     pd.hide();
@@ -265,6 +264,9 @@ public class LoginActivity extends AppCompatActivity {
                     public void onAdDismissedFullScreenContent() {
                         // Called when fullscreen content is dismissed.
                         Log.d("TAG", "The ad was dismissed.");
+                        Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                        startActivity(intent);
+                        finishAffinity();
                     }
 
                     @Override
