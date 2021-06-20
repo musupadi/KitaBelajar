@@ -1,10 +1,14 @@
 package com.destinyapp.kitabelajar.Method;
 
 import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
@@ -35,8 +39,10 @@ import com.destinyapp.kitabelajar.Acitvity.menu.Tugas.TugasActivity;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -57,7 +63,17 @@ public class Destiny {
         }
         return Des;
     }
-
+    public void DownloadPDF(String url,String judul,Context ctx){
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
+        request.setTitle(judul);
+        request.setDescription("Downloading "+judul);
+        request.allowScanningByMediaScanner();
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,"/eBusiness_Profile/"+judul+".pdf");
+        DownloadManager manager = (DownloadManager)ctx.getSystemService(Context.DOWNLOAD_SERVICE);
+        manager.enqueue(request);
+    }
     public String Nilai(String nilai){
         int index = nilai.indexOf('/');
         String nilai_min = nilai.substring(0,index);

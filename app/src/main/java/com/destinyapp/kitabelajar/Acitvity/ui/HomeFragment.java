@@ -63,6 +63,7 @@ import java.util.List;
 import com.destinyapp.kitabelajar.Adapter.AdapterKegiatan;
 import com.destinyapp.kitabelajar.Splash.SliderAdapter;
 import com.destinyapp.kitabelajar.Splash.SplashActivity;
+import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -289,9 +290,12 @@ public class HomeFragment extends Fragment {
                         ID=response.body().getData().get(0).getId_sekolah();
                         Sekolah.setText(response.body().getData().get(0).getNama_sekolah());
                         SekolahBesar.setText(response.body().getData().get(0).getNama_sekolah());
-                        Glide.with(getActivity())
+                        Picasso.get()
                                 .load(destiny.BASE_URL()+response.body().getData().get(0).getLogo_sekolah())
                                 .into(Logo);
+                        //                        Glide.with(getActivity())
+//                                .load(destiny.BASE_URL()+response.body().getData().get(0).getLogo_sekolah())
+//                                .into(Logo);
                     }else if (response.body().getStatusCode().equals("001") || response.body().getStatusCode().equals("002")){
                         destiny.AutoLogin(Username,Password,getActivity());
                         Intent intent = new Intent(getActivity(), MainActivity.class);
