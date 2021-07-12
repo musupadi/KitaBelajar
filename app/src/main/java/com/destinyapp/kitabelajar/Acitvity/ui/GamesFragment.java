@@ -13,11 +13,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.destinyapp.kitabelajar.Acitvity.Games.GamesActivity;
+import com.destinyapp.kitabelajar.Acitvity.Games.NamaHewan.GameHewanActivity;
 import com.destinyapp.kitabelajar.R;
 
 
 public class GamesFragment extends Fragment {
-    LinearLayout games1;
+    LinearLayout games1,games2;
     public GamesFragment() {
         // Required empty public constructor
     }
@@ -40,10 +41,19 @@ public class GamesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         try {
             games1 = view.findViewById(R.id.linearGames1);
+            games2 = view.findViewById(R.id.linearGames2);
+
             games1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getActivity(), GamesActivity.class);
+                    startActivity(intent);
+                }
+            });
+            games2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), GameHewanActivity.class);
                     startActivity(intent);
                 }
             });

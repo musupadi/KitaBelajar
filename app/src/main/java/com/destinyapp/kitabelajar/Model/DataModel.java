@@ -40,6 +40,23 @@ public class DataModel {
     @Expose
     public String id_environment;
 
+    //Game
+    @SerializedName("id_games_hewan")
+    @Expose
+    public String id_games_hewan;
+
+    @SerializedName("inisial")
+    @Expose
+    public String inisial;
+
+    @SerializedName("nama_hewan")
+    @Expose
+    public String nama_hewan;
+
+    @SerializedName("link_file_hewan")
+    @Expose
+    public String link_file_hewan;
+
     //Guru Ngaji
     @SerializedName("id_guru_ngaji")
     @Expose
@@ -76,6 +93,7 @@ public class DataModel {
     @SerializedName("nama_daerah")
     @Expose
     public String nama_daerah;
+
     //Tahun Ajaran
     @SerializedName("id_tahun_ajaran")
     @Expose
@@ -352,6 +370,21 @@ public class DataModel {
     @SerializedName("isi_soal")
     @Expose
     public String isi_soal;
+
+    @SerializedName("terjawab")
+    @Expose
+    public String terjawab;
+
+    @SerializedName("nama_tugas")
+    @Expose
+    public String nama_tugas;
+
+    @SerializedName("file_tugas")
+    @Expose
+    public String file_tugas;
+
+
+
 
     //Gallery
     @SerializedName("id_gallery")
@@ -1897,5 +1930,61 @@ public class DataModel {
 
     public void setCreated_at_guru_ngaji(String created_at_guru_ngaji) {
         this.created_at_guru_ngaji = created_at_guru_ngaji;
+    }
+
+    public String getId_games_hewan() {
+        return id_games_hewan;
+    }
+
+    public void setId_games_hewan(String id_games_hewan) {
+        this.id_games_hewan = id_games_hewan;
+    }
+
+    public String getInisial() {
+        return inisial;
+    }
+
+    public void setInisial(String inisial) {
+        this.inisial = inisial;
+    }
+
+    public String getNama_hewan() {
+        return nama_hewan;
+    }
+
+    public void setNama_hewan(String nama_hewan) {
+        this.nama_hewan = nama_hewan;
+    }
+
+    public String getLink_file_hewan() {
+        return link_file_hewan;
+    }
+
+    public void setLink_file_hewan(String link_file_hewan) {
+        this.link_file_hewan = link_file_hewan;
+    }
+
+    public String getTerjawab() {
+        return terjawab;
+    }
+
+    public void setTerjawab(String terjawab) {
+        this.terjawab = terjawab;
+    }
+
+    public String getNama_tugas() {
+        return nama_tugas;
+    }
+
+    public void setNama_tugas(String nama_tugas) {
+        this.nama_tugas = nama_tugas;
+    }
+
+    public String getFile_tugas() {
+        return file_tugas;
+    }
+
+    public void setFile_tugas(String file_tugas) {
+        this.file_tugas = file_tugas;
     }
 }

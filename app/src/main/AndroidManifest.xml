@@ -32,9 +32,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Acitvity.menu.JumatNgaji.GuruNgaji.DetailGuruNgajiActivity"
-            android:parentActivityName=".Acitvity.menu.JumatNgaji.GuruNgaji.GuruNgajiActivity"
-            android:label="Detail Guru Ngaji"></activity>
+        <activity android:name=".Acitvity.menu.Marketplace.MarketplaceSiswaActivity"
+            android:label="Marketplace Siswa"
+            android:parentActivityName=".Acitvity.HomeActivity"/>
+        <activity android:name=".Acitvity.menu.Marketplace.InputProdukActivity"
+            android:label="Marketplace"
+            android:parentActivityName=".Acitvity.menu.Marketplace.MarketplaceSiswaActivity"/>
+        <activity android:name=".Acitvity.menu.Marketplace.MarketplaceActivity"
+            android:label="Marketplace"
+            android:parentActivityName=".Acitvity.HomeActivity"/>
+        <activity android:name=".Acitvity.menu.Tugas.TugasTugasActivity"
+            android:label="Tugas"
+            android:parentActivityName=".Acitvity.menu.Tugas.TugasActivity"/>
+        <activity
+            android:name=".Acitvity.menu.Prestasi.DetailPrestasi"
+            android:label="Detail Prestasi"
+            android:parentActivityName=".Acitvity.menu.Prestasi.PrestasiActivity" />
+        <activity
+            android:name=".Acitvity.Games.NamaHewan.HewanActivity"
+            android:label="Detail Hewan"
+            android:parentActivityName=".Acitvity.Games.NamaHewan.HewanActivity" />
+        <activity
+            android:name=".Acitvity.Games.NamaHewan.GameHewanActivity"
+            android:label="Nama Hewan"
+            android:parentActivityName=".Acitvity.HomeActivity" />
+        <activity
+            android:name=".Acitvity.menu.JumatNgaji.GuruNgaji.DetailGuruNgajiActivity"
+            android:label="Detail Guru Ngaji"
+            android:parentActivityName=".Acitvity.menu.JumatNgaji.GuruNgaji.GuruNgajiActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -62,14 +87,18 @@
             android:name=".Acitvity.menu.JumatNgaji.Doa.DoaActivity"
             android:label="Al&apos;quran dan Doa"
             android:parentActivityName=".Acitvity.HomeActivity" />
-        <activity android:name=".Acitvity.menu.JumatNgaji.GuruNgaji.GuruNgajiActivity"
-            android:parentActivityName=".Acitvity.HomeActivity"
-            android:label="Guru Ngaji"/>
         <activity
-            android:name=".Acitvity.DetailProdukActivity"
+            android:name=".Acitvity.menu.JumatNgaji.GuruNgaji.GuruNgajiActivity"
+            android:label="Guru Ngaji"
+            android:parentActivityName=".Acitvity.HomeActivity" />
+        <activity
+            android:name=".Acitvity.menu.Marketplace.DetailProdukActivity"
             android:label="Detail Product"
             android:parentActivityName=".Acitvity.HomeActivity" />
-        <activity android:name=".Acitvity.menu.Tugas.SoalEssayActivity" />
+        <activity
+            android:name=".Acitvity.menu.Tugas.SoalEssayActivity"
+            android:label="Detail Product"
+            android:parentActivityName=".Acitvity.menu.Tugas.TugasActivity" />
         <activity
             android:name=".Acitvity.menu.Tugas.SoalPGActivity"
             android:label="Soal pilihan Ganda"
@@ -247,7 +276,7 @@
             android:label="Struktur Oraganisasi"
             android:parentActivityName=".Acitvity.HomeActivity" />
         <activity
-            android:name=".Acitvity.menu.PrestasiActivity"
+            android:name=".Acitvity.menu.Prestasi.PrestasiActivity"
             android:label="Prestasi"
             android:parentActivityName=".Acitvity.HomeActivity" />
         <activity

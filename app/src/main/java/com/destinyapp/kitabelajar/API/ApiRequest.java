@@ -3,6 +3,7 @@ package com.destinyapp.kitabelajar.API;
 import com.destinyapp.kitabelajar.Model.Alquran.Surah.Alfatihah;
 import com.destinyapp.kitabelajar.Model.DataAbsen;
 import com.destinyapp.kitabelajar.Model.Essay;
+import com.destinyapp.kitabelajar.Model.Marketplace.ResponseMarketplace;
 import com.destinyapp.kitabelajar.Model.NewResponse;
 import com.destinyapp.kitabelajar.Model.ResponseDestiny;
 import com.destinyapp.kitabelajar.Model.ResponseDoa;
@@ -31,6 +32,9 @@ public interface ApiRequest {
     Call<ResponseModel> login(@Field("username") String username,
                               @Field("password") String password);
 
+    @GET("gameshewan")
+    Call<ResponseModel> GameHewan(@Header("Authorization") String authHeader);
+
     @FormUrlEncoded
     @POST("kelas")
     Call<ResponseModel> GetKelas(@Field("id_sekolah") String id_sekolah);
@@ -57,6 +61,42 @@ public interface ApiRequest {
                                         @Field("idmapel") String idmapel,
                                         @Field("piket") String piket,
                                         @Field("dataabsen") List<DataAbsen> dataabsen);
+
+
+    @Multipart
+    @POST("tugas")
+    Call<ResponseModel> Tugas(@Header("Authorization") String authHeader,
+                              @Part("id_tugas") RequestBody id_tugas,
+                              @Part("text") RequestBody text,
+                              @Part MultipartBody.Part photo);
+
+    @Multipart
+    @POST("tugas")
+    Call<ResponseModel> Tugas(@Header("Authorization") String authHeader,
+                              @Part("id_tugas") RequestBody id_tugas,
+                              @Part("text") RequestBody text,
+                              @Part MultipartBody.Part photo,
+                              @Part MultipartBody.Part photo2);
+
+    @Multipart
+    @POST("tugas")
+    Call<ResponseModel> Tugas(@Header("Authorization") String authHeader,
+                              @Part("id_tugas") RequestBody id_tugas,
+                              @Part("text") RequestBody text,
+                              @Part MultipartBody.Part photo,
+                              @Part MultipartBody.Part photo2,
+                              @Part MultipartBody.Part photo3);
+
+    @Multipart
+    @POST("tugas")
+    Call<ResponseModel> Tugas(@Header("Authorization") String authHeader,
+                              @Part("id_tugas") RequestBody id_tugas,
+                              @Part("text") RequestBody text,
+                              @Part MultipartBody.Part photo,
+                              @Part MultipartBody.Part photo2,
+                              @Part MultipartBody.Part photo3,
+                              @Part MultipartBody.Part photo4);
+
     @FormUrlEncoded
     @POST("supray/kitabelajar")
     Call<ResponseDestiny> Checkers(@Header("Authorization") String authHeader,
@@ -76,12 +116,53 @@ public interface ApiRequest {
                               @Field("id_tugas") String id_tugas,
                               @Query("jawaban[]") ArrayList<String> jawab);
 
+    //Tambah Produk
+    @Multipart
+    @POST("produksiswa")
+    Call<ResponseModel> ProdukSiswa(@Header("Authorization") String authHeader,
+                                    @Part("namaproduk") RequestBody namaproduk,
+                                    @Part("deskripsiproduk") RequestBody deskripsiproduk,
+                                    @Part("hargaproduk") RequestBody hargaproduk,
+                                    @Part("nomorteleponpengurus") RequestBody nomorteleponpengurus,
+                                    @Part MultipartBody.Part Foto1,
+                                    @Part MultipartBody.Part Foto2,
+                                    @Part("photodeskripsi[]") RequestBody photodeskripsi2);
+
+    @Multipart
+    @POST("produksiswa")
+    Call<ResponseModel> ProdukSiswa(@Header("Authorization") String authHeader,
+                                    @Part("namaproduk") RequestBody namaproduk,
+                                    @Part("deskripsiproduk") RequestBody deskripsiproduk,
+                                    @Part("hargaproduk") RequestBody hargaproduk,
+                                    @Part("nomorteleponpengurus") RequestBody nomorteleponpengurus,
+                                    @Part MultipartBody.Part Foto1,
+                                    @Part MultipartBody.Part Foto2,
+                                    @Part("photodeskripsi[]") RequestBody photodeskripsi2,
+                                    @Part MultipartBody.Part Foto3,
+                                    @Part("photodeskripsi[]") RequestBody photodeskripsi3);
+
+    @Multipart
+    @POST("produksiswa")
+    Call<ResponseModel> ProdukSiswa(@Header("Authorization") String authHeader,
+                                    @Part("namaproduk") RequestBody namaproduk,
+                                    @Part("deskripsiproduk") RequestBody deskripsiproduk,
+                                    @Part("hargaproduk") RequestBody hargaproduk,
+                                    @Part("nomorteleponpengurus") RequestBody nomorteleponpengurus,
+                                    @Part MultipartBody.Part Foto1,
+                                    @Part MultipartBody.Part Foto2,
+                                    @Part("photodeskripsi[]") RequestBody photodeskripsi2,
+                                    @Part MultipartBody.Part Foto3,
+                                    @Part("photodeskripsi[]") RequestBody photodeskripsi3,
+                                    @Part MultipartBody.Part Foto4,
+                                    @Part("photodeskripsi[]") RequestBody photodeskripsi4);
+
     //GET
     @GET("quran")
     Call<ResponseDoa> Quran();
 
-    @GET("produk")
-    Call<ResponseProduk> Produk(@Header("Authorization") String authHeader);
+    @GET("produksiswa")
+    Call<ResponseMarketplace> Produk(@Header("Authorization") String authHeader);
+
 
     @GET("tahunajaranppdb")
     Call<ResponseModel> TahunAjaran(@Header("Authorization") String authHeader);
@@ -150,7 +231,7 @@ public interface ApiRequest {
 
 
     @GET("tugassoal")
-    Call<NewResponse> Tugas(@Header("Authorization") String authHeader,
+    Call<ResponseModel> Tugas(@Header("Authorization") String authHeader,
                             @Query("id_tugas") String id_tugas);
 
     @GET("tugassoal")

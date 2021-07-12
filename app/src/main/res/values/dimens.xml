@@ -10,5 +10,6 @@
     <dimen name="text_large">10sp</dimen>
     <dimen name="text_xtra_large">12sp</dimen>
     <dimen name="text_titid_imam">15sp</dimen>
+    <dimen name="text_titid_akram">18sp</dimen>
     <dimen name="text_titid_baim">25sp</dimen>
 </resources>

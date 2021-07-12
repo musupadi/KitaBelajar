@@ -6,7 +6,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Base64;
@@ -28,10 +27,11 @@ import com.destinyapp.kitabelajar.Acitvity.menu.GuruActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.JadwalPelajaranActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.JumatNgaji.JumatNgajiActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.KemisNyunda.KemisNyundaActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.Marketplace.MarketplaceSiswaActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.MediaInformasi.MediaInformasiActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.MediaPembelajaran.MediaPembelajaranActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.PembayaranActivity;
-import com.destinyapp.kitabelajar.Acitvity.menu.PrestasiActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.Prestasi.PrestasiActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.ProfileSekolahActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.ROBDanaActivity;
 import com.destinyapp.kitabelajar.Acitvity.menu.StrukturOrganisasiActivity;
@@ -39,10 +39,8 @@ import com.destinyapp.kitabelajar.Acitvity.menu.Tugas.TugasActivity;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -301,6 +299,9 @@ public class Destiny {
             ctx.startActivity(intent);
         }else if(Class.equals("Media Informasi")){
             Intent intent = new Intent(ctx, MediaInformasiActivity.class);
+            ctx.startActivity(intent);
+        }else if(Class.equals("Marketplace")){
+            Intent intent = new Intent(ctx, MarketplaceSiswaActivity.class);
             ctx.startActivity(intent);
         }
         

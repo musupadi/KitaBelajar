@@ -14,10 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.destinyapp.kitabelajar.Acitvity.DetailProdukActivity;
-import com.destinyapp.kitabelajar.Acitvity.menu.DetailKabarSekolahActivity;
+import com.destinyapp.kitabelajar.Acitvity.menu.Marketplace.DetailProdukActivity;
 import com.destinyapp.kitabelajar.Method.Destiny;
-import com.destinyapp.kitabelajar.Model.DataModel;
+import com.destinyapp.kitabelajar.Model.Marketplace.ProdukModel;
 import com.destinyapp.kitabelajar.Model.Produk;
 import com.destinyapp.kitabelajar.R;
 import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
@@ -25,14 +24,14 @@ import com.destinyapp.kitabelajar.SharedPreferance.DB_Helper;
 import java.util.List;
 
 public class AdapterProduk extends RecyclerView.Adapter<AdapterProduk.HolderData> {
-    private List<Produk> mList;
+    private List<ProdukModel> mList;
     private Context ctx;
 
     DB_Helper dbHelper;
     Boolean onClick=false;
     RecyclerView recyclerView;
     Destiny destiny;
-    public AdapterProduk(Context ctx, List<Produk> mList){
+    public AdapterProduk(Context ctx, List<ProdukModel> mList){
         this.ctx = ctx;
         this.mList = mList;
     }
@@ -48,15 +47,15 @@ public class AdapterProduk extends RecyclerView.Adapter<AdapterProduk.HolderData
     @Override
     public void onBindViewHolder(@NonNull final HolderData holderData, int posistion) {
         destiny = new Destiny();
-        final Produk dm = mList.get(posistion);
-        holderData.Sekolah.setText(dm.getNama_produk());
+        final ProdukModel dm = mList.get(posistion);
+        holderData.Sekolah.setText(dm.getNama_produk_siswa());
         holderData.Penjual.setText(dm.getNama_sekolah());
-        holderData.Harga.setText("Rp "+dm.getHarga_produk());
-        if (dm.getCover_produk().equals("")){
+        holderData.Harga.setText("Rp "+dm.getHarga_produk_siswa());
+        if (dm.getCover_produk_siswa().equals("")){
             holderData.Image.setImageResource(R.drawable.childern);
         }else{
             Glide.with(ctx)
-                    .load(destiny.BASE_URL()+dm.getCover_produk())
+                    .load(destiny.BASE_URL()+dm.getCover_produk_siswa())
                     .into(holderData.Image);
         }
 //        if (dm.getLink_youtube_kabar().equals("") || dm.getLink_youtube_kabar().isEmpty()){
@@ -71,11 +70,11 @@ public class AdapterProduk extends RecyclerView.Adapter<AdapterProduk.HolderData
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ctx, DetailProdukActivity.class);
-                i.putExtra("NAMA", dm.getNama_produk());
+                i.putExtra("NAMA", dm.getNama_produk_siswa());
                 i.putExtra("SEKOLAH",dm.getNama_sekolah());
-                i.putExtra("HARGA","Rp "+dm.getHarga_produk());
-                i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getCover_produk());
-                i.putExtra("DESKRIPSI",dm.getDeskripsi_produk());
+                i.putExtra("HARGA","Rp "+dm.getHarga_produk_siswa());
+                i.putExtra("GAMBAR",destiny.BASE_URL()+dm.getCover_produk_siswa());
+                i.putExtra("DESKRIPSI",dm.getDeskripsi_produk_siswa());
                 ctx.startActivity(i);
             }
         });

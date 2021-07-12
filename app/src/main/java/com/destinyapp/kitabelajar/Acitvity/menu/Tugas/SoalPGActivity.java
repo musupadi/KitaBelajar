@@ -27,7 +27,7 @@ import com.destinyapp.kitabelajar.Adapter.AdapterSoalPG;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
 import com.destinyapp.kitabelajar.Model.Media;
-import com.destinyapp.kitabelajar.Model.NewResponse;
+import com.destinyapp.kitabelajar.Model.ResponseModel;
 import com.destinyapp.kitabelajar.Model.ResponseDestiny;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
 import com.destinyapp.kitabelajar.R;
@@ -92,13 +92,13 @@ public class SoalPGActivity extends AppCompatActivity {
         NAMA = intent.getExtras().getString("NAMA");
         getSupportActionBar().setTitle(NAMA);
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
-        Call<NewResponse> Data=api.Tugas(destiny.AUTH(Token),ID);
-        Data.enqueue(new Callback<NewResponse>() {
+        Call<ResponseModel> Data=api.Tugas(destiny.AUTH(Token),ID);
+        Data.enqueue(new Callback<ResponseModel>() {
             @Override
-            public void onResponse(Call<NewResponse> call, final Response<NewResponse> response) {
+            public void onResponse(Call<ResponseModel> call, final Response<ResponseModel> response) {
                 try {
                     if (response.body().getStatusCode().equals("000")){
-                        new RetreivePDFStreamsss().execute(destiny.BASE_URL()+response.body().getData().getSoal());
+                        new RetreivePDFStreamsss().execute(destiny.BASE_URL()+response.body().getData().get(0).getSoal());
                         dialog = new Dialog(SoalPGActivity.this);
                         dialog.setContentView(R.layout.dialog_jawaban);
                         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -108,7 +108,7 @@ public class SoalPGActivity extends AppCompatActivity {
                         Tutup = dialog.findViewById(R.id.btnTutupSoal);
                         mManager = new GridLayoutManager(SoalPGActivity.this,1);
                         recyclerView.setLayoutManager(mManager);
-                        mAdapter = new AdapterSoalPG(SoalPGActivity.this,Integer.parseInt(response.body().getData().jumlahsoal),JAWABAN);
+                        mAdapter = new AdapterSoalPG(SoalPGActivity.this,Integer.parseInt(response.body().getData().get(0).jumlahsoal),JAWABAN);
                         recyclerView.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();
                         Jawab.setOnClickListener(new View.OnClickListener() {
@@ -207,8 +207,8 @@ public class SoalPGActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<NewResponse> call, Throwable t) {
-                Toast.makeText(SoalPGActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                Toast.makeText(SoalPGActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 

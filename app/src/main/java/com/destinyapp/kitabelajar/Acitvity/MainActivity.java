@@ -30,28 +30,28 @@ public class MainActivity extends AppCompatActivity {
         final Handler handler = new Handler();
         final DB_Helper dbHelper = new DB_Helper(MainActivity.this);
         Cursor cursor = dbHelper.checkUser();
-        ApiRequest api = DestinyServer.getClient().create(ApiRequest.class);
-        Call<ResponseDestiny> Check = api.Checkers("Basic YWRtaW46MTIzNA==",
-                                                    "destinykitabelajarkey");
-        Check.enqueue(new Callback<ResponseDestiny>() {
-            @Override
-            public void onResponse(Call<ResponseDestiny> call, Response<ResponseDestiny> response) {
-                try {
-                    if (response.body().getData().equals("1")){
-
-                    }else{
-                        Toast.makeText(MainActivity.this, "Kesalahan Server Jaringan", Toast.LENGTH_SHORT).show();
-                    }
-                }catch (Exception e){
-                    Toast.makeText(MainActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseDestiny> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        ApiRequest api = DestinyServer.getClient().create(ApiRequest.class);
+//        Call<ResponseDestiny> Check = api.Checkers("Basic YWRtaW46MTIzNA==",
+//                                                    "destinykitabelajarkey");
+//        Check.enqueue(new Callback<ResponseDestiny>() {
+//            @Override
+//            public void onResponse(Call<ResponseDestiny> call, Response<ResponseDestiny> response) {
+//                try {
+//                    if (response.body().getData().equals("1")){
+//
+//                    }else{
+//                        Toast.makeText(MainActivity.this, "Kesalahan Server Jaringan", Toast.LENGTH_SHORT).show();
+//                    }
+//                }catch (Exception e){
+//                    Toast.makeText(MainActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseDestiny> call, Throwable t) {
+//                Toast.makeText(MainActivity.this, "Koneksi Gagal", Toast.LENGTH_SHORT).show();
+//            }
+//        });
         if (cursor.getCount()>0){
             Intent intent = new Intent(MainActivity.this,HomeActivity.class);
             startActivity(intent);

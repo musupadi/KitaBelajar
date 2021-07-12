@@ -8,6 +8,8 @@
     android:layout_height="280dp"
     android:layout_gravity="center">
     <androidx.cardview.widget.CardView
+        android:visibility="gone"
+        android:id="@+id/card1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardCornerRadius="14dp"
@@ -56,7 +58,6 @@
                     android:layout_weight="1.5"
                     android:text="Nama Tugas"
                     android:gravity="center"
-                    android:textSize="@dimen/text_titid_baim"
                     android:textColor="@color/colorBlack"
                     android:fontFamily="@font/roboto"
                     android:id="@+id/tvNamaTugas"/>
@@ -132,6 +133,119 @@
             </LinearLayout>
         </LinearLayout>
 
+
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardTugas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="2dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="4dp"
+        android:padding="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Batas Pengumpulan : 25 Mei 2021"
+                    android:fontFamily="@font/roboto"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_titid_imam"
+                    android:id="@+id/tvPeriode"/>
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <WebView
+                            android:id="@+id/tvDeskripsi"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/LayoutCardView"
+                android:orientation="horizontal"
+                android:layout_weight="1.5">
+                <ImageView
+                    android:layout_weight="5"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/pdf"
+                    android:scaleType="fitXY"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp">
+                    <TextView
+                        android:gravity="center|left"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Baim Kontol.pdf"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="@font/roboto"
+                        android:id="@+id/tvNama"
+                        android:textSize="@dimen/text_xtra_large"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnTautan"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_rounded_white_2"
+                    android:text="Lihat" />
+
+                <Button
+                    android:id="@+id/btnDownload"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_rounded_orange"
+                    android:text="Download"
+                    android:textColor="@color/colorWhite"
+                    android:layout_margin="5dp"/>
+                <Button
+                    android:id="@+id/btnUpload"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_rounded_primary"
+                    android:text="Upload"
+                    android:textColor="@color/colorWhite"
+                    android:layout_margin="5dp"/>
+            </LinearLayout>
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

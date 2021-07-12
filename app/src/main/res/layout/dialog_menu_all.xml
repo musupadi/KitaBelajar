@@ -366,18 +366,30 @@
                     android:text="Gallery"/>
             </LinearLayout>
             <LinearLayout
-                android:visibility="invisible"
+                android:id="@+id/linearMarketplace"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:id="@+id/linearROB"
                 android:layout_margin="5dp">
-                <ImageView
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:src="@drawable/rob_dana"/>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/round_green"
+                        android:layout_margin="8dp"
+                        android:alpha="0.22"/>
+                    <ImageView
+                        android:layout_margin="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/marketplace"/>
+                </RelativeLayout>
+
                 <TextView
                     android:fontFamily="@font/roboto"
                     android:textStyle="bold"
@@ -386,8 +398,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:textSize="@dimen/text_smoll"
-                    android:text="ROB Dana\nBOP"/>
+                    android:textSize="@dimen/text_medium"
+                    android:text="Marketplace"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout

@@ -57,7 +57,20 @@
                 android:layout_height="200dp"
                 android:orientation="vertical"
                 android:background="@drawable/btn_rounded">
-
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/lion"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="Nama Hewan"
+                    android:gravity="center"/>
             </LinearLayout>
 
         </LinearLayout>

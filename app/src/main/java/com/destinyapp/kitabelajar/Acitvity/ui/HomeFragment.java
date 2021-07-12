@@ -50,6 +50,8 @@ import com.destinyapp.kitabelajar.Adapter.AdapterProduk;
 import com.destinyapp.kitabelajar.Adapter.AdapterSponsor;
 import com.destinyapp.kitabelajar.Method.Destiny;
 import com.destinyapp.kitabelajar.Model.DataModel;
+import com.destinyapp.kitabelajar.Model.Marketplace.ProdukModel;
+import com.destinyapp.kitabelajar.Model.Marketplace.ResponseMarketplace;
 import com.destinyapp.kitabelajar.Model.Produk;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
 import com.destinyapp.kitabelajar.Model.ResponseModel;
@@ -76,7 +78,7 @@ public class HomeFragment extends Fragment {
     ImageView Logo;
     TextView CheckMasuk,Poin,SekolahBesar,Sekolah;
     LinearLayout ProfilSekolah,AgendaSekolah,Prestasi,PPDB,StrukturSekolah,JadwalPelajaran,Evadir,MediaPembelajaran,Tugas,LihatSemua;
-    LinearLayout DProfilSekolah,DAgendaSekolah,DPrestasi,DPPDB,DStrukturSekolah,DJadwalPelajaran,DEvadir,DMediaPembelajaran,DTugas,DGuru,DBiayaAkademik,DPembayaran,DROB,DERaport,DGallery;
+    LinearLayout DProfilSekolah,DAgendaSekolah,DPrestasi,DPPDB,DStrukturSekolah,DJadwalPelajaran,DEvadir,DMediaPembelajaran,DTugas,DGuru,DBiayaAkademik,DPembayaran,DROB,DERaport,DGallery,DMarketplace;
     LinearLayout KemisNyunda,JumatNgaji,MediaInformasi;
     //Dialog
     Dialog dialog;
@@ -91,7 +93,7 @@ public class HomeFragment extends Fragment {
     TextView TAHeader,TABerita,TASponsor,TAProduk;
     LinearLayout infoDinas;
     private List<DataModel> mItems = new ArrayList<>();
-    private List<Produk> Marketplace = new ArrayList<>();
+    private List<ProdukModel> Marketplace = new ArrayList<>();
     private List<DataModel> mItems2 = new ArrayList<>();
     private List<DataModel> mItems3 = new ArrayList<>();
     private RecyclerView.Adapter mAdapter;
@@ -532,16 +534,16 @@ public class HomeFragment extends Fragment {
         AProduk.setAnimation("loading.json");
         AProduk.playAnimation();
         ApiRequest api = RetroServer.getClient().create(ApiRequest.class);
-        Call<ResponseProduk> KabarBerita = api.Produk(destiny.AUTH(Token));
-        KabarBerita.enqueue(new Callback<ResponseProduk>() {
+        Call<ResponseMarketplace> KabarBerita = api.Produk(destiny.AUTH(Token));
+        KabarBerita.enqueue(new Callback<ResponseMarketplace>() {
             @Override
-            public void onResponse(Call<ResponseProduk> call, Response<ResponseProduk> response) {
+            public void onResponse(Call<ResponseMarketplace> call, Response<ResponseMarketplace> response) {
                 try {
                     if (response.body().getStatusCode().equals("000")){
                         Marketplace=response.body().getData();
                         if (Marketplace.size()<1){
                             TAProduk.setVisibility(View.VISIBLE);
-                            TAProduk.setText("Berita Belum Ada");
+                            TAProduk.setText("Produk Belum Ada");
                             AProduk.setAnimation("notfound.json");
                             AProduk.playAnimation();
                         }else{
@@ -563,7 +565,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ResponseProduk> call, Throwable t) {
+            public void onFailure(Call<ResponseMarketplace> call, Throwable t) {
                 Toast.makeText(getActivity(), "Koneksi Gagal", Toast.LENGTH_SHORT).show();
                 TAProduk.setVisibility(View.VISIBLE);
                 TAProduk.setText("Kesalahan pada Jaringan");
@@ -632,7 +634,7 @@ public class HomeFragment extends Fragment {
         DGuru = dialog.findViewById(R.id.linearGuru);
         DBiayaAkademik = dialog.findViewById(R.id.linearBiayaAkademik);
         DPembayaran = dialog.findViewById(R.id.linearPembayaran);
-        DROB = dialog.findViewById(R.id.linearROB);
+        DMarketplace = dialog.findViewById(R.id.linearMarketplace);
         DERaport = dialog.findViewById(R.id.linearEraport);
         DGallery = dialog.findViewById(R.id.linearGallery);
     }
@@ -717,12 +719,6 @@ public class HomeFragment extends Fragment {
                 destiny.ChangeActivity(getActivity(),"Pembayaran",Level);
             }
         });
-        DROB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                destiny.ChangeActivity(getActivity(),"ROB",Level);
-            }
-        });
         DERaport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -733,6 +729,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 destiny.ChangeActivity(getActivity(),"Gallery",Level);
+            }
+        });
+        DMarketplace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                destiny.ChangeActivity(getActivity(),"Marketplace",Level);
             }
         });
     }
